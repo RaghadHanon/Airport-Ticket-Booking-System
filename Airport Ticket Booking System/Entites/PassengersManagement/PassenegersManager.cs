@@ -18,5 +18,9 @@ namespace Airport_Ticket_Booking_System.Entites.PassengersManager
             Passengers.Add(passenger);
             return passenger;
         }
+        public static Passenger? GetById(int id)
+        {
+            return Passengers.FirstOrDefault(p => p.Id == id);
+        }
     }
 }

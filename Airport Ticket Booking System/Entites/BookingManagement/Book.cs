@@ -1,4 +1,5 @@
 ﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
+using Airport_Ticket_Booking_System.Entites.PassengersManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,14 @@ public class Book
     public int Id { get { return _id; } }
     public ClassOfFlight ClassOfFlight { get; set; }
     public Flight Flight { get; set; }
-
-    public Book(ClassOfFlight classOfFlight, int flgihtId)
+    public Passenger Passenger { get; set; }
+    public Book(ClassOfFlight classOfFlight, Flight flgiht, Passenger passenger)
     {
 
         _id = ++_currentId;
         ClassOfFlight = classOfFlight;
-        Flight = FlightsManager.GetById(flgihtId);
+        Flight = flgiht;
+        Passenger = passenger;
     }
 
     public override string? ToString()
