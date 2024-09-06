@@ -11,6 +11,43 @@ using System.Threading.Tasks;
 namespace Airport_Ticket_Booking_System.Utilities;
 public class PassengerUI
 {
+    public static void ShowMenu()
+    {
+        bool exit = false;
+        while (!exit)
+        {
+            Console.WriteLine("\n--- Passenger Menu ---");
+            Console.WriteLine("1. Show Available Flights");
+            Console.WriteLine("2. Search Available Flights");
+            Console.WriteLine("3. Book a Flight");
+            Console.WriteLine("4. Manage Bookings");
+            Console.WriteLine("5. Exit");
+            Console.Write("\nPlease select an option: ");
+            var choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    PassengerUI.ShoewAvailableFlights();
+                    break;
+                case "2":
+                    PassengerUI.SearchAvailableFlights();
+                    break;
+                case "3":
+                    PassengerUI.BookAFlight();
+                    break;
+                case "4":
+                    PassengerUI.ManageBookings();
+                    break;
+                case "5":
+                    exit = true;
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice. Please select a valid option.");
+                    break;
+            }
+        }
+    }
     public static void BookAFlight()
     {
         Console.Write("\nEnter Passenger ID: ");
@@ -25,6 +62,12 @@ public class PassengerUI
 
             Console.WriteLine("Please enter the flight ID you want to book:");
             int.TryParse(Console.ReadLine(), out int flightId);
+            Flight? flight = FlightsManager.GetById(flightId);
+            if (flight == null)
+            {
+                Console.WriteLine($"Flight with ID {flightId} not found.");
+                return;
+            }
 
             Console.WriteLine("Select a class: (1) Economy, (2) Business, (3) First Class");
             int.TryParse(Console.ReadLine(), out int classOption);
@@ -51,55 +94,88 @@ public class PassengerUI
 
     }
 
+    public static void ShoewAvailableFlights()
+    {
+        FlightBookingFilter.ShowAvailableFlights();
+    }
     public static void SearchAvailableFlights()
     {
-        Console.WriteLine("Search by: \n1. Price \n2. Departure Country \n3. Destination Country \n4. Departure Airport \n5. Arrival Airport \n6. Date \n7. Exit");
-        int.TryParse(Console.ReadLine(), out int searchOption);
+        Console.WriteLine("\n--- Search Flights ---");
+        Console.WriteLine("1. By Price");
+        Console.WriteLine("2. By Departure Country");
+        Console.WriteLine("3. By Destination Country");
+        Console.WriteLine("4. By Airport");
+        Console.WriteLine("5. By Arrival Airport");
+        Console.WriteLine("6. By Date");
+        Console.WriteLine("7. Exit");
 
-        switch (searchOption)
+        Console.WriteLine("Select a filter option:");
+        if (int.TryParse(Console.ReadLine(), out int searchOption))
         {
-            case 1:
-                Console.WriteLine("Enter price:");
-                decimal.TryParse(Console.ReadLine(),out decimal price);
-                FlightBookingFilter.ShowFlightsByPrice(price);
-                break;
+            switch (searchOption)
+            {
+                case 1:
+                    Console.WriteLine("Enter price:");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal price))
+                    {
+                        FlightBookingFilter.ShowFlightsByPrice(price);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid price.");
+                    }
+                    break;
 
-            case 2:
-                Console.WriteLine("Enter departure country:");
-                string departureCountry = Console.ReadLine();
-                FlightBookingFilter.ShowFlightsByDepartureCountry(departureCountry);
-                break;
+                case 2:
+                    Console.WriteLine("Enter departure country:");
+                    string departureCountry = Console.ReadLine();
+                    FlightBookingFilter.ShowFlightsByDepartureCountry(departureCountry);
+                    break;
 
-            case 3:
-                Console.WriteLine("Enter destination country:");
-                string destinationCountry = Console.ReadLine();
-                FlightBookingFilter.ShowFlightsByDestinationCountry(destinationCountry);
-                break;
+                case 3:
+                    Console.WriteLine("Enter destination country:");
+                    string destinationCountry = Console.ReadLine();
+                    FlightBookingFilter.ShowFlightsByDestinationCountry(destinationCountry);
+                    break;
 
-            case 4:
-                Console.WriteLine("Enter departure airport:");
-                string departureAirport = Console.ReadLine();
-                FlightBookingFilter.ShowFlightsByDepartureAirport(departureAirport);
-                break;
+                case 4:
+                    Console.WriteLine("Enter departure airport:");
+                    string departureAirport = Console.ReadLine();
+                    FlightBookingFilter.ShowFlightsByDepartureAirport(departureAirport);
+                    break;
 
-            case 5:
-                Console.WriteLine("Enter arrival airport:");
-                string arrivalAirport = Console.ReadLine();
-                FlightBookingFilter.ShowFlightsByArrivalAirport(arrivalAirport);
-                break;
+                case 5:
+                    Console.WriteLine("Enter arrival airport:");
+                    string arrivalAirport = Console.ReadLine();
+                    FlightBookingFilter.ShowFlightsByArrivalAirport(arrivalAirport);
+                    break;
 
-            case 6:
-                Console.WriteLine("Enter departure date (YYYY-MM-DD):");
-                DateTime.TryParse(Console.ReadLine() ,out DateTime departureDate);
-                FlightBookingFilter.ShowFlightsByDate(departureDate);
-                Console.WriteLine(departureDate);
-                break;
-            case 7:
-                break;
-            default:
-                Console.WriteLine("Invalid option.");
-            break;
+                case 6:
+                    Console.WriteLine("Enter departure date (YYYY-MM-DD):");
+                    if (DateTime.TryParse(Console.ReadLine(), out DateTime departureDate))
+                    {
+                        FlightBookingFilter.ShowFlightsByDate(departureDate);
+                        Console.WriteLine($"Selected Date: {departureDate:yyyy-MM-dd}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid date.");
+                    }
+                    break;
+
+                case 7:
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid option.");
+                    break;
+            }
         }
+        else
+        {
+            Console.WriteLine("Invalid option selection.");
+        }
+
     }
 
     public static void ManageBookings()

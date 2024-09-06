@@ -7,12 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Security.Claims;
+using Airport_Ticket_Booking_System.Entites.PassengersManager;
 
 namespace Airport_Ticket_Booking_System.Entites.FlightManagment;
 public class FlightsManager
 {
     private static List<Flight> flights = new List<Flight>();
-
+    public static Flight? AddAFlight(Flight flight)
+    {
+        if(flight != null)
+        flights.Add(flight);
+        return flight;
+    }
 
     public static List<Flight> GetAllFlights()
     {
