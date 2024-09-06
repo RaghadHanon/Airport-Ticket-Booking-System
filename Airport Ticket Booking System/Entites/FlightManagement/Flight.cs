@@ -115,6 +115,6 @@ public class Flight
     }
     public override string? ToString()
     {
-        return $"Flight {_id} :\r\n        {GetPriceList()}\r        DepartureCountry = {DepartureCountry},\r\n        DestinationCountry = {DestinationCountry},\r\n        DepartureDate = {DepartureDate},\r\n        DepartureAirport = {DepartureAirport},\r\n        ArrivalAirport = {ArrivalAirport}\n\n";
+        return $" {{ \n   FlightId {_id}:\r\n        DepartureCountry: \"{DepartureCountry}\",\r\n        DestinationCountry: \"{DestinationCountry}\",\r\n        DepartureDate: \"{DepartureDate}\",\r\n        DepartureAirport: \"{DepartureAirport}\",\r\n        ArrivalAirport: \"{ArrivalAirport}\"\n\r        {GetPriceList()}\n }}";
     }
 }

@@ -59,7 +59,7 @@ public class BookingManager
         Bookings.Remove(book);
         return book;
     }
-    public static Book? ModifyAbooking(int bookId, int passengerId, ClassOfFlight? newClassOfFlight, int newFlgihtId)
+    public static Book? ModifyAbooking(int bookId, int passengerId, ClassOfFlight? newClassOfFlight, int? newFlgihtId)
     {
         Passenger? passenger = PassenegersManager.GetById(passengerId);
 
@@ -78,7 +78,8 @@ public class BookingManager
         }
 
         book.ClassOfFlight = newClassOfFlight?? book.ClassOfFlight;
-        book.Flight = FlightsManager.GetById(newFlgihtId)?? book.Flight;
+        if(newFlgihtId is not null)
+            book.Flight = FlightsManager.GetById(newFlgihtId) ?? book.Flight;
 
 
         book = BookingManager.GetById(bookId);
@@ -92,6 +93,78 @@ public class BookingManager
         return Bookings.FirstOrDefault(b => b.Id == id);
     }
 
+    public static List<Book> GetAllBookings()
+    {
+        return Bookings;
+    }
+    
+    public static List<Book> GetAllBookings(DateTime date)
+    {
+        return Bookings.Where(b => b.Flight.DepartureDate.CompareTo(date) >= 0).ToList();
+    }
+    
+    public static List<Book> GetByPrice(decimal price)
+    {
+        return Bookings.Where(b => b.Flight.ClassPriceMap[b.ClassOfFlight]==price).ToList();
+    }
+    
+    public static List<Book> GetByPrice(decimal price, DateTime date)
+    {
+        return Bookings.Where(b => b.Flight.ClassPriceMap[b.ClassOfFlight] == price && b.Flight.DepartureDate.CompareTo(date) >= 0).ToList();
+    }
+
+    public static List<Book> GetByDepartureCountry(string departureCountry)
+    {
+        return Bookings.Where(b => b.Flight.DepartureCountry == departureCountry).ToList();
+    }
+    
+    public static List<Book> GetByDepartureCountry(string departureCountry, DateTime date)
+    {
+        return Bookings.Where(b => b.Flight.DepartureCountry == departureCountry && b.Flight.DepartureDate.CompareTo(date) >= 0).ToList();
+    }
+
+    
+    public static List<Book> GetByDestinationCountry(string destinationCountry)
+    {
+        return Bookings.Where(b => b.Flight.DestinationCountry == destinationCountry).ToList();
+    }
+    
+    public static List<Book> GetByDestinationCountry(string destinationCountry, DateTime date)
+    {
+        return Bookings.Where(b => b.Flight.DestinationCountry == destinationCountry && b.Flight.DepartureDate.CompareTo(date) >= 0).ToList();
+    }
+    
+
+    public static List<Book> GetByDepartureDate(DateTime departureDate)
+    {
+        return Bookings.Where(b => b.Flight.DepartureDate == departureDate).ToList();
+    }
+
+    
+
+    public static List<Book> GetByDepartureAirport(string departureAirport)
+    {
+        return Bookings.Where(b => b.Flight.DepartureAirport == departureAirport).ToList();
+    }
+    
+    public static List<Book> GetByDepartureAirport(string departureAirport, DateTime date)
+    {
+        return Bookings.Where(b => b.Flight.DepartureAirport == departureAirport && b.Flight.DepartureDate.CompareTo(date) >= 0).ToList();
+    }
+
+    
+
+    public static List<Book> GetByArrivalAirport(string arrivalAirport)
+    {
+        return Bookings.Where(b => b.Flight.ArrivalAirport == arrivalAirport).ToList();
+    }
+    
+    public static List<Book> GetByArrivalAirport(string arrivalAirport, DateTime date)
+    {
+        return Bookings.Where(b => b.Flight.ArrivalAirport == arrivalAirport && b.Flight.DepartureDate.CompareTo(date) >= 0).ToList();
+    }
+
+    
 
 
 }

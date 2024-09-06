@@ -22,7 +22,7 @@ public class FlightsManager
     {
         return flights.Where(f => f.DepartureDate.CompareTo(date) > 0).ToList();
     }
-    public static Flight? GetById(int id)
+    public static Flight? GetById(int? id)
     {
         return flights.FirstOrDefault(f => f.Id == id);
     }

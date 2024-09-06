@@ -45,5 +45,10 @@ public class Passenger
             Console.WriteLine($"{book}"); 
         }
     }
+
+    public override string? ToString()
+    {
+        return $"PassengerId {Id}: \" {Name} \"";
+    }
 }
 
