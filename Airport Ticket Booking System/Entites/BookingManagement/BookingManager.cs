@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 namespace Airport_Ticket_Booking_System.Entites.BookingManagement;
 public class BookingManager
 {
-  
+
+    public static List<Book> Bookings { get; } = new List<Book>();
     public static Book BookAFlight(ClassOfFlight classOfFlight, int flgihtId,int passengerId)
     {
         Passenger? passenger = PassenegersManager.Passengers.FirstOrDefault(p => p.Id == passengerId);
@@ -24,7 +25,8 @@ public class BookingManager
         Book? book = new Book(classOfFlight, flgihtId);
         
 
-        passenger?.Bookings.Add(book);  
+        passenger?.Bookings.Add(book);
+        Bookings.Add(book);
         return book;
     }
 
