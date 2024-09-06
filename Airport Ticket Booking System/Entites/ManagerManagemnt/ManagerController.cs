@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Airport_Ticket_Booking_System.Entites.ManagerManagemnt;
 public class ManagerController
 {
+    private static List<string> ErrorList =new List<string>();
     private static string[]? Data;
     public static void BatchUploadFlights(string fileName)
     {
@@ -28,12 +29,15 @@ public class ManagerController
         {
             Console.WriteLine($"Error processing file: {ex.Message}");
         }
-        ValidateImportedFlightData();
     }
     
     public static List<string> ValidateImportedFlightData()
     {
-        List<string> ErrorList = new List<string>();
+        if (Data == null || !Data.Any())
+        {
+            ErrorList.Add("No new data found.");
+            return ErrorList;
+        }
         foreach (var line in Data?.Skip(1))
         {
             var flightDetails = line.Split(',');
@@ -58,12 +62,12 @@ public class ManagerController
                 ErrorList.Add($"Error with Flight {flight.Id}:\n- {validationErrors}\n");
             }
         }
+        Data = null;
         return ErrorList;
     }
     public static void ViewValidationErrorList()
     {
-        List<string> ErrorList = ValidateImportedFlightData();
-        if (ErrorList.Count > 0)
+        if (ErrorList?.Count > 0)
         {
             Console.WriteLine("\nValidation Errors:");
             foreach (var error in ErrorList)

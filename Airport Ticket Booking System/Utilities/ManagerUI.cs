@@ -22,14 +22,15 @@ public class ManagerUI
             Console.WriteLine("3. Show All Flights");
             Console.WriteLine("4. Batch Flight Upload");
             Console.WriteLine("5. Validate Imported Flight Data");
-            Console.WriteLine("6. Display Validation Rules");
-            Console.WriteLine("7. Exit");
+            Console.WriteLine("6. View Validation Error List");
+            Console.WriteLine("7. Display Validation Rules");
+            Console.WriteLine("8. Exit");
             Console.Write("Select an option: ");
 
             switch (Console.ReadLine())
             {
                 case "1":
-                    ShowAllBookings();
+                    BookingFilter.ShowBookings();
                     break;
                 case "2":
                     SearchBookings();
@@ -44,9 +45,12 @@ public class ManagerUI
                     ValidateFlightData();
                     break;
                 case "6":
-                    DisplayValidationRules();
+                    ManagerController.ViewValidationErrorList();
                     break;
                 case "7":
+                    DisplayValidationRules();
+                    break;
+                case "8":
                     exit = true;
                     break;
                 default:
@@ -55,11 +59,7 @@ public class ManagerUI
             }
         }
     }
-    public static void ShowAllBookings()
-    { 
-        BookingFilter.ShowBookings();
-
-    }
+   
     public static void VewAllFlights()
     {
 
