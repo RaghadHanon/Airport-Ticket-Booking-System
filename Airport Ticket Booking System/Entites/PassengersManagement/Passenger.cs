@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.Entites.PassengersManager;
+
 public class Passenger
 {
     private static int _currentId = 0;

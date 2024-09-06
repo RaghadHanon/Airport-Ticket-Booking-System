@@ -1,4 +1,5 @@
 ﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
+using Airport_Ticket_Booking_System.Entites.PassengersManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,55 @@ public class BookingFilter
             Console.WriteLine("No available bookings at the moment.");
         }
     }
+    public static void ShowBookingsByPassenger(int passengerId)
+    {
+
+        var bookings = BookingManager.GetByPassenger(passengerId);
+        if (bookings.Any())
+        {
+            Console.WriteLine($"Bookings by Passenger {passengerId}:\n ");
+            foreach (var book in bookings)
+                Console.WriteLine(book);
+        }
+        else
+        {
+            Console.WriteLine("No available Bookings at the moment.");
+        }
+
+    }
+    public static void ShowBookingsByFlight(int flightId)
+    {
+
+        var bookings = BookingManager.GetByFlight(flightId);
+        if (bookings.Any())
+        {
+            Console.WriteLine($"Bookings on flight {flightId}:\n ");
+            foreach (var book in bookings)
+                Console.WriteLine(book);
+        }
+        else
+        {
+            Console.WriteLine("No available Bookings at the moment.");
+        }
+
+    }
+    public static void ShowBookingsByClassFlight(ClassOfFlight classOfFlight)
+    {
+
+        var bookings = BookingManager.GetByClassFlight(classOfFlight);
+        if (bookings.Any())
+        {
+            Console.WriteLine($"{classOfFlight} Class Bookings:\n ");
+            foreach (var book in bookings)
+                Console.WriteLine(book);
+        }
+        else
+        {
+            Console.WriteLine("No available Bookings at the moment.");
+        }
+
+    }
+    
     public static void ShowBookingsByDate(DateTime date)
     {
 

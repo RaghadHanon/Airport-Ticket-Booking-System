@@ -102,7 +102,19 @@ public class BookingManager
     {
         return Bookings.Where(b => b.Flight.DepartureDate.CompareTo(date) >= 0).ToList();
     }
-    
+    public static List<Book> GetByPassenger(int id)
+    {
+        return Bookings.Where(b => b.Passenger.Id == id).ToList();
+    }
+    public static List<Book> GetByFlight(int id)
+    {
+        return Bookings.Where(b => b.Flight.Id == id).ToList();
+    }
+    public static List<Book> GetByClassFlight(ClassOfFlight classOfFlight)
+    {
+        return Bookings.Where(b => b.ClassOfFlight == classOfFlight).ToList();
+    }
+
     public static List<Book> GetByPrice(decimal price)
     {
         return Bookings.Where(b => b.Flight.ClassPriceMap[b.ClassOfFlight]==price).ToList();

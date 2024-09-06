@@ -22,12 +22,13 @@ public class FlightBookingFilter
             Console.WriteLine("No available flights at the moment.");
         }
     }
-    public static void ShowFlightsByDate(DateTime date)
+    public static void ShowFlightsByDate(DateTime? date)
     {
-        if (date.CompareTo(DateTime.Now) <= 0)
+        if (date?.CompareTo(DateTime.Now) <= 0)
             Console.WriteLine("You’ve chosen a date that has already passed. Please pick a future date.");
         else
         {
+            Console.WriteLine(date);
             var flights = FlightsManager.GetAllFlights(date);
             if (flights.Any())
             {
