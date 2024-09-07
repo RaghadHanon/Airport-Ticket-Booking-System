@@ -54,8 +54,6 @@ public static class BookingRepository
         }
 
         passenger?.Bookings.Remove(book);
-
-        book = BookingRepository.GetById(bookId);
         Bookings.Remove(book);
         return book;
     }
@@ -80,11 +78,6 @@ public static class BookingRepository
         book.ClassOfFlight = newClassOfFlight?? book.ClassOfFlight;
         if(newFlgihtId is not null)
             book.Flight = FlightsRepository.GetById(newFlgihtId) ?? book.Flight;
-
-
-        book = BookingRepository.GetById(bookId);
-        book.ClassOfFlight = newClassOfFlight ?? book.ClassOfFlight;
-        book.Flight = FlightsRepository.GetById(newFlgihtId) ?? book.Flight;
 
         return book;
     }
