@@ -24,6 +24,11 @@ public class ManagerController
         try
         {
             Data = File.ReadAllLines(_filePath);
+            if (Data.Length == 0)
+            {
+                Console.WriteLine("The file is empty.");
+                return;
+            }
         }
         catch (Exception ex)
         {
