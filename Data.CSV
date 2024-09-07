@@ -8,7 +8,7 @@ EconomyPrice,BusinessPrice,FirstClassPrice,DepartureCountry,DestinationCountry,D
 310,760,1270,UK,USA,5/22/2024,LHR,JFK
 0,810,1320,Brazil,Italy,4/9/2024,GRU,FCO
 370,880,1350,Canada,Australia,6/15/2024,YYZ,SYD
-350,650,1210,India,Japan,3/1/2024,DEL,HND
+350,650,1210,India,Japan,3/,DEL,HND
 330,770,1260,France,UK,2/12/2024,CDG,LHR
 360,850,1370,Italy,Germany,1/22/2024,FCO,FRA
 295,700,1200,Australia,USA,12/5/2024,SYD,JFK

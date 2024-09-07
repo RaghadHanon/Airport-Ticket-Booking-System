@@ -3,6 +3,7 @@ using Airport_Ticket_Booking_System.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -21,7 +22,10 @@ public static class FlightValidator
         if (string.IsNullOrWhiteSpace(flightDetails[4]))
             errorList.Add("Destination country is required.");
 
-        if (DateTime.TryParse(flightDetails[5], out DateTime DepartureDate) && DepartureDate <= DateTime.Now.AddHours(2))
+        if (!DateTime.TryParse(flightDetails[5], out DateTime DepartureDate))
+            errorList.Add("Departure date must be in format DD/MM/YYYY");
+
+        if (DepartureDate <= DateTime.Now.AddHours(2))
             errorList.Add("Departure date must be at least 2 hours from the current time.");
 
         if (string.IsNullOrWhiteSpace(flightDetails[6]))
