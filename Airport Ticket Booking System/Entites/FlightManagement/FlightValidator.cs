@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Airport_Ticket_Booking_System.Entites.FlightManagement;
 public static class FlightValidator
 {
-    public static bool ValidateFlight(string[] flightDetails, out string errors)
+    public static bool isFlightValid(string[] flightDetails, out string errors)
     {
         var errorList = new List<string>();
 
@@ -46,7 +46,7 @@ public static class FlightValidator
         errors = string.Join("\n - ", errorList);
         return !errorList.Any();
     }
-    public static bool ValidateFlight(Flight flight, out string errors)
+    public static bool isFlightValid(Flight flight, out string errors)
     {
         var errorList = new List<string>();
 

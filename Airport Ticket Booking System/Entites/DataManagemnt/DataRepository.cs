@@ -47,7 +47,7 @@ public static class DataRepository
         {
             Flight? flight = null;
             var flightDetails = line.Split(',');
-            if (FlightValidator.ValidateFlight(flightDetails, out string validationErrors))
+            if (FlightValidator.isFlightValid(flightDetails, out string validationErrors))
             {
                 flight = new Flight(
                 economyPrice: decimal.Parse(flightDetails[0]),
