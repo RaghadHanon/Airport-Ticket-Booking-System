@@ -16,13 +16,18 @@ public class PassengerUI
         bool exit = false;
         while (!exit)
         {
-            Console.WriteLine("\n--- Passenger Menu ---");
-            Console.WriteLine("1. Show Available Flights");
-            Console.WriteLine("2. Search Available Flights");
-            Console.WriteLine("3. Book a Flight");
-            Console.WriteLine("4. Manage Bookings");
-            Console.WriteLine("5. Exit");
-            Console.Write("\nPlease select an option: ");
+            Console.WriteLine("""
+
+                                --- Passenger Menu ---
+
+                                1. Show Available Flights
+                                2. Search Available Flights
+                                3. Book a Flight
+                                4. Manage Bookings
+                                5. Exit
+
+                                Please select an option: 
+                               """);
             var choice = Console.ReadLine();
 
             switch (choice)
@@ -100,16 +105,21 @@ public class PassengerUI
     }
     public static void SearchAvailableFlights()
     {
-        Console.WriteLine("\n--- Search Flights ---");
-        Console.WriteLine("1. By Price");
-        Console.WriteLine("2. By Departure Country");
-        Console.WriteLine("3. By Destination Country");
-        Console.WriteLine("4. By Airport");
-        Console.WriteLine("5. By Arrival Airport");
-        Console.WriteLine("6. By Date");
-        Console.WriteLine("7. Exit");
+        Console.WriteLine("""
 
-        Console.WriteLine("Select a filter option:");
+                           --- Search Flights ---
+
+                           1. By Price
+                           2. By Departure Country
+                           3. By Destination Country
+                           4. By Airport
+                           5. By Arrival Airport
+                           6. By Date
+                           7. Exit
+            
+                          Select a filter option:
+                          """);
+
         if (int.TryParse(Console.ReadLine(), out int searchOption))
         {
             switch (searchOption)
@@ -189,7 +199,14 @@ public class PassengerUI
                 Console.WriteLine($"Passenger with ID {passengerId} not found.");
                 return;
             }
-            Console.WriteLine("Manage your bookings: \n1. View all bookings \n2. Modify booking \n3. Cancel booking");
+            Console.WriteLine("""
+
+                               Manage your bookings: 
+                               1. View all bookings 
+                               2. Modify booking 
+                               3. Cancel booking
+                              Select a filter option:
+                              """);
             int.TryParse(Console.ReadLine(),out int manageOption );
 
             switch (manageOption)

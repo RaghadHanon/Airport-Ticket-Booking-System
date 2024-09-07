@@ -85,9 +85,12 @@ public static class FlightValidator
 
             if (fieldTypeAttr != null && validationRuleAttr != null)
             {
-                Console.WriteLine($"- {property.Name}:");
-                Console.WriteLine($"    Type: {fieldTypeAttr.Type}");
-                Console.WriteLine($"    Constraints: {validationRuleAttr.Constraints}\n");
+                Console.WriteLine($"""
+                                   - {property.Name}:
+                                        Type: {fieldTypeAttr.Type}
+                                        Constraints: {validationRuleAttr.Constraints}
+
+                                   """);
             }
         }
     }

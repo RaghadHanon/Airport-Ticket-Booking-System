@@ -65,7 +65,11 @@ public class ManagerController
             }
             else
             {
-                ErrorList.Add($"Error with Flight {line}:\n - {validationErrors}\n");
+                ErrorList.Add($"""
+                                Error with Flight {line}:
+                                 - {validationErrors}
+
+                               """);
             }
         }
         Data = null;

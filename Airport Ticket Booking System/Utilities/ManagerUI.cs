@@ -16,16 +16,21 @@ public class ManagerUI
         bool exit = false;
         while (!exit)
         {
-            Console.WriteLine("\n--- Manager Menu ---");
-            Console.WriteLine("1. Show All Bookings");
-            Console.WriteLine("2. Search Bookings");
-            Console.WriteLine("3. Show All Flights");
-            Console.WriteLine("4. Batch Flight Upload");
-            Console.WriteLine("5. Validate Imported Flight Data");
-            Console.WriteLine("6. View Validation Error List");
-            Console.WriteLine("7. Display Validation Rules");
-            Console.WriteLine("8. Exit");
-            Console.Write("Select an option: ");
+            Console.WriteLine("""
+
+                               --- Manager Menu ---
+
+                               1. Show All Bookings 
+                               2. Search Bookings
+                               3. Show All Flights
+                               4. Batch Flight Upload
+                               5. Validate Imported Flight Data
+                               6. View Validation Error List
+                               7. Display Validation Rules
+                               8. Exit
+
+                               Select an option: 
+                               """);
 
             switch (Console.ReadLine())
             {
@@ -71,18 +76,23 @@ public class ManagerUI
     }
     public static void SearchBookings()
     {
-        Console.WriteLine("\n--- Search Bookings ---");
-        Console.WriteLine("1. By Flight ID");
-        Console.WriteLine("2. By Price");
-        Console.WriteLine("3. By Departure Country");
-        Console.WriteLine("4. By Destination Country");
-        Console.WriteLine("5. By Departure Date");
-        Console.WriteLine("6. By Departure Airport");
-        Console.WriteLine("7. By Arrival Airport");
-        Console.WriteLine("8. By Passenger ID");
-        Console.WriteLine("9. By Flight Class");
-        Console.WriteLine("10. Exit");
-        Console.Write("Select a filter option: ");
+        Console.WriteLine("""
+
+                           --- Search Bookings ---
+
+                           1. By Flight ID
+                           2. By Price
+                           3. By Departure Country
+                           4. By Destination Country
+                           5. By Departure Date
+                           6. By Departure Airport
+                           7. By Arrival Airport
+                           8. By Passenger ID
+                           9. By Flight Class
+                           10. Exit
+                           
+                          Select a filter option: 
+                          """);
         string filterOption = Console.ReadLine();
         switch (filterOption)
         {

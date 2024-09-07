@@ -28,6 +28,16 @@ public class Book
 
     public override string? ToString()
     {
-        return $"{{\n BookId {Id}: ,\n Booked Class: \"{ClassOfFlight}\",\n Price: {Flight.ClassPriceMap[ClassOfFlight]}$,\r\n {Passenger},\r\n{Flight} \n Booking Date: {BookingDate}\n}}";
+        return $$""" 
+                  { 
+                    BookId {{Id}}:
+                    Booked Class: "{{ClassOfFlight}}",
+                    Price: {{Flight.ClassPriceMap[ClassOfFlight]}}$,
+                    {{Passenger}},
+                    {{Flight}}
+                    Booking Date: {{BookingDate}}\n
+                  }
+
+                 """;
     }
 }
