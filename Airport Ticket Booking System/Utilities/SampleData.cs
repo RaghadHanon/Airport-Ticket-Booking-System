@@ -12,10 +12,10 @@ namespace Airport_Ticket_Booking_System.Utilities
     {
         public static void InitializeSampleData()
         {
-            PassenegersManager.AddAPassenger("John Doe");
-            PassenegersManager.AddAPassenger("Jane Smith");
-            ManagerController.BatchUploadFlights(@"Data.CSV");
-            ManagerController.ValidateImportedFlightData();
+            PassenegerRepository.AddAPassenger("John Doe");
+            PassenegerRepository.AddAPassenger("Jane Smith");
+            DataRepository.BatchUploadFlights(@"Data.CSV");
+            DataRepository.ValidateImportedFlightData();
         }
     }
 }

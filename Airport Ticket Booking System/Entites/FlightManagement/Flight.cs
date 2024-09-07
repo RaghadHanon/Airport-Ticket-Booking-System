@@ -144,7 +144,7 @@ public class Flight
     public override string? ToString()
     {
         return $$""" 
-                {
+                  {
                       FlightId {{_id}}:
                       DepartureCountry: "{{DepartureCountry}}",
                       DestinationCountry: "{{DestinationCountry}}\",
@@ -152,7 +152,8 @@ public class Flight
                       DepartureAirport: "{{DepartureAirport}}",
                       ArrivalAirport: "{{ArrivalAirport}}"
                       {{GetPriceList()}}
-                   }
+                  }
+
                 """;
     }
 }

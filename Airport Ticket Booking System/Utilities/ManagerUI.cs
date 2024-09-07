@@ -50,7 +50,7 @@ public class ManagerUI
                     ValidateFlightData();
                     break;
                 case "6":
-                    ManagerController.ViewValidationErrorList();
+                    DataRepository.ViewValidationErrorList();
                     break;
                 case "7":
                     DisplayValidationRules();
@@ -69,7 +69,7 @@ public class ManagerUI
     {
 
         Console.WriteLine("\n--- Flights ---");
-        foreach (var flight in FlightsManager.GetAllFlights())
+        foreach (var flight in FlightsRepository.GetAllFlights())
         {
             Console.WriteLine($"{flight}");
         }
@@ -193,7 +193,7 @@ public class ManagerUI
         string filePath = Console.ReadLine();
         try
         {
-            ManagerController.BatchUploadFlights(filePath);
+            DataRepository.BatchUploadFlights(filePath);
             Console.WriteLine("Batch flight upload successful.");
         }
         catch (Exception ex)
@@ -204,8 +204,8 @@ public class ManagerUI
 
     public static void ValidateFlightData()
     {
-        ManagerController.ValidateImportedFlightData();
-        ManagerController.ViewValidationErrorList();
+        DataRepository.ValidateImportedFlightData();
+        DataRepository.ViewValidationErrorList();
     }
 
     public static void DisplayValidationRules()

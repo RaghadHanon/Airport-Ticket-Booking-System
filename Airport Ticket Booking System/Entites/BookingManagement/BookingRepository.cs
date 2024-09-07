@@ -8,20 +8,20 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.Entites.BookingManagement;
-public class BookingManager
+public class BookingRepository
 {
 
     public static List<Book> Bookings { get; } = new List<Book>();
     public static Book? BookAFlight(ClassOfFlight classOfFlight, int flgihtId,int passengerId)
     {
-        Passenger? passenger = PassenegersManager.GetById(passengerId);
+        Passenger? passenger = PassenegerRepository.GetById(passengerId);
 
         if (passenger == null)
         {
             Console.WriteLine($"Passenger with ID {passengerId} not found.");
             return null;
         }
-        Flight? flight = FlightsManager.GetById(flgihtId);
+        Flight? flight = FlightsRepository.GetById(flgihtId);
         if (flight == null)
         {
             Console.WriteLine($"Passenger with ID {passengerId} not found.");
@@ -37,7 +37,7 @@ public class BookingManager
 
     public static Book? CancelAbooking(int bookId, int passengerId)
     {
-        Passenger? passenger = PassenegersManager.GetById(passengerId);
+        Passenger? passenger = PassenegerRepository.GetById(passengerId);
 
         if (passenger == null)
         {
@@ -55,13 +55,13 @@ public class BookingManager
 
         passenger?.Bookings.Remove(book);
 
-        book = BookingManager.GetById(bookId);
+        book = BookingRepository.GetById(bookId);
         Bookings.Remove(book);
         return book;
     }
     public static Book? ModifyAbooking(int bookId, int passengerId, ClassOfFlight? newClassOfFlight, int? newFlgihtId)
     {
-        Passenger? passenger = PassenegersManager.GetById(passengerId);
+        Passenger? passenger = PassenegerRepository.GetById(passengerId);
 
         if (passenger == null)
         {
@@ -79,12 +79,12 @@ public class BookingManager
 
         book.ClassOfFlight = newClassOfFlight?? book.ClassOfFlight;
         if(newFlgihtId is not null)
-            book.Flight = FlightsManager.GetById(newFlgihtId) ?? book.Flight;
+            book.Flight = FlightsRepository.GetById(newFlgihtId) ?? book.Flight;
 
 
-        book = BookingManager.GetById(bookId);
+        book = BookingRepository.GetById(bookId);
         book.ClassOfFlight = newClassOfFlight ?? book.ClassOfFlight;
-        book.Flight = FlightsManager.GetById(newFlgihtId) ?? book.Flight;
+        book.Flight = FlightsRepository.GetById(newFlgihtId) ?? book.Flight;
 
         return book;
     }

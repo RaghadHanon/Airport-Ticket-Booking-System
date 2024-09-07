@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.Entites.PassengersManager
 {
-    public class PassenegersManager
+    public class PassenegerRepository
     {
         public static List<Passenger> Passengers { get; } = new List<Passenger>();
 

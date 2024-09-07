@@ -58,7 +58,7 @@ public class PassengerUI
         Console.Write("\nEnter Passenger ID: ");
         if (int.TryParse(Console.ReadLine(), out int passengerId))
         {
-            Passenger? passenger = PassenegersManager.GetById(passengerId);
+            Passenger? passenger = PassenegerRepository.GetById(passengerId);
             if (passenger == null)
             {
                 Console.WriteLine($"Passenger with ID {passengerId} not found.");
@@ -67,7 +67,7 @@ public class PassengerUI
 
             Console.WriteLine("Please enter the flight ID you want to book:");
             int.TryParse(Console.ReadLine(), out int flightId);
-            Flight? flight = FlightsManager.GetById(flightId);
+            Flight? flight = FlightsRepository.GetById(flightId);
             if (flight == null)
             {
                 Console.WriteLine($"Flight with ID {flightId} not found.");
@@ -85,7 +85,7 @@ public class PassengerUI
                 _ => throw new ArgumentException("Invalid class option")
             };
 
-            Book? booking = BookingManager.BookAFlight(classOfFlight, flightId, passengerId);
+            Book? booking = BookingRepository.BookAFlight(classOfFlight, flightId, passengerId);
             if (booking != null)
             {
                 Console.WriteLine("Booking successful!");
@@ -193,7 +193,7 @@ public class PassengerUI
         Console.Write("\nEnter Passenger ID: ");
         if (int.TryParse(Console.ReadLine(), out int passengerId))
         {
-            Passenger? passenger = PassenegersManager.GetById(passengerId);
+            Passenger? passenger = PassenegerRepository.GetById(passengerId);
             if (passenger == null)
             {
                 Console.WriteLine($"Passenger with ID {passengerId} not found.");
@@ -247,14 +247,14 @@ public class PassengerUI
                         newFlightId = _newFlightId;
                     }
 
-                    BookingManager.ModifyAbooking(bookingId, passengerId, newClassOfFlight, newFlightId);
+                    BookingRepository.ModifyAbooking(bookingId, passengerId, newClassOfFlight, newFlightId);
                     Console.WriteLine("Booking modified successfully.");
                     break;
 
                 case 3:
                     Console.WriteLine("Enter booking ID to cancel:");
                     int.TryParse(Console.ReadLine(),out int cancelBookingId );
-                    BookingManager.CancelAbooking(cancelBookingId, passengerId);
+                    BookingRepository.CancelAbooking(cancelBookingId, passengerId);
                     Console.WriteLine("Booking cancelled successfully.");
                     break;
 

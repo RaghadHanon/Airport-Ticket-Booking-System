@@ -11,7 +11,7 @@ public class BookingFilter
 {
     public static void ShowBookings()
     {
-        var bookings = BookingManager.GetAllBookings();
+        var bookings = BookingRepository.GetAllBookings();
         if (bookings.Any())
         {
             Console.WriteLine($"Bookings List:\n ");
@@ -26,7 +26,7 @@ public class BookingFilter
     public static void ShowBookingsByPassenger(int passengerId)
     {
 
-        var bookings = BookingManager.GetByPassenger(passengerId);
+        var bookings = BookingRepository.GetByPassenger(passengerId);
         if (bookings.Any())
         {
             Console.WriteLine($"Bookings by Passenger {passengerId}:\n ");
@@ -42,7 +42,7 @@ public class BookingFilter
     public static void ShowBookingsByFlight(int flightId)
     {
 
-        var bookings = BookingManager.GetByFlight(flightId);
+        var bookings = BookingRepository.GetByFlight(flightId);
         if (bookings.Any())
         {
             Console.WriteLine($"Bookings on flight {flightId}:\n ");
@@ -58,7 +58,7 @@ public class BookingFilter
     public static void ShowBookingsByClassFlight(ClassOfFlight classOfFlight)
     {
 
-        var bookings = BookingManager.GetByClassFlight(classOfFlight);
+        var bookings = BookingRepository.GetByClassFlight(classOfFlight);
         if (bookings.Any())
         {
             Console.WriteLine($"{classOfFlight} Class Bookings:\n ");
@@ -75,7 +75,7 @@ public class BookingFilter
     public static void ShowBookingsByDate(DateTime date)
     {
 
-        var bookings = BookingManager.GetAllBookings(date);
+        var bookings = BookingRepository.GetAllBookings(date);
         if (bookings.Any())
         {
             Console.WriteLine($"Bookings on flights departing after {date}:\n ");
@@ -91,7 +91,7 @@ public class BookingFilter
 
     public static void ShowBookingsByPrice(decimal price)
     {
-        var bookings = BookingManager.GetByPrice(price);
+        var bookings = BookingRepository.GetByPrice(price);
         if (bookings.Any())
         {
             Console.WriteLine($"Bookings matching the price {price}:\n ");
@@ -108,7 +108,7 @@ public class BookingFilter
 
     public static void ShowBookingsByDepartureCountry(string departureCountry)
     {
-        var bookings = BookingManager.GetByDepartureCountry(departureCountry);
+        var bookings = BookingRepository.GetByDepartureCountry(departureCountry);
         if (bookings.Any())
         {
             Console.WriteLine($"Available bookings on flights departing from {departureCountry}:\n ");
@@ -125,7 +125,7 @@ public class BookingFilter
 
     public static void ShowBookingsByDestinationCountry(string destinationCountry)
     {
-        var bookings = BookingManager.GetByDestinationCountry(destinationCountry);
+        var bookings = BookingRepository.GetByDestinationCountry(destinationCountry);
         if (bookings.Any())
         {
             Console.WriteLine($"Available bookings on flights to {destinationCountry}:\n ");
@@ -142,7 +142,7 @@ public class BookingFilter
 
     public static void ShowBookingsByDepartureAirport(string departureAirport)
     {
-        var bookings = BookingManager.GetByDepartureAirport(departureAirport);
+        var bookings = BookingRepository.GetByDepartureAirport(departureAirport);
         if (bookings.Any())
         {
             Console.WriteLine($"Available flights departing from {departureAirport} Airport:\n ");
@@ -159,7 +159,7 @@ public class BookingFilter
 
     public static void ShowFlightsByArrivalAirport(string arrivalAirport)
     {
-        var bookings = FlightsManager.GetByArrivalAirport(arrivalAirport, DateTime.Now);
+        var bookings = FlightsRepository.GetByArrivalAirport(arrivalAirport, DateTime.Now);
         if (bookings.Any())
         {
             Console.WriteLine($"Available flights to {arrivalAirport} Airport:\n ");

@@ -35,7 +35,7 @@ public class Book
                     Price: {{Flight.ClassPriceMap[ClassOfFlight]}}$,
                     {{Passenger}},
                     {{Flight}}
-                    Booking Date: {{BookingDate}}\n
+                    Booking Date: {{BookingDate}}
                   }
 
                  """;
