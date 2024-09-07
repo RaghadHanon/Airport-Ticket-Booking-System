@@ -1,7 +1,9 @@
 ﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
+using Airport_Ticket_Booking_System.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,24 +37,22 @@ public static class FlightValidator
     }
     public static void DisplayValidationRules()
     {
-        var validationRules = new List<(string Field, string Type, string Constraints)>
-    {
-        ("Departure Country", "Free Text", "Required"),
-        ("Destination Country", "Free Text", "Required"),
-        ("Departure Date", "Date Time", "Required, Allowed Range: Today to Future"),
-        ("Departure Airport", "Free Text", "Required"),
-        ("Arrival Airport", "Free Text", "Required"),
-        ("Economy Price", "Decimal", "Required, Must be greater than 0"),
-        ("Business Price", "Decimal", "Required, Must be greater than 0"),
-        ("First Class Price", "Decimal", "Required, Must be greater than 0")
-    };
+        var flightType = typeof(Flight); 
 
-        Console.WriteLine("--- Validation Rules ---");
-        foreach (var rule in validationRules)
+        Console.WriteLine("\n--- Validation Rules ---");
+
+        foreach (var property in flightType.GetProperties())
         {
-            Console.WriteLine($"- {rule.Field}:\n    Type: {rule.Type}\n    Constraints: {rule.Constraints}");
+            var fieldTypeAttr = property.GetCustomAttribute<FieldTypeAttribute>();
+            var validationRuleAttr = property.GetCustomAttribute<ValidationRuleAttribute>();
+
+            if (fieldTypeAttr != null && validationRuleAttr != null)
+            {
+                Console.WriteLine($"- {property.Name}:");
+                Console.WriteLine($"    Type: {fieldTypeAttr.Type}");
+                Console.WriteLine($"    Constraints: {validationRuleAttr.Constraints}\n");
+            }
         }
     }
-
-
+    
 }
