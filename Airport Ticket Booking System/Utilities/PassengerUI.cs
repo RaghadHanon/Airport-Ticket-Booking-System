@@ -13,8 +13,8 @@ public static class PassengerUI
 {
     public static void ShowMenu()
     {
-        bool exit = false;
-        while (!exit)
+        bool isExit = false;
+        while (!isExit)
         {
             Console.WriteLine("""
 
@@ -45,7 +45,7 @@ public static class PassengerUI
                     PassengerUI.ManageBookings();
                     break;
                 case "5":
-                    exit = true;
+                    isExit = true;
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Please select a valid option.");
