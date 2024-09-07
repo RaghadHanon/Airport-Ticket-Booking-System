@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.Entites.BookingManagement;
-public class BookingFilter
+public static class BookingFilter
 {
     public static void ShowBookings()
     {

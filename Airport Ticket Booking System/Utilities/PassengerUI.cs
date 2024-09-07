@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.Utilities;
-public class PassengerUI
+public static class PassengerUI
 {
     public static void ShowMenu()
     {

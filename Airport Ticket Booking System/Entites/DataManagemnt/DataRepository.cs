@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.Entites.ManagerManagemnt;
-public class DataRepository
+public static class DataRepository
 {
     private static List<string> ErrorList = new List<string>();
     private static string[]? Data;

@@ -6,16 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Airport_Ticket_Booking_System.Utilities
+namespace Airport_Ticket_Booking_System.Utilities;
+public static class SampleData
 {
-    public class SampleData
+    public static void InitializeSampleData()
     {
-        public static void InitializeSampleData()
-        {
-            PassenegerRepository.AddAPassenger("John Doe");
-            PassenegerRepository.AddAPassenger("Jane Smith");
-            DataRepository.BatchUploadFlights(@"Data.CSV");
-            DataRepository.ValidateImportedFlightData();
-        }
+        PassenegerRepository.AddAPassenger("John Doe");
+        PassenegerRepository.AddAPassenger("Jane Smith");
+        DataRepository.BatchUploadFlights(@"Data.CSV");
+        DataRepository.ValidateImportedFlightData();
     }
 }

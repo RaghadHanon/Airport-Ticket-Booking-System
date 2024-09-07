@@ -10,7 +10,7 @@ using System.Security.Claims;
 using Airport_Ticket_Booking_System.Entites.PassengersManager;
 
 namespace Airport_Ticket_Booking_System.Entites.FlightManagment;
-public class FlightsRepository
+public static class FlightsRepository
 {
     private static List<Flight> flights = new List<Flight>();
     public static Flight? AddAFlight(Flight flight)

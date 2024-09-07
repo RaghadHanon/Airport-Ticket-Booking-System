@@ -8,7 +8,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.Entites.BookingManagement;
-public class BookingRepository
+public static class BookingRepository
 {
 
     public static List<Book> Bookings { get; } = new List<Book>();
