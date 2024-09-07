@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 namespace Airport_Ticket_Booking_System.Entites.ManagerManagemnt;
 public class ManagerController
 {
-    private static List<string> ErrorList =new List<string>();
+    private static List<string> ErrorList = new List<string>();
     private static string[]? Data;
     public static void BatchUploadFlights(string fileName)
     {
 
         string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        string _filePath = Path.Combine(baseDirectory,"../../../../", fileName);
+        string _filePath = Path.Combine(baseDirectory, "../../../../", fileName);
         if (!File.Exists(_filePath))
         {
             Console.WriteLine("File not found.");
@@ -30,7 +30,7 @@ public class ManagerController
             Console.WriteLine($"Error processing file: {ex.Message}");
         }
     }
-    
+
     public static List<string> ValidateImportedFlightData()
     {
         if (Data == null || !Data.Any())
@@ -40,9 +40,11 @@ public class ManagerController
         }
         foreach (var line in Data?.Skip(1))
         {
+            Flight? flight = null;
             var flightDetails = line.Split(',');
-
-            var flight = new Flight(
+            if (FlightValidator.ValidateFlight(flightDetails, out string validationErrors))
+            {
+                flight = new Flight(
                 economyPrice: decimal.Parse(flightDetails[0]),
                 businessPrice: decimal.Parse(flightDetails[1]),
                 firstClassPrice: decimal.Parse(flightDetails[2]),
@@ -51,15 +53,14 @@ public class ManagerController
                 departureDate: DateTime.Parse(flightDetails[5]),
                 departureAirport: flightDetails[6],
                 arrivalAirport: flightDetails[7]
-            );
+                );
 
-            if (FlightValidator.ValidateFlight(flight, out string validationErrors))
-            {
+
                 FlightsManager.AddAFlight(flight);
             }
             else
             {
-                ErrorList.Add($"Error with Flight {flight.Id}:\n- {validationErrors}\n");
+                ErrorList.Add($"Error with Flight {line}:\n - {validationErrors}\n");
             }
         }
         Data = null;

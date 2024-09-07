@@ -15,6 +15,7 @@ namespace Airport_Ticket_Booking_System.Utilities
             PassenegersManager.AddAPassenger("John Doe");
             PassenegersManager.AddAPassenger("Jane Smith");
             ManagerController.BatchUploadFlights(@"data.txt");
+            ManagerController.ValidateImportedFlightData();
         }
     }
 }

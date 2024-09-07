@@ -10,10 +10,10 @@ public class FlightBookingFilter
 {
     public static void ShowAvailableFlights()
     {
-        var flights = FlightsManager.GetAllFlights(DateTime.Now);
+        var flights = FlightsManager.GetAllFlights(DateTime.Now.AddHours(2));
         if (flights.Any())
         {
-            Console.WriteLine($"Available flights departing after {DateTime.Now}:\n ");
+            Console.WriteLine($"Available flights departing after {DateTime.Now.AddHours(2)}:\n ");
             foreach (var flight in flights)
                 Console.WriteLine(flight);
         }
@@ -24,8 +24,8 @@ public class FlightBookingFilter
     }
     public static void ShowFlightsByDate(DateTime? date)
     {
-        if (date?.CompareTo(DateTime.Now) <= 0)
-            Console.WriteLine("You’ve chosen a date that has already passed. Please pick a future date.");
+        if (date?.CompareTo(DateTime.Now.AddHours(2)) <= 0)
+            Console.WriteLine("The selected date is either in the past or less than 2 hours from now. Please choose a date at least 2 hours in the future.");
         else
         {
             Console.WriteLine(date);
@@ -44,10 +44,10 @@ public class FlightBookingFilter
     }
     public static void ShowFlightsByPrice(decimal price)
     {
-        var flights = FlightsManager.GetByPrice(price, DateTime.Now);
+        var flights = FlightsManager.GetByPrice(price, DateTime.Now.AddHours(2));
         if (flights.Any())
         {
-            Console.WriteLine($"Available flights matching the price {price} after {DateTime.Now}:\n ");
+            Console.WriteLine($"Available flights matching the price {price} after {DateTime.Now.AddHours(2)}:\n ");
             foreach (var flight in flights)
             {
                 ClassOfFlight classOfFlight = flight.ClassPriceMap.FirstOrDefault(x => x.Value == price).Key;
@@ -62,10 +62,10 @@ public class FlightBookingFilter
     }
     public static void ShowFlightsByDepartureCountry(string departureCountry)
     {
-        var flights = FlightsManager.GetByDepartureCountry(departureCountry, DateTime.Now);
+        var flights = FlightsManager.GetByDepartureCountry(departureCountry, DateTime.Now.AddHours(2));
         if (flights.Any())
         {
-            Console.WriteLine($"Available flights departing from {departureCountry} after {DateTime.Now}:\n ");
+            Console.WriteLine($"Available flights departing from {departureCountry} after {DateTime.Now.AddHours(2)}:\n ");
             foreach (var flight in flights)
             {
                 Console.WriteLine(flight);
@@ -78,10 +78,10 @@ public class FlightBookingFilter
     }
     public static void ShowFlightsByDestinationCountry(string destinationCountry)
     {
-        var flights = FlightsManager.GetByDestinationCountry(destinationCountry, DateTime.Now);
+        var flights = FlightsManager.GetByDestinationCountry(destinationCountry, DateTime.Now.AddHours(2));
         if (flights.Any())
         {
-            Console.WriteLine($"Available flights to {destinationCountry} after {DateTime.Now}:\n ");
+            Console.WriteLine($"Available flights to {destinationCountry} after {DateTime.Now.AddHours(2)}:\n ");
             foreach (var flight in flights)
             {
                 Console.WriteLine(flight);
@@ -94,10 +94,10 @@ public class FlightBookingFilter
     }
     public static void ShowFlightsByDepartureAirport(string departureAirport)
     {
-        var flights = FlightsManager.GetByDepartureAirport(departureAirport, DateTime.Now);
+        var flights = FlightsManager.GetByDepartureAirport(departureAirport, DateTime.Now.AddHours(2));
         if (flights.Any())
         {
-            Console.WriteLine($"Available flights departing from {departureAirport} Airport after {DateTime.Now}:\n ");
+            Console.WriteLine($"Available flights departing from {departureAirport} Airport after {DateTime.Now.AddHours(2)}:\n ");
             foreach (var flight in flights)
             {
                 Console.WriteLine(flight);
@@ -110,10 +110,10 @@ public class FlightBookingFilter
     }
     public static void ShowFlightsByArrivalAirport(string arrivalAirport)
     {
-        var flights = FlightsManager.GetByArrivalAirport(arrivalAirport, DateTime.Now);
+        var flights = FlightsManager.GetByArrivalAirport(arrivalAirport, DateTime.Now.AddHours(2));
         if (flights.Any())
         {
-            Console.WriteLine($"Available flights to {arrivalAirport} Airport after {DateTime.Now}:\n ");
+            Console.WriteLine($"Available flights to {arrivalAirport} Airport after {DateTime.Now.AddHours(2)}:\n ");
             foreach (var flight in flights)
             {
                 Console.WriteLine(flight);
