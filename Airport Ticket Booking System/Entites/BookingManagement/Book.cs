@@ -15,6 +15,7 @@ public class Book
     public ClassOfFlight ClassOfFlight { get; set; }
     public Flight Flight { get; set; }
     public Passenger Passenger { get; set; }
+    public DateTime BookingDate { get; init; }
     public Book(ClassOfFlight classOfFlight, Flight flgiht, Passenger passenger)
     {
 
@@ -22,10 +23,11 @@ public class Book
         ClassOfFlight = classOfFlight;
         Flight = flgiht;
         Passenger = passenger;
+        BookingDate = DateTime.Now;
     }
 
     public override string? ToString()
     {
-        return $"{{\n BookId {Id}: ,\n Booked Class: \"{ClassOfFlight}\",\n Price: {Flight.ClassPriceMap[ClassOfFlight]}$,\r\n {Passenger},\r\n{Flight} \n}}";
+        return $"{{\n BookId {Id}: ,\n Booked Class: \"{ClassOfFlight}\",\n Price: {Flight.ClassPriceMap[ClassOfFlight]}$,\r\n {Passenger},\r\n{Flight} \n Booking Date: {BookingDate}\n}}";
     }
 }
