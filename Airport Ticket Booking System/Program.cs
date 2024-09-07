@@ -13,13 +13,17 @@ internal class Program
 
         Console.WriteLine("Welcome to the Airport Ticket Booking System!");
 
-        bool exit = false;
-        while (!exit)
+        bool isExit = false;
+        while (!isExit)
         {
-            Console.WriteLine("\nYou want to use the system as:");
-            Console.WriteLine("1. Passenger");
-            Console.WriteLine("2. Manager");
-            Console.WriteLine("3. Exit");
+            Console.WriteLine("""
+
+                              You want to use the system as:
+                              1. Passenger
+                              2. Manager
+                              3. Exit
+
+                              """);
             var choice = Console.ReadLine();
 
             switch (choice)
@@ -31,7 +35,7 @@ internal class Program
                     ManagerUI.ShowMenu();
                     break;
                 case "3":
-                    exit = true;
+                    isExit = true;
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Please select a valid option.");

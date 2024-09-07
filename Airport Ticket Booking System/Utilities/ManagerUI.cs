@@ -13,8 +13,8 @@ public static class ManagerUI
 {
     public static void ShowMenu()
     {
-        bool exit = false;
-        while (!exit)
+        bool isExit = false;
+        while (!isExit)
         {
             Console.WriteLine("""
 
@@ -56,7 +56,7 @@ public static class ManagerUI
                     DisplayValidationRules();
                     break;
                 case "8":
-                    exit = true;
+                    isExit = true;
                     break;
                 default:
                     Console.WriteLine("Invalid option. Please try again.");
@@ -76,7 +76,10 @@ public static class ManagerUI
     }
     public static void SearchBookings()
     {
-        Console.WriteLine("""
+        bool isExit = false;
+        while (!isExit)
+        {
+            Console.WriteLine("""
 
                            --- Search Bookings ---
 
@@ -93,98 +96,100 @@ public static class ManagerUI
                            
                           Select a filter option: 
                           """);
-        string filterOption = Console.ReadLine();
-        switch (filterOption)
-        {
-            case "1":
-                Console.Write("Enter Flight ID: ");
-                if (int.TryParse(Console.ReadLine(), out int flightId))
-                {
-                    BookingFilter.ShowBookingsByFlight(flightId);
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Flight ID.");
-                }
-                break;
-            case "2":
-                Console.Write("Enter Price: ");
-                if (decimal.TryParse(Console.ReadLine(), out decimal price))
-                {
-                    BookingFilter.ShowBookingsByPrice(price);
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Price.");
-                }
-                break;
-            case "3":
-                Console.Write("Enter Departure Country: ");
-                string depCountry = Console.ReadLine();
-                BookingFilter.ShowBookingsByDepartureCountry(depCountry);
-                break;
-            case "4":
-                Console.Write("Enter Destination Country: ");
-                string destCountry = Console.ReadLine();
-                BookingFilter.ShowBookingsByDestinationCountry(destCountry);
-                break;
-            case "5":
-                Console.Write("Enter Departure Date (YYYY-MM-DD): ");
-                if (DateTime.TryParse(Console.ReadLine(), out DateTime depDate))
-                {
-                    BookingFilter.ShowBookingsByDate(depDate);
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Date.");
-                }
-                break;
-            case "6":
-                Console.Write("Enter Departure Airport: ");
-                string depAirport = Console.ReadLine();
-                BookingFilter.ShowBookingsByDepartureAirport(depAirport);
-                break;
-            case "7":
-                Console.Write("Enter Arrival Airport: ");
-                string arrAirport = Console.ReadLine();
-                BookingFilter.ShowFlightsByArrivalAirport(arrAirport);
-                break;
-            case "8":
-                Console.Write("Enter Passenger ID: ");
-                if (int.TryParse(Console.ReadLine(), out int passengerId))
-                {
-                    BookingFilter.ShowBookingsByPassenger(passengerId);
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Passenger ID.");
-                }
-                break;
-            case "9":
-                Console.WriteLine("Select Class: (1) Economy, (2) Business, (3) First Class");
-                if (int.TryParse(Console.ReadLine(), out int classOption))
-                {
-                    ClassOfFlight flightClass = classOption switch
+            string filterOption = Console.ReadLine();
+            switch (filterOption)
+            {
+                case "1":
+                    Console.Write("Enter Flight ID: ");
+                    if (int.TryParse(Console.ReadLine(), out int flightId))
                     {
-                        1 => ClassOfFlight.Economy,
-                        2 => ClassOfFlight.Business,
-                        3 => ClassOfFlight.FirstClass,
-                        _ => throw new ArgumentException("Invalid class option")
-                    };
-                    BookingFilter.ShowBookingsByClassFlight(flightClass);
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Class Option.");
-                }
-                break;
-            case "10":
-                break;
-            default:
-                Console.WriteLine("Invalid option.");
-                break;
-        }
+                        BookingFilter.ShowBookingsByFlight(flightId);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Flight ID.");
+                    }
+                    break;
+                case "2":
+                    Console.Write("Enter Price: ");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal price))
+                    {
+                        BookingFilter.ShowBookingsByPrice(price);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Price.");
+                    }
+                    break;
+                case "3":
+                    Console.Write("Enter Departure Country: ");
+                    string depCountry = Console.ReadLine();
+                    BookingFilter.ShowBookingsByDepartureCountry(depCountry);
+                    break;
+                case "4":
+                    Console.Write("Enter Destination Country: ");
+                    string destCountry = Console.ReadLine();
+                    BookingFilter.ShowBookingsByDestinationCountry(destCountry);
+                    break;
+                case "5":
+                    Console.Write("Enter Departure Date (YYYY-MM-DD): ");
+                    if (DateTime.TryParse(Console.ReadLine(), out DateTime depDate))
+                    {
+                        BookingFilter.ShowBookingsByDate(depDate);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Date.");
+                    }
+                    break;
+                case "6":
+                    Console.Write("Enter Departure Airport: ");
+                    string depAirport = Console.ReadLine();
+                    BookingFilter.ShowBookingsByDepartureAirport(depAirport);
+                    break;
+                case "7":
+                    Console.Write("Enter Arrival Airport: ");
+                    string arrAirport = Console.ReadLine();
+                    BookingFilter.ShowFlightsByArrivalAirport(arrAirport);
+                    break;
+                case "8":
+                    Console.Write("Enter Passenger ID: ");
+                    if (int.TryParse(Console.ReadLine(), out int passengerId))
+                    {
+                        BookingFilter.ShowBookingsByPassenger(passengerId);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Passenger ID.");
+                    }
+                    break;
+                case "9":
+                    Console.WriteLine("Select Class: (1) Economy, (2) Business, (3) First Class");
+                    if (int.TryParse(Console.ReadLine(), out int classOption))
+                    {
+                        ClassOfFlight flightClass = classOption switch
+                        {
+                            1 => ClassOfFlight.Economy,
+                            2 => ClassOfFlight.Business,
+                            3 => ClassOfFlight.FirstClass,
+                            _ => throw new ArgumentException("Invalid class option")
+                        };
+                        BookingFilter.ShowBookingsByClassFlight(flightClass);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Class Option.");
+                    }
+                    break;
+                case "10":
+                    isExit = true;
+                    break;
+                default:
+                    Console.WriteLine("Invalid option.");
+                    break;
+            }
 
+        }
     }
 
     public static void BatchUploadFlights()
