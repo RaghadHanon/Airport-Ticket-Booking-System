@@ -28,6 +28,10 @@ public static class FlightsRepository
     {
         return flights.Where(f => f.DepartureDate.CompareTo(date) >= 0).ToList();
     }
+    public static List<Flight> GetByDate(DateTime? date)
+    {
+        return flights.Where(f => f.DepartureDate.CompareTo(date) == 0).ToList();
+    }
     public static Flight? GetById(int? id)
     {
         return flights.FirstOrDefault(f => f.Id == id);

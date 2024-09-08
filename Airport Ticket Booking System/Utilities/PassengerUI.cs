@@ -167,7 +167,7 @@ public static class PassengerUI
                         Console.WriteLine("Enter departure date (YYYY-MM-DD):");
                         if (DateTime.TryParse(Console.ReadLine(), out DateTime departureDate))
                         {
-                            FlightBookingFilter.ShowFlightsByDate(departureDate);
+                            FlightBookingFilter.ShowAvailableFlightsByDate(departureDate);
                             Console.WriteLine($"Selected Date: {departureDate:yyyy-MM-dd}");
                         }
                         else

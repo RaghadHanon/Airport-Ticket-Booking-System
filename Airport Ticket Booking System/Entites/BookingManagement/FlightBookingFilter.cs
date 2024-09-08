@@ -22,25 +22,26 @@ public static class FlightBookingFilter
             Console.WriteLine("No available flights at the moment.");
         }
     }
-    public static void ShowFlightsByDate(DateTime? date)
+    public static void ShowAvailableFlightsByDate(DateTime? date)
     {
         if (date?.CompareTo(DateTime.Now.AddHours(2)) <= 0)
+        {
             Console.WriteLine("The selected date is either in the past or less than 2 hours from now. Please choose a date at least 2 hours in the future.");
+            return;
+        }
+
+        var flights = FlightsRepository.GetByDate(date);
+        if (flights.Any())
+        {
+            Console.WriteLine($"Available flights departing at {date}:\n ");
+            foreach (var flight in flights)
+                Console.WriteLine(flight);
+        }
         else
         {
-            Console.WriteLine(date);
-            var flights = FlightsRepository.GetAllFlights(date);
-            if (flights.Any())
-            {
-                Console.WriteLine($"Available flights departing after {date}:\n ");
-                foreach (var flight in flights)
-                    Console.WriteLine(flight);
-            }
-            else
-            {
-                Console.WriteLine("No available flights at the moment.");
-            }
+            Console.WriteLine("No available flights at the moment.");
         }
+        
     }
     public static void ShowFlightsByPrice(decimal price)
     {

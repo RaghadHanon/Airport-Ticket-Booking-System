@@ -21,7 +21,7 @@ public static class PassenegerRepository
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine($"Error Adding passenger: {e.Message}");
         }
        
         return passenger;
