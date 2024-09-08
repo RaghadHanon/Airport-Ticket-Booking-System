@@ -11,10 +11,19 @@ public static class PassenegerRepository
 {
     public static List<Passenger> Passengers { get; } = new List<Passenger>();
 
-    public static Passenger AddAPassenger(string name)
+    public static Passenger? AddAPassenger(string name)
     {
-        Passenger passenger = new Passenger(name);
-        Passengers.Add(passenger);
+        Passenger? passenger = null;
+        try
+        {
+            passenger = new Passenger(name);
+            Passengers.Add(passenger);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+       
         return passenger;
     }
     public static Passenger? GetById(int id)
