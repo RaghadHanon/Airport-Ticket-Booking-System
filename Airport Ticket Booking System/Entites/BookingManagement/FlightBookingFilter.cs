@@ -1,4 +1,5 @@
-﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
+﻿using Airport_Ticket_Booking_System.Entites.FlightManagement;
+using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ public static class FlightBookingFilter
 {
     public static void ShowAvailableFlights()
     {
-        var flights = FlightsRepository.GetAllFlights(DateTime.Now.AddHours(2));
+        var flights = FlightQuery.GetAll(DateTime.Now.AddHours(2));
         if (flights.Any())
         {
             Console.WriteLine($"Available flights departing after {DateTime.Now.AddHours(2)}:\n ");
@@ -30,7 +31,7 @@ public static class FlightBookingFilter
             return;
         }
 
-        var flights = FlightsRepository.GetByDate(date);
+        var flights = FlightQuery.GetByDepartureDate(date);
         if (flights.Any())
         {
             Console.WriteLine($"Available flights departing at {date}:\n ");
@@ -45,7 +46,7 @@ public static class FlightBookingFilter
     }
     public static void ShowFlightsByPrice(decimal price)
     {
-        var flights = FlightsRepository.GetByPrice(price, DateTime.Now.AddHours(2));
+        var flights = FlightQuery.GetByPrice(price, DateTime.Now.AddHours(2));
         if (flights.Any())
         {
             Console.WriteLine($"Available flights matching the price {price} after {DateTime.Now.AddHours(2)}:\n ");
@@ -63,7 +64,7 @@ public static class FlightBookingFilter
     }
     public static void ShowFlightsByDepartureCountry(string departureCountry)
     {
-        var flights = FlightsRepository.GetByDepartureCountry(departureCountry, DateTime.Now.AddHours(2));
+        var flights = FlightQuery.GetByDepartureCountry(departureCountry, DateTime.Now.AddHours(2));
         if (flights.Any())
         {
             Console.WriteLine($"Available flights departing from {departureCountry} after {DateTime.Now.AddHours(2)}:\n ");
@@ -79,7 +80,7 @@ public static class FlightBookingFilter
     }
     public static void ShowFlightsByDestinationCountry(string destinationCountry)
     {
-        var flights = FlightsRepository.GetByDestinationCountry(destinationCountry, DateTime.Now.AddHours(2));
+        var flights = FlightQuery.GetByDestinationCountry(destinationCountry, DateTime.Now.AddHours(2));
         if (flights.Any())
         {
             Console.WriteLine($"Available flights to {destinationCountry} after {DateTime.Now.AddHours(2)}:\n ");
@@ -95,7 +96,7 @@ public static class FlightBookingFilter
     }
     public static void ShowFlightsByDepartureAirport(string departureAirport)
     {
-        var flights = FlightsRepository.GetByDepartureAirport(departureAirport, DateTime.Now.AddHours(2));
+        var flights = FlightQuery.GetByDepartureAirport(departureAirport, DateTime.Now.AddHours(2));
         if (flights.Any())
         {
             Console.WriteLine($"Available flights departing from {departureAirport} Airport after {DateTime.Now.AddHours(2)}:\n ");
@@ -111,7 +112,7 @@ public static class FlightBookingFilter
     }
     public static void ShowFlightsByArrivalAirport(string arrivalAirport)
     {
-        var flights = FlightsRepository.GetByArrivalAirport(arrivalAirport, DateTime.Now.AddHours(2));
+        var flights = FlightQuery.GetByArrivalAirport(arrivalAirport, DateTime.Now.AddHours(2));
         if (flights.Any())
         {
             Console.WriteLine($"Available flights to {arrivalAirport} Airport after {DateTime.Now.AddHours(2)}:\n ");

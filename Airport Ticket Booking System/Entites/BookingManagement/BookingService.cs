@@ -1,4 +1,5 @@
-﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
+﻿using Airport_Ticket_Booking_System.Entites.FlightManagement;
+using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using Airport_Ticket_Booking_System.Entites.PassengersManager;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ public class BookingService
     public static Book? BookAFlight(Enum classOfFlight, int flightId, int passengerId)
     {
         Passenger? passenger = PassenegerRepository.GetById(passengerId);
-        Flight? flight = FlightsRepository.GetById(flightId);
+        Flight? flight = FlightQuery.GetById(flightId);
         
 
         if (!BookValidator.IsBookValid(classOfFlight, flight, passenger, out string validationErrors))
@@ -95,7 +96,7 @@ public class BookingService
             return null;
         }
 
-        Flight? flight = FlightsRepository.GetById(newFlightId);
+        Flight? flight = FlightQuery.GetById(newFlightId);
 
         if (!BookValidator.IsFlightValid( flight, out string validationErrors))
         {

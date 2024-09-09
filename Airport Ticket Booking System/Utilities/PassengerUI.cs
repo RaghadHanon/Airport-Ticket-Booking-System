@@ -1,4 +1,5 @@
 ﻿using Airport_Ticket_Booking_System.Entites.BookingManagement;
+using Airport_Ticket_Booking_System.Entites.FlightManagement;
 using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using Airport_Ticket_Booking_System.Entites.PassengersManager;
 using System;
@@ -67,7 +68,7 @@ public static class PassengerUI
 
             Console.WriteLine("Please enter the flight ID you want to book:");
             int.TryParse(Console.ReadLine(), out int flightId);
-            Flight? flight = FlightsRepository.GetById(flightId);
+            Flight? flight = FlightQuery.GetById(flightId);
             if (flight == null)
             {
                 Console.WriteLine($"Flight with ID {flightId} not found.");

@@ -69,7 +69,7 @@ public static class ManagerUI
     {
 
         Console.WriteLine("\n--- Flights ---");
-        foreach (var flight in FlightsRepository.GetAllFlights())
+        foreach (var flight in FlightQuery.GetAll())
         {
             Console.WriteLine($"{flight}");
         }
@@ -215,6 +215,6 @@ public static class ManagerUI
 
     public static void DisplayValidationRules()
     {
-        FlightValidator.DisplayValidationRules();
+        FlightValidation.DisplayValidationRules();
     }
 }

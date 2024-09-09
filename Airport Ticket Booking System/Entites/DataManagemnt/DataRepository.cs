@@ -45,32 +45,27 @@ public static class DataRepository
         }
         foreach (var line in Data?.Skip(1))
         {
-            Flight? flight = null;
             var flightDetails = line.Split(',');
-            if (FlightValidator.isFlightValid(flightDetails, out string validationErrors))
-            {
-                flight = new Flight(
+            Flight flight = new Flight(
                 economyPrice: decimal.Parse(flightDetails[0]),
                 businessPrice: decimal.Parse(flightDetails[1]),
                 firstClassPrice: decimal.Parse(flightDetails[2]),
                 departureCountry: flightDetails[3],
                 destinationCountry: flightDetails[4],
-                departureDate: DateTime.Parse(flightDetails[5]),
+                departureDate : DateTime.TryParse(flightDetails[5], out DateTime _departureDate) ? _departureDate : null,
                 departureAirport: flightDetails[6],
                 arrivalAirport: flightDetails[7]
                 );
 
-
-                FlightsRepository.AddAFlight(flight);
-            }
-            else
-            {
-                ErrorList.Add($"""
-                                Error with Flight {line}:
-                                 - {validationErrors}
-
-                               """);
-            }
+                try
+                {
+                    FlightRepository.AddFlight(flight);
+                }catch( Exception ex)
+                {
+                    ErrorList.Add($"""
+                                   Error with Flight {line}: {ex.Message}
+                                   """);
+                }
         }
         Data = null;
         return ErrorList;

@@ -1,4 +1,5 @@
-﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
+﻿using Airport_Ticket_Booking_System.Entites.FlightManagement;
+using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using Airport_Ticket_Booking_System.Entites.PassengersManager;
 using System;
 using System.Collections.Generic;
@@ -159,7 +160,7 @@ public static class BookingFilter
 
     public static void ShowFlightsByArrivalAirport(string arrivalAirport)
     {
-        var bookings = FlightsRepository.GetByArrivalAirport(arrivalAirport, DateTime.Now);
+        var bookings = FlightQuery.GetByArrivalAirport(arrivalAirport, DateTime.Now);
         if (bookings.Any())
         {
             Console.WriteLine($"Available flights to {arrivalAirport} Airport:\n ");
