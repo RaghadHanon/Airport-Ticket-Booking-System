@@ -80,9 +80,9 @@ public class Flight
                   DepartureAirport: "{{DepartureAirport}}",
                   ArrivalAirport: "{{ArrivalAirport}}"
                   Prices: 
-                  - Economy: {{EconomyPrice}}
-                  - Business: {{BusinessPrice}}
-                  - First Class: {{FirstClassPrice}}
+                  - Economy: {{EconomyPrice}}$
+                  - Business: {{BusinessPrice}}$
+                  - First Class: {{FirstClassPrice}}$
               }
 
             """;

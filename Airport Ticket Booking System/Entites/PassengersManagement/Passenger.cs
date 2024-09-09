@@ -13,40 +13,14 @@ public class Passenger
     private static int _currentId = 0;
     private readonly int _id;
     public int Id { get { return _id; } }
-    public List<Book> Bookings { get; } = new List<Book>();
-
-    private string _name;
-    public string Name
-    {
-        get => _name;
-        set
-        {
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                throw new ArgumentException("Name cannot be null.");
-            }
-            _name = value;
-
-        }
-
-    }
-
     public Passenger(string name)
     {
         _id = ++_currentId;
         Name = name;
     }
-
-    public void ShowBooking()
-    {
-
-        Console.WriteLine($"*****************************  {Name}'s Bookings  *****************************");
-        foreach (var book in Bookings)
-        {
-            Console.WriteLine($"{book}"); 
-        }
-    }
-
+    public List<Book> Bookings { get; } = new List<Book>();
+    public string Name { get; set; }
+ 
     public override string? ToString()
     {
         return $"PassengerId {Id}: \" {Name} \"";

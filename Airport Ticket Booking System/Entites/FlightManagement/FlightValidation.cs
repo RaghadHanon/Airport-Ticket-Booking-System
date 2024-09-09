@@ -33,7 +33,7 @@ public static class FlightValidation
             stringBuilder.Append($"{airportErrors}\n");
         
         errors = stringBuilder.ToString();
-        return !string.IsNullOrEmpty(errors);
+        return string.IsNullOrEmpty(errors);
     }
 
     public static bool PriceValidtion(Flight flight, out string priceErrors)
@@ -51,14 +51,26 @@ public static class FlightValidation
         priceErrors = string.Join("\n", errorList);
         return !errorList.Any();
     }
+    public static bool DepartureDateValidation(string departureDate, out string dateErrors)
+    {
+        var errorList = new List<string>();
+        if (!DateTime.TryParse(departureDate, out DateTime _departureDate))
+            errorList.Add("- Departure date can't be null and must be in dd-MM-yyyy format.");
+
+        if (_departureDate <= DateTime.Now.AddHours(4))
+            errorList.Add("- Departure date must be at least 4 hours from the current time.");
+
+        dateErrors = string.Join("\n", errorList);
+        return !errorList.Any();
+    }
     public static bool DepartureDateValidation(Flight flight, out string dateErrors)
     {
         var errorList = new List<string>();
         if( flight.DepartureDate is null)
             errorList.Add("- Departure date can't be null and must be in dd-MM-yyyy format.");
 
-        if (flight.DepartureDate <= DateTime.Now.AddHours(3))
-            errorList.Add("- Departure date must be at least 3 hours from the current time.");
+        if (flight.DepartureDate <= DateTime.Now.AddHours(4))
+            errorList.Add("- Departure date must be at least 4 hours from the current time.");
 
         dateErrors = string.Join("\n", errorList);
         return !errorList.Any();

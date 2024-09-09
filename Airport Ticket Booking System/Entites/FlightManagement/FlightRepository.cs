@@ -9,6 +9,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Security.Claims;
 using Airport_Ticket_Booking_System.Entites.PassengersManager;
 using Airport_Ticket_Booking_System.Entites.FlightManagement;
+using Airport_Ticket_Booking_System.Utilities;
 
 namespace Airport_Ticket_Booking_System.Entites.FlightManagment;
 public static class FlightRepository
@@ -17,15 +18,15 @@ public static class FlightRepository
     public static List<Flight> Flights { get; } = _flights;
     public static Flight? AddFlight(Flight flight)
     {
-        if (FlightValidation.ValidateFlight(flight, out string errors))
+        if (!FlightValidation.ValidateFlight(flight, out string errors))
         {
-            throw new ArgumentException($"""
-
-                                         {errors}
-                                         """
+            ErrorException.error($"""
+                                  
+                                  {errors}
+                                  """
              );
         }
-        _flights.Add(flight);
+        Flights.Add(flight);
         return flight;
     }
 

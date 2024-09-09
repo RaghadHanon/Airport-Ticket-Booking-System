@@ -1,51 +1,56 @@
 ﻿using Airport_Ticket_Booking_System.Entites.FlightManagement;
 using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using Airport_Ticket_Booking_System.Entites.PassengersManager;
+using Airport_Ticket_Booking_System.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Airport_Ticket_Booking_System.Entites.BookingManagement;
 
-public class BookingService
+public static class BookingService
 {
-    public static Book? BookAFlight(Enum classOfFlight, int flightId, int passengerId)
+    public static Book? BookAFlight(Book booking,int passengerId)
     {
-        Passenger? passenger = PassenegerRepository.GetById(passengerId);
-        Flight? flight = FlightQuery.GetById(flightId);
-        
-
-        if (!BookValidator.IsBookValid(classOfFlight, flight, passenger, out string validationErrors))
+        if (!BookingValidation.ValidateBook(booking, out string errors))
         {
-            Console.WriteLine("Booking failed due to the following errors:");
-            Console.WriteLine(validationErrors);
-            return null;
+
+            ErrorException.error($"""
+                                   Booking Flight failed due to these errors:
+                                   {errors}
+                                  """
+            );
         }
 
-        Book newBooking = new Book((ClassOfFlight)classOfFlight, flight, passenger);
+        (PassenegerRepository.GetById(passengerId))?.Bookings.Add(booking);
+        BookingRepository.Bookings.Add(booking);
 
-        passenger.Bookings.Add(newBooking);
-        BookingRepository.Bookings.Add(newBooking);
-
-        return newBooking;
+        return booking;
     }
 
-    public static Book? CancelAbooking(int bookId, int passengerId)
+    public static Book? CancelAbooking(int bookingId, int passengerId)
     {
-        Passenger? passenger = PassenegerRepository.GetById(passengerId);
-        if (passenger == null)
-        {
-            Console.WriteLine($"Passenger with ID {passengerId} not found.");
-            return null;
-        }
-
-        Book? booking = passenger.Bookings.FirstOrDefault(b => b.Id == bookId);
+        Book? booking = BookingRepository.GetById(bookingId);
         if (booking == null)
         {
-            Console.WriteLine($"Booking with ID {bookId} for passenger {passengerId} not found.");
-            return null;
+            throw new ArgumentException($"- Booking not found or null.\n");
+        }
+
+        if (!BookingValidation.PassengerValidation(booking, out string errors))
+        {
+            ErrorException.error($"""
+                                   Cancel Booking Failed due to these errors:
+                                   {errors}
+                                  """
+            );
+        }
+        Passenger passenger = PassenegerRepository.GetById(passengerId)!;
+        if (!passenger.Bookings.Any(b=> b.Id == booking.Id))
+        {
+            ErrorException.error($"- Booking with ID {booking.Id} does not exist in the booking list of passenger {passenger.Name}.");
         }
 
         passenger.Bookings.Remove(booking);
@@ -54,133 +59,108 @@ public class BookingService
         return booking;
     }
 
-    public static Book? ModifyBookingClassFlight(int bookId, int passengerId, Enum? newClassOfFlight)
+    public static Book? ModifyBookingClassFlight(int bookingId,ClassOfFlight classOfFlight,  int passengerId)
     {
-        Passenger? passenger = PassenegerRepository.GetById(passengerId);
-        if (passenger == null)
-        {
-            Console.WriteLine($"Passenger with ID {passengerId} not found.");
-            return null;
-        }
-
-        Book? booking = passenger.Bookings.FirstOrDefault(b => b.Id == bookId);
+        Book? booking = BookingRepository.GetById(bookingId);
         if (booking == null)
         {
-            Console.WriteLine($"Booking with ID {bookId} for passenger {passengerId} not found.");
-            return null;
+            ErrorException.error($"- Booking not found or null.\n");
         }
+        Passenger passenger = PassenegerRepository.GetById(passengerId)!;
 
-        if (!BookValidator.IsClassOfFlightValid(newClassOfFlight,out string validationErrors))
+
+        Book? newBooking = new(classOfFlight,
+            booking.Flight, passenger);
+
+        if (!BookingValidation.PassengerValidation(newBooking, out string errors))
         {
-            Console.WriteLine("Modifing booking clight class failed due to the following errors:");
-            Console.WriteLine(validationErrors);
-            return null;
+            ErrorException.error($"""
+                                   {errors}
+                                  """
+            );
         }
 
-        booking.ClassOfFlight = (ClassOfFlight) newClassOfFlight;
+        if (!passenger.Bookings.Any(b => b.Id == booking.Id))
+        {
+            ErrorException.error($"- Booking with ID {booking.Id} does not exist in the booking list of passenger {passenger.Name}.");
+        }
+
+
+        if (!BookingValidation.ClassOfFlightValidation(newBooking, out string validationErrors))
+        {
+            ErrorException.error($"""
+                                  Modifying Class Flight of booking {bookingId} failed due to these errors:
+                                  {validationErrors}
+                                  """
+             );
+        }
+
+        booking.ClassOfFlight = newBooking.ClassOfFlight;
         return booking;
     }
-    public static Book? ModifyBookingFlight(int bookId, int passengerId,  int? newFlightId)
+    public static Book? ModifyBookingFlight(int bookingId, int passengerId,  int?flightId)
     {
-        Passenger? passenger = PassenegerRepository.GetById(passengerId);
-        if (passenger == null)
-        {
-            Console.WriteLine($"Passenger with ID {passengerId} not found.");
-            return null;
-        }
-
-        Book? booking = passenger.Bookings.FirstOrDefault(b => b.Id == bookId);
+        Book? booking = BookingRepository.GetById(bookingId);
         if (booking == null)
         {
-            Console.WriteLine($"Booking with ID {bookId} for passenger {passengerId} not found.");
-            return null;
+            ErrorException.error($"- Booking not found or null.\n");
         }
+        Passenger passenger = PassenegerRepository.GetById(passengerId)!;
 
-        Flight? flight = FlightQuery.GetById(newFlightId);
-
-        if (!BookValidator.IsFlightValid( flight, out string validationErrors))
+        Book? newBooking = new(booking.ClassOfFlight, FlightQuery.GetById(flightId), passenger);
+        if (!BookingValidation.PassengerValidation(newBooking, out string errors))
         {
-            Console.WriteLine("Modifing Booking flight failed due to the following errors:");
-            Console.WriteLine(validationErrors);
-            return null;
+            ErrorException.error($"""
+                                   {errors}
+                                  """
+            );
         }
 
-        booking.Flight = flight;
+        if (!passenger.Bookings.Any(b => b.Id == booking.Id))
+        {
+            ErrorException.error($"- Booking with ID {booking.Id} does not exist in the booking list of passenger {passenger.Name}.");
+        }
+
+
+        if (!BookingValidation.FlightValidation(booking, out string flightErrors) )
+        {
+            ErrorException.error($"""
+                                  Modify Flight of booking {bookingId} failed due to these errors:
+                                  {flightErrors}
+                                  """
+             );
+        }
+
+        if (!BookingValidation.BookingCollisionsValidation(booking, out string bookingCollisionsErrors))
+        {
+            ErrorException.error($"""
+                                  Modify Flight of booking {bookingId} failed due to these errors:
+                                  {bookingCollisionsErrors}
+                                  """
+            );
+        }
+       
+        booking.Flight = newBooking.Flight;
         return booking;
     }
-}
-
-/*
-public class BookingService
-{
-    public static Book? BookAFlight(ClassOfFlight classOfFlight, int flgihtId, int passengerId)
+    public static void ShowBookings(int passengerId)
     {
-        Passenger? passenger = PassenegerRepository.GetById(passengerId);
+        Passenger passenger = PassenegerRepository.GetById(passengerId)!;
 
-        if (passenger == null)
+        if (passenger is null)
         {
-            Console.WriteLine($"Passenger with ID {passengerId} not found.");
-            return null;
-        }
-        Flight? flight = FlightsRepository.GetById(flgihtId);
-        if (flight == null)
-        {
-            Console.WriteLine($"Passenger with ID {passengerId} not found.");
-            return null;
-        }
-        Book? book = new Book(classOfFlight, flight, passenger);
-
-
-        passenger?.Bookings.Add(book);
-        BookingRepository.Bookings.Add(book);
-        return book;
-    }
-
-    public static Book? CancelAbooking(int bookId, int passengerId)
-    {
-        Passenger? passenger = PassenegerRepository.GetById(passengerId);
-
-        if (passenger == null)
-        {
-            Console.WriteLine($"Passenger with ID {passengerId} not found.");
-            return null;
+            ErrorException.error($"- Passenger not found.");
         }
 
-        Book? book = passenger.Bookings.FirstOrDefault(b => b.Id == bookId);
-
-        if (book == null)
+        if (passenger.Bookings.Count() == 0)
         {
-            Console.WriteLine($"Booking with ID {bookId} for passenger {passengerId} not found.");
-            return null;
+            ErrorException.error($"- No Available bookings at the moment.");
         }
 
-        passenger?.Bookings.Remove(book);
-        BookingRepository.Bookings.Remove(book);
-        return book;
-    }
-    public static Book? ModifyAbooking(int bookId, int passengerId, ClassOfFlight? newClassOfFlight, int? newFlgihtId)
-    {
-        Passenger? passenger = PassenegerRepository.GetById(passengerId);
-
-        if (passenger == null)
+        Console.WriteLine($"--- {passenger.Name}'s Bookings ---");
+        foreach (var book in passenger.Bookings)
         {
-            Console.WriteLine($"Passenger with ID {passengerId} not found.");
-            return null;
+            Console.WriteLine($"{book}");
         }
-
-        Book? book = passenger.Bookings.FirstOrDefault(b => b.Id == bookId);
-
-        if (book == null)
-        {
-            Console.WriteLine($"Booking with ID {bookId} for passenger {passengerId} not found.");
-            return null;
-        }
-
-        book.ClassOfFlight = newClassOfFlight ?? book.ClassOfFlight;
-        if (newFlgihtId is not null)
-            book.Flight = FlightsRepository.GetById(newFlgihtId) ?? book.Flight;
-
-        return book;
     }
 }
-*/

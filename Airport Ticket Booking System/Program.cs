@@ -1,4 +1,5 @@
 ﻿using Airport_Ticket_Booking_System.Entites.BookingManagement;
+using Airport_Ticket_Booking_System.Entites.FlightManagement;
 using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using Airport_Ticket_Booking_System.Entites.PassengersManager;
 using Airport_Ticket_Booking_System.Utilities;
@@ -10,9 +11,7 @@ internal class Program
     static void Main(string[] args)
     {
         SampleData.InitializeSampleData();
-
-        Console.WriteLine("Welcome to the Airport Ticket Booking System!");
-
+        
         bool isExit = false;
         while (!isExit)
         {

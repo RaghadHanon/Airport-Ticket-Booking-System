@@ -12,7 +12,7 @@ public static class BookingFilter
 {
     public static void ShowBookings()
     {
-        var bookings = BookingRepository.GetAllBookings();
+        var bookings = BookingRepository.GetAll();
         if (bookings.Any())
         {
             Console.WriteLine($"Bookings List:\n ");
@@ -76,7 +76,7 @@ public static class BookingFilter
     public static void ShowBookingsByDate(DateTime date)
     {
 
-        var bookings = BookingRepository.GetAllBookings(date);
+        var bookings = BookingRepository.GetAll(date);
         if (bookings.Any())
         {
             Console.WriteLine($"Bookings on flights departing after {date}:\n ");
@@ -160,10 +160,10 @@ public static class BookingFilter
 
     public static void ShowFlightsByArrivalAirport(string arrivalAirport)
     {
-        var bookings = FlightQuery.GetByArrivalAirport(arrivalAirport, DateTime.Now);
+        var bookings = BookingRepository.GetByArrivalAirport(arrivalAirport);
         if (bookings.Any())
         {
-            Console.WriteLine($"Available flights to {arrivalAirport} Airport:\n ");
+            Console.WriteLine($"Available flights departing from {arrivalAirport} Airport:\n ");
             foreach (var book in bookings)
             {
                 Console.WriteLine(book);

@@ -86,7 +86,7 @@ public static class PassengerUI
                 _ => throw new ArgumentException("Invalid class option")
             };
 
-            Book? booking = BookingService.BookAFlight(classOfFlight, flightId, passengerId);
+            Book? booking = BookingService.BookAFlight(new Book((ClassOfFlight)classOfFlight, flight, passenger),passengerId);
             if (booking != null)
             {
                 Console.WriteLine("Booking successful!");
@@ -224,9 +224,15 @@ public static class PassengerUI
                 switch (manageOption)
                 {
                     case 1:
-                        BookingFilter.ShowBookingsByPassenger(passengerId);
+                        try
+                        {
+                            BookingFilter.ShowBookingsByPassenger(passengerId);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"{ex.Message}");
+                        }
                         break;
-
                     case 2:
                         Console.WriteLine("Enter booking ID to modify:");
                         int.TryParse(Console.ReadLine(), out int bookingId);
@@ -246,10 +252,17 @@ public static class PassengerUI
                                 3 => ClassOfFlight.FirstClass,
                                 _ => throw new ArgumentException("Invalid class option")
                             };
+                            try
+                            {
+                                BookingService.ModifyBookingClassFlight(bookingId, (ClassOfFlight)newClassOfFlight, passengerId);
+                                Console.WriteLine("Booking modified successfully.");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"{ex.Message}");
+                            }
 
-                            BookingService.ModifyBookingClassFlight(bookingId, passengerId, newClassOfFlight);
                         }
-
                         Console.WriteLine("Do you want to change the flight? (y/n)");
                         string changeFlightOption = Console.ReadLine().ToLower();
 
@@ -259,17 +272,31 @@ public static class PassengerUI
                             Console.WriteLine("Enter new flight ID:");
                             int.TryParse(Console.ReadLine(), out int _newFlightId);
                             newFlightId = _newFlightId;
-                            BookingService.ModifyBookingFlight(bookingId, passengerId, newFlightId);
+                            try
+                            {
+                                BookingService.ModifyBookingFlight(bookingId, passengerId, newFlightId);
+                                Console.WriteLine("Booking modified successfully.");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"{ex.Message}");
+                            }
                         }
 
-                        Console.WriteLine("Booking modified successfully.");
                         break;
 
                     case 3:
                         Console.WriteLine("Enter booking ID to cancel:");
                         int.TryParse(Console.ReadLine(), out int cancelBookingId);
-                        BookingService.CancelAbooking(cancelBookingId, passengerId);
-                        Console.WriteLine("Booking cancelled successfully.");
+                        try
+                        {
+                            BookingService.CancelAbooking(cancelBookingId, passengerId);
+                            Console.WriteLine("Booking cancelled successfully.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"{ex.Message}");
+                        }
                         break;
 
                     case 4:
