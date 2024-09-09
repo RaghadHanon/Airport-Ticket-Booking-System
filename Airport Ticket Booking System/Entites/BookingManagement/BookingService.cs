@@ -26,14 +26,14 @@ public static class BookingService
         }
 
         (PassenegerRepository.GetById(passengerId))?.Bookings.Add(booking);
-        BookingRepository.Bookings.Add(booking);
+        BookingQuery.Bookings.Add(booking);
 
         return booking;
     }
 
     public static Book? CancelAbooking(int bookingId, int passengerId)
     {
-        Book? booking = BookingRepository.GetById(bookingId);
+        Book? booking = BookingQuery.GetById(bookingId);
         if (booking == null)
         {
             throw new ArgumentException($"- Booking not found or null.\n");
@@ -54,14 +54,14 @@ public static class BookingService
         }
 
         passenger.Bookings.Remove(booking);
-        BookingRepository.Bookings.Remove(booking);
+        BookingQuery.Bookings.Remove(booking);
 
         return booking;
     }
 
     public static Book? ModifyBookingClassFlight(int bookingId,ClassOfFlight classOfFlight,  int passengerId)
     {
-        Book? booking = BookingRepository.GetById(bookingId);
+        Book? booking = BookingQuery.GetById(bookingId);
         if (booking == null)
         {
             ErrorException.error($"- Booking not found or null.\n");
@@ -100,7 +100,7 @@ public static class BookingService
     }
     public static Book? ModifyBookingFlight(int bookingId, int passengerId,  int?flightId)
     {
-        Book? booking = BookingRepository.GetById(bookingId);
+        Book? booking = BookingQuery.GetById(bookingId);
         if (booking == null)
         {
             ErrorException.error($"- Booking not found or null.\n");
