@@ -10,9 +10,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Ardalis.GuardClauses;
 
 namespace Airport_Ticket_Booking_System.Entites.BookingManagement;
-
 
 public static class BookingService
 {
@@ -23,7 +23,7 @@ public static class BookingService
             ErrorException.error($"{errors}",$"{potintialErrorTitle}");
         
 
-        (PassenegerRepository.GetById(booking!.Passenger!.Id))?.Bookings.Add(booking);
+        booking!.Passenger!.Bookings.Add(booking);
         BookingQuery.Bookings.Add(booking);
 
         return booking;
