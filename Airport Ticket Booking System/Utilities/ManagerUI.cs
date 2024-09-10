@@ -160,17 +160,14 @@ public static class ManagerUI
 
                     break;
                 case "9":
-                    Console.WriteLine("Select Class: (1) Economy, (2) Business, (3) First Class");
-                    int.TryParse(Console.ReadLine(), out int classOption);
+                    ClassOfFlight? flightClass = ClassOfFlightInput();
+                    if(flightClass is null)
+                    {
+                        Console.WriteLine("Invalid input.");
+                        break;
+                    }
+                    BookingFilter.ShowBookingsByClassFlight((ClassOfFlight)flightClass);
                     
-                        ClassOfFlight flightClass = classOption switch
-                        {
-                            1 => ClassOfFlight.Economy,
-                            2 => ClassOfFlight.Business,
-                            3 => ClassOfFlight.FirstClass,
-                            _ => throw new ArgumentException("Invalid class option")
-                        };
-                    BookingFilter.ShowBookingsByClassFlight(flightClass);
 
                     break;
                 case "10":
@@ -183,7 +180,21 @@ public static class ManagerUI
 
         }
     }
+    private static ClassOfFlight? ClassOfFlightInput()
+    {
+        Console.WriteLine("Select new class: (1) Economy, (2) Business, (3) First Class");
+        int newClassOption = int.TryParse(Console.ReadLine(), out int _newClassOption) ? _newClassOption : 0;
 
+        ClassOfFlight? newClassOfFlight = newClassOption switch
+        {
+            1 => ClassOfFlight.Economy,
+            2 => ClassOfFlight.Business,
+            3 => ClassOfFlight.FirstClass,
+            _ => null
+        };
+
+        return newClassOfFlight;
+    }
     public static void BatchUploadFlights()
     {
         Console.Write("\nEnter the file name for batch flight upload (CSV format): ");

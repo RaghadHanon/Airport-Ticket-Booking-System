@@ -60,7 +60,7 @@ public static class BookingService
         return true;
     }
 
-    public static Book? ModifyBookingClassFlight(int bookingId, ClassOfFlight classOfFlight, int passengerId)
+    public static Book? ModifyBookingClassFlight(int bookingId, ClassOfFlight? classOfFlight, int passengerId)
     {
         string potintialErrorTitle = $"Modifying Class Flight of booking {bookingId} failed due to these errors:";
 

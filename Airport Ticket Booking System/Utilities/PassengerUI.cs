@@ -73,20 +73,11 @@ public static class PassengerUI
         }
         Flight? flight = FlightQuery.GetById(flightId);
 
+        ClassOfFlight? classOfFlight = ClassOfFlightInput();
 
-        Console.WriteLine("Select a class: (1) Economy, (2) Business, (3) First Class");
-        int.TryParse(Console.ReadLine(), out int classOption);
-
-        Enum classOfFlight = classOption switch
-        {
-            1 => ClassOfFlight.Economy,
-            2 => ClassOfFlight.Business,
-            3 => ClassOfFlight.FirstClass,
-            _ => throw new ArgumentException("Invalid class option")
-        };
         try
         {
-            Book? booking = BookingService.BookAFlight(new Book((ClassOfFlight)classOfFlight, flight, passenger));
+            Book? booking = BookingService.BookAFlight(new Book(classOfFlight, flight, passenger));
             Console.WriteLine("Booking successful!");
             Console.WriteLine(booking);
 
@@ -97,6 +88,21 @@ public static class PassengerUI
         }
 
 
+    }
+    private static ClassOfFlight? ClassOfFlightInput()
+    {
+        Console.WriteLine("Select new class: (1) Economy, (2) Business, (3) First Class");
+        int newClassOption = int.TryParse(Console.ReadLine(), out int _newClassOption) ? _newClassOption : 0;
+
+        ClassOfFlight? newClassOfFlight = newClassOption switch
+        {
+            1 => ClassOfFlight.Economy,
+            2 => ClassOfFlight.Business,
+            3 => ClassOfFlight.FirstClass,
+            _ => null
+        };
+
+        return newClassOfFlight;
     }
     public static void SearchAvailableFlights()
     {
@@ -265,7 +271,6 @@ public static class PassengerUI
         Console.WriteLine("Do you want to change the class? (y/n)");
         string changeClassOption = Console.ReadLine().ToLower();
 
-        Enum? newClassOfFlight = null;
         if (changeClassOption != "y" && changeClassOption != "n")
         {
             Console.WriteLine("Invalid option.");
@@ -275,19 +280,10 @@ public static class PassengerUI
 
         if (changeClassOption == "y")
         {
-            Console.WriteLine("Select new class: (1) Economy, (2) Business, (3) First Class");
-            int newClassOption = int.Parse(Console.ReadLine());
-
-            newClassOfFlight = newClassOption switch
-            {
-                1 => ClassOfFlight.Economy,
-                2 => ClassOfFlight.Business,
-                3 => ClassOfFlight.FirstClass,
-                _ => throw new ArgumentException("Invalid class option")
-            };
+            ClassOfFlight? newClassOfFlight = ClassOfFlightInput();
             try
             {
-                BookingService.ModifyBookingClassFlight(bookingId, (ClassOfFlight)newClassOfFlight, passengerId);
+                BookingService.ModifyBookingClassFlight(bookingId, newClassOfFlight, passengerId);
                 Console.WriteLine("Booking modified successfully.");
             }
             catch (Exception ex)
@@ -331,6 +327,8 @@ public static class PassengerUI
 
         }
     }
+
+
 
     private static void ViewAllBookings(int passengerId)
     {
