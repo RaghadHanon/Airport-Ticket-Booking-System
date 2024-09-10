@@ -77,7 +77,7 @@ public static class BookingValidation
         var currentBookingFlight = booking!.Flight;
 
         collisionErrors = string.Empty;
-        if (currentBookingFlight != null && passengerBookings!.Any())
+        if (currentBookingFlight != null && passengerBookings != null && passengerBookings!.Any())
         {
             List<Book> collidingBooking = null;
 

@@ -12,8 +12,8 @@ public static class ErrorException
     {
         throw new ArgumentException($"""
 
-                                      {title}
-                                      {message}
+                                     {title}
+                                     {message}
 
                                      """);
     }

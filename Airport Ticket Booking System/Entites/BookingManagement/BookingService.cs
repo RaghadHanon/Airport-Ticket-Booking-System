@@ -10,7 +10,6 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using Ardalis.GuardClauses;
 
 namespace Airport_Ticket_Booking_System.Entites.BookingManagement;
 
@@ -31,10 +30,12 @@ public static class BookingService
 
     public static Book? CancelAbooking(int bookingId, int passengerId)
     {
-        Book? booking = BookingQuery.GetById(bookingId);
-
-
         string potintialErrorTitle = "Cancel Booking Failed due to these errors:";
+
+        Book? booking = BookingQuery.GetById(bookingId);
+        if (booking == null)
+            ErrorException.error($"- Booking not found or null.", $"{potintialErrorTitle}");
+
         if (!BookingValidation.PassengerValidation(booking, out string errors))
             ErrorException.error($"{errors}", $"{potintialErrorTitle}");
         
@@ -89,7 +90,6 @@ public static class BookingService
     public static Book? ModifyBookingFlight(int bookingId, int passengerId, int? flightId)
     {
         string potintialErrorTitle = $"Modify Flight of booking {bookingId} failed due to these errors:";
-
 
         Book ? booking = BookingQuery.GetById(bookingId);
         if (booking == null)

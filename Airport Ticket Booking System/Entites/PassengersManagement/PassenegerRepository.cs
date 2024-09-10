@@ -26,7 +26,7 @@ public static class PassenegerRepository
        
         return passenger;
     }
-    public static Passenger? GetById(int id)
+    public static Passenger? GetById(int? id)
     {
         return Passengers.FirstOrDefault(p => p.Id == id);
     }

@@ -11,7 +11,7 @@ internal class Program
     static void Main(string[] args)
     {
         SampleData.InitializeSampleData();
-        
+       
         bool isExit = false;
         while (!isExit)
         {
