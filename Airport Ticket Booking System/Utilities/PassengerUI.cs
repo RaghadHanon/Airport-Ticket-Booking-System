@@ -85,16 +85,17 @@ public static class PassengerUI
                 3 => ClassOfFlight.FirstClass,
                 _ => throw new ArgumentException("Invalid class option")
             };
-
-            Book? booking = BookingService.BookAFlight(new Book((ClassOfFlight)classOfFlight, flight, passenger),passengerId);
-            if (booking != null)
+            try
             {
+                Book? booking = BookingService.BookAFlight(new Book((ClassOfFlight)classOfFlight, flight, passenger), passengerId);
+
                 Console.WriteLine("Booking successful!");
                 Console.WriteLine(booking);
+
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Booking failed. Please try again.");
+                Console.WriteLine($"{ex.Message}");
             }
         }
 

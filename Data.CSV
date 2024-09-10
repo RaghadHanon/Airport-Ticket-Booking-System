@@ -38,4 +38,5 @@ EconomyPrice,BusinessPrice,FirstClassPrice,DepartureCountry,DestinationCountry,D
 330,770,1300,Spain,Japan,8/20/2023,BCN,HND
 310,750,1250,Germany,USA,7/15/2023,FRA,JFK
 340,820,1350,Australia,Italy,6/10/2023,SYD,FCO
-300,690,1190,UK,Canada,5/1/2023,LHR,YYZ
+340,690,1190,UK,Canada,11/5/2024,LHR,YYZ
+300,790,2000,USA,Japan,11/5/2024,LHR,YYZ
