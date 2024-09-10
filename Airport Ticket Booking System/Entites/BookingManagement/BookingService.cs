@@ -18,9 +18,9 @@ public static class BookingService
 {
     public static Book? BookAFlight(Book booking, int passengerId)
     {
-        string porintialErrorTitle = "Booking Flight failed due to these errors:";
+        string potintialErrorTitle = "Booking Flight failed due to these errors:";
         if (!BookingValidation.ValidateBook(booking, out string errors))
-            ErrorException.error($"{errors}",$"{porintialErrorTitle}");
+            ErrorException.error($"{errors}",$"{potintialErrorTitle}");
         
 
         (PassenegerRepository.GetById(passengerId))?.Bookings.Add(booking);
@@ -34,14 +34,14 @@ public static class BookingService
         Book? booking = BookingQuery.GetById(bookingId);
 
 
-        string porintialErrorTitle = "Cancel Booking Failed due to these errors:";
+        string potintialErrorTitle = "Cancel Booking Failed due to these errors:";
         if (!BookingValidation.PassengerValidation(booking, out string errors))
-            ErrorException.error($"{errors}", $"{porintialErrorTitle}");
+            ErrorException.error($"{errors}", $"{potintialErrorTitle}");
         
 
         Passenger passenger = PassenegerRepository.GetById(passengerId)!;
         if (!HasAccessToBooking(passenger, booking, out string accessError))
-            ErrorException.error($"{accessError}", $"{porintialErrorTitle}");
+            ErrorException.error($"{accessError}", $"{potintialErrorTitle}");
 
 
         passenger.Bookings.Remove(booking);
@@ -61,26 +61,26 @@ public static class BookingService
 
     public static Book? ModifyBookingClassFlight(int bookingId, ClassOfFlight classOfFlight, int passengerId)
     {
-        string porintialErrorTitle = $"Modifying Class Flight of booking {bookingId} failed due to these errors:";
+        string potintialErrorTitle = $"Modifying Class Flight of booking {bookingId} failed due to these errors:";
 
         Book? booking = BookingQuery.GetById(bookingId);
         if (booking == null)
-            ErrorException.error($"- Booking not found or null.", $"{porintialErrorTitle}");
+            ErrorException.error($"- Booking not found or null.", $"{potintialErrorTitle}");
 
 
         Passenger passenger = PassenegerRepository.GetById(passengerId)!;
         Book? newBooking = new(classOfFlight,booking!.Flight, passenger);
 
         if (!BookingValidation.PassengerValidation(newBooking, out string errors))
-            ErrorException.error($"{errors}", $"{porintialErrorTitle}");
+            ErrorException.error($"{errors}", $"{potintialErrorTitle}");
 
 
         if (!HasAccessToBooking(passenger, booking, out string accessError))
-            ErrorException.error($"{accessError}", $"{porintialErrorTitle}");
+            ErrorException.error($"{accessError}", $"{potintialErrorTitle}");
 
 
         if (!BookingValidation.ClassOfFlightValidation(newBooking, out string validationErrors))
-            ErrorException.error($"{validationErrors}", $"{porintialErrorTitle}");
+            ErrorException.error($"{validationErrors}", $"{potintialErrorTitle}");
 
 
         booking.ClassOfFlight = newBooking.ClassOfFlight;
@@ -88,29 +88,29 @@ public static class BookingService
     }
     public static Book? ModifyBookingFlight(int bookingId, int passengerId, int? flightId)
     {
-        string porintialErrorTitle = $"Modify Flight of booking {bookingId} failed due to these errors:";
+        string potintialErrorTitle = $"Modify Flight of booking {bookingId} failed due to these errors:";
 
 
         Book ? booking = BookingQuery.GetById(bookingId);
         if (booking == null)
-            ErrorException.error($"- Booking not found or null.",$"{porintialErrorTitle}");
+            ErrorException.error($"- Booking not found or null.",$"{potintialErrorTitle}");
 
         
         Passenger passenger = PassenegerRepository.GetById(passengerId)!;
         Book? newBooking = new(booking.ClassOfFlight, FlightQuery.GetById(flightId), passenger);
 
         if (!BookingValidation.PassengerValidation(newBooking, out string errors))
-            ErrorException.error($"{errors}", $"{porintialErrorTitle}");
+            ErrorException.error($"{errors}", $"{potintialErrorTitle}");
 
         if (!HasAccessToBooking(passenger, booking, out string accessError))
-            ErrorException.error($"{accessError}", $"{porintialErrorTitle}");
+            ErrorException.error($"{accessError}", $"{potintialErrorTitle}");
 
 
         if (!BookingValidation.FlightValidation(booking, out string flightErrors))
-            ErrorException.error($"{accessError}", $"{porintialErrorTitle}");
+            ErrorException.error($"{accessError}", $"{potintialErrorTitle}");
 
         if (!BookingValidation.BookingCollisionsValidation(booking, out string bookingCollisionsErrors))
-            ErrorException.error($"{accessError}", $"{porintialErrorTitle}");
+            ErrorException.error($"{accessError}", $"{potintialErrorTitle}");
 
 
         booking.Flight = newBooking.Flight;
