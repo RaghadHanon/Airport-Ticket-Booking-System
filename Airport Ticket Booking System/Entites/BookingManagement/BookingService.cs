@@ -48,7 +48,7 @@ public static class BookingService
             );
         }
         Passenger passenger = PassenegerRepository.GetById(passengerId)!;
-        if (!passenger.Bookings.Any(b=> b.Id == booking.Id))
+        if (booking!.Passenger!.Id!= passengerId)
         {
             ErrorException.error($"- Booking with ID {booking.Id} does not exist in the booking list of passenger {passenger.Name}.");
         }
@@ -70,7 +70,7 @@ public static class BookingService
 
 
         Book? newBooking = new(classOfFlight,
-            booking.Flight, passenger);
+            booking!.Flight, passenger);
 
         if (!BookingValidation.PassengerValidation(newBooking, out string errors))
         {
@@ -79,8 +79,7 @@ public static class BookingService
                                   """
             );
         }
-
-        if (!passenger.Bookings.Any(b => b.Id == booking.Id))
+        if (booking!.Passenger!.Id != passengerId)
         {
             ErrorException.error($"- Booking with ID {booking.Id} does not exist in the booking list of passenger {passenger.Name}.");
         }
@@ -116,7 +115,7 @@ public static class BookingService
             );
         }
 
-        if (!passenger.Bookings.Any(b => b.Id == booking.Id))
+        if (booking!.Passenger!.Id != passengerId)
         {
             ErrorException.error($"- Booking with ID {booking.Id} does not exist in the booking list of passenger {passenger.Name}.");
         }
