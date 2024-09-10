@@ -16,14 +16,14 @@ namespace Airport_Ticket_Booking_System.Entites.BookingManagement;
 
 public static class BookingService
 {
-    public static Book? BookAFlight(Book booking, int passengerId)
+    public static Book? BookAFlight(Book booking)
     {
         string potintialErrorTitle = "Booking Flight failed due to these errors:";
         if (!BookingValidation.ValidateBook(booking, out string errors))
             ErrorException.error($"{errors}",$"{potintialErrorTitle}");
         
 
-        (PassenegerRepository.GetById(passengerId))?.Bookings.Add(booking);
+        (PassenegerRepository.GetById(booking!.Passenger!.Id))?.Bookings.Add(booking);
         BookingQuery.Bookings.Add(booking);
 
         return booking;

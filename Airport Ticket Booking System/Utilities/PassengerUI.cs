@@ -87,7 +87,7 @@ public static class PassengerUI
             };
             try
             {
-                Book? booking = BookingService.BookAFlight(new Book((ClassOfFlight)classOfFlight, flight, passenger), passengerId);
+                Book? booking = BookingService.BookAFlight(new Book((ClassOfFlight)classOfFlight, flight, passenger));
 
                 Console.WriteLine("Booking successful!");
                 Console.WriteLine(booking);

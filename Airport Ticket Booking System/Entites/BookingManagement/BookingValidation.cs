@@ -35,8 +35,6 @@ public static class BookingValidation
             stringBuilder.Append($"{collisionErrors}\n");
 
 
-
-
         errors = stringBuilder.ToString();
         return string.IsNullOrEmpty(errors);
     }
