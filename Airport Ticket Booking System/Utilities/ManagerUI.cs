@@ -8,8 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Airport_Ticket_Booking_System.Utilities;
-public static class ManagerUI
+namespace Airport_Ticket_Booking_System.Utilities; public static class ManagerUI
 {
     public static void ShowMenu()
     {
@@ -64,16 +63,16 @@ public static class ManagerUI
             }
         }
     }
-   
+
     public static void VewAllFlights()
     {
-
         Console.WriteLine("\n--- Flights ---");
         foreach (var flight in FlightQuery.GetAll())
         {
             Console.WriteLine($"{flight}");
         }
     }
+
     public static void SearchBookings()
     {
         bool isExit = false;
@@ -96,79 +95,59 @@ public static class ManagerUI
                            
                           Select a filter option: 
                           """);
-            string filterOption = Console.ReadLine();
-            switch (filterOption)
+
+            switch (Console.ReadLine())
             {
                 case "1":
-                    Console.Write("Enter Flight ID: ");
-                    if (!int.TryParse(Console.ReadLine(), out int flightId))
+                    int? flightId = InputGathering.GetFlightId();
+                    if (flightId != null)
                     {
-                        Console.WriteLine("Invalid input.");
-                        break;
+                        BookingFilter.ShowBookingsByFlight(flightId.Value);
                     }
-                    BookingFilter.ShowBookingsByFlight(flightId);
-
                     break;
                 case "2":
-                    Console.Write("Enter Price: ");
-                    if (!decimal.TryParse(Console.ReadLine(), out decimal price))
+                    decimal? price = InputGathering.GetPriceInput();
+                    if (price != null)
                     {
-                        Console.WriteLine("Invalid input.");
-                        break;
+                        BookingFilter.ShowBookingsByPrice(price.Value);
                     }
-                    BookingFilter.ShowBookingsByPrice(price);
-
                     break;
                 case "3":
-                    Console.Write("Enter Departure Country: ");
-                    string depCountry = Console.ReadLine();
+                    string depCountry = InputGathering.GetStringInput("departure country");
                     BookingFilter.ShowBookingsByDepartureCountry(depCountry);
                     break;
                 case "4":
-                    Console.Write("Enter Destination Country: ");
-                    string destCountry = Console.ReadLine();
+                    string destCountry = InputGathering.GetStringInput("destination country");
                     BookingFilter.ShowBookingsByDestinationCountry(destCountry);
                     break;
                 case "5":
-                    Console.Write("Enter Departure Date (YYYY-MM-DD): ");
-                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime depDate))
+                    DateTime? depDate = InputGathering.GetDateInput();
+                    if (depDate != null)
                     {
-                        Console.WriteLine("Invalid input.");
-                        break;
+                        BookingFilter.ShowBookingsByDate(depDate.Value);
                     }
-                    BookingFilter.ShowBookingsByDate(depDate);
-
                     break;
                 case "6":
-                    Console.Write("Enter Departure Airport: ");
-                    string depAirport = Console.ReadLine();
+                    string depAirport = InputGathering.GetStringInput("departure airport");
                     BookingFilter.ShowBookingsByDepartureAirport(depAirport);
                     break;
                 case "7":
-                    Console.Write("Enter Arrival Airport: ");
-                    string arrAirport = Console.ReadLine();
+                    string arrAirport = InputGathering.GetStringInput("arrival airport");
                     BookingFilter.ShowFlightsByArrivalAirport(arrAirport);
                     break;
                 case "8":
-                    Console.Write("Enter Passenger ID: ");
-                    if (!int.TryParse(Console.ReadLine(), out int passengerId))
+                    int? passengerId = InputGathering.GetPassengerId();
+                    if (passengerId != null)
                     {
-                        Console.WriteLine("Invalid input.");
-                        break;
+                        BookingFilter.ShowBookingsByPassenger(passengerId.Value);
                     }
-                    BookingFilter.ShowBookingsByPassenger(passengerId);
-
                     break;
                 case "9":
-                    ClassOfFlight? flightClass = ClassOfFlightInput();
-                    if(flightClass is null)
+                    ClassOfFlight? flightClass = InputGathering.GetClassOfFlightInput();
+                    if (flightClass != null)
                     {
-                        Console.WriteLine("Invalid input.");
-                        break;
+                        BookingFilter.ShowBookingsByClassFlight(flightClass.Value);
                     }
-                    BookingFilter.ShowBookingsByClassFlight((ClassOfFlight)flightClass);
-                    
-
                     break;
                 case "10":
                     isExit = true;
@@ -177,24 +156,9 @@ public static class ManagerUI
                     Console.WriteLine("Invalid option.");
                     break;
             }
-
         }
     }
-    private static ClassOfFlight? ClassOfFlightInput()
-    {
-        Console.WriteLine("Select new class: (1) Economy, (2) Business, (3) First Class");
-        int newClassOption = int.TryParse(Console.ReadLine(), out int _newClassOption) ? _newClassOption : 0;
 
-        ClassOfFlight? newClassOfFlight = newClassOption switch
-        {
-            1 => ClassOfFlight.Economy,
-            2 => ClassOfFlight.Business,
-            3 => ClassOfFlight.FirstClass,
-            _ => null
-        };
-
-        return newClassOfFlight;
-    }
     public static void BatchUploadFlights()
     {
         Console.Write("\nEnter the file name for batch flight upload (CSV format): ");
