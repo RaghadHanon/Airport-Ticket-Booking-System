@@ -20,11 +20,7 @@ public static class FlightRepository
     {
         if (!FlightValidation.ValidateFlight(flight, out string errors))
         {
-            ErrorException.error($"""
-                                  
-                                  {errors}
-                                  """
-             );
+            ErrorException.error($"{errors}");
         }
         Flights.Add(flight);
         return flight;

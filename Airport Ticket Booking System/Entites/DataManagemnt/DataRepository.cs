@@ -15,15 +15,17 @@ public static class DataRepository
     {
 
         string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        string _filePath = Path.Combine(baseDirectory, "../../../../", fileName);
-        if (!File.Exists(_filePath))
+        string filePath = Path.Combine(baseDirectory, @"..\..\..\..\", fileName);
+        string fullPath = Path.GetFullPath(filePath);
+
+        if (!File.Exists(fullPath))
         {
             Console.WriteLine("File not found.");
             return;
         }
         try
         {
-            Data = File.ReadAllLines(_filePath);
+            Data = File.ReadAllLines(filePath);
             if (Data.Length == 0)
             {
                 Console.WriteLine("The file is empty.");
