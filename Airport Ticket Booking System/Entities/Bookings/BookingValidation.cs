@@ -1,6 +1,7 @@
 ﻿using Airport_Ticket_Booking_System.Entites.FlightManagement;
 using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using Airport_Ticket_Booking_System.Entites.PassengersManager;
+using Airport_Ticket_Booking_System.Presentation;
 using Airport_Ticket_Booking_System.Utilities;
 using System;
 using System.Collections.Generic;
@@ -80,18 +81,10 @@ public static class BookingValidation
         if (currentBookingFlight != null && passengerBookings != null && passengerBookings!.Any())
         {
             List<Book> collidingBooking = null;
-
             collidingBooking = passengerBookings!.Where(b => b?.Flight?.DepartureDate == currentBookingFlight?.DepartureDate).ToList();
 
             if (collidingBooking.Any())
-            {
-                string collidingList = string.Join("\n -", collidingBooking);
-                collisionErrors= ($"""
-                              - The flight on {currentBookingFlight.DepartureDate} collides with an existing booking/s:
-                                {collidingList}.
-                              """);
-            }
-        
+                collisionErrors = BookPrinter.PrintBookings(collidingBooking, $"- The flight on {currentBookingFlight.DepartureDate} collides with an existing booking/s:\n");
         }
         return string.IsNullOrEmpty(collisionErrors);
     }

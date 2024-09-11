@@ -2,6 +2,8 @@
 using Airport_Ticket_Booking_System.Entites.FlightManagement;
 using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using Airport_Ticket_Booking_System.Entites.PassengersManager;
+using Airport_Ticket_Booking_System.Entities.Flights;
+using Airport_Ticket_Booking_System.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Airport_Ticket_Booking_System.Utilities;
+namespace Airport_Ticket_Booking_System.UI;
 public static class PassengerUI
 {
     public static void ShowMenu()
@@ -31,16 +33,16 @@ public static class PassengerUI
             switch (choice)
             {
                 case "1":
-                    FlightBookingFilter.ShowAvailableFlights();
+                    AvailableFlightFilter.ShowAvailableFlights();
                     break;
                 case "2":
-                    PassengerUI.SearchAvailableFlights();
+                    SearchAvailableFlights();
                     break;
                 case "3":
-                    PassengerUI.BookAFlight();
+                    BookAFlight();
                     break;
                 case "4":
-                    PassengerUI.ManageBookings();
+                    ManageBookings();
                     break;
                 case "5":
                     isExit = true;
@@ -75,7 +77,7 @@ public static class PassengerUI
         {
             Book? booking = BookingService.BookAFlight(new Book(classOfFlight, flight, passenger));
             Console.WriteLine("Booking successful!");
-            Console.WriteLine(booking);
+            Console.WriteLine(new BookPrinter(booking).PrintBooking());
         }
         catch (Exception ex)
         {
@@ -95,7 +97,7 @@ public static class PassengerUI
                            1. By Price
                            2. By Departure Country
                            3. By Destination Country
-                           4. By Airport
+                           4. By Departure Airport
                            5. By Arrival Airport
                            6. By Date
                            7. Exit
@@ -109,35 +111,35 @@ public static class PassengerUI
             {
                 case 1:
                     decimal? price = InputGathering.GetPriceInput();
-                    if (price != null) FlightBookingFilter.ShowFlightsByPrice(price.Value);
+                    if (price != null) AvailableFlightFilter.ShowFlightsByPrice(price.Value);
                     break;
 
                 case 2:
                     string departureCountry = InputGathering.GetStringInput("departure country");
-                    FlightBookingFilter.ShowFlightsByDepartureCountry(departureCountry);
+                    AvailableFlightFilter.ShowFlightsByDepartureCountry(departureCountry);
                     break;
 
                 case 3:
                     string destinationCountry = InputGathering.GetStringInput("destination country");
-                    FlightBookingFilter.ShowFlightsByDestinationCountry(destinationCountry);
+                    AvailableFlightFilter.ShowFlightsByDestinationCountry(destinationCountry);
                     break;
 
                 case 4:
                     string departureAirport = InputGathering.GetStringInput("departure airport");
-                    FlightBookingFilter.ShowFlightsByDepartureAirport(departureAirport);
+                    AvailableFlightFilter.ShowFlightsByDepartureAirport(departureAirport);
                     break;
 
                 case 5:
                     string arrivalAirport = InputGathering.GetStringInput("arrival airport");
-                    FlightBookingFilter.ShowFlightsByArrivalAirport(arrivalAirport);
+                    AvailableFlightFilter.ShowFlightsByArrivalAirport(arrivalAirport);
                     break;
 
                 case 6:
                     DateTime? departureDate = InputGathering.GetDateInput();
                     if (departureDate != null)
                     {
-                        FlightBookingFilter.ShowAvailableFlightsByDate(departureDate.Value);
-                        Console.WriteLine($"Selected Date: {departureDate.Value:yyyy-MM-dd}");
+                        AvailableFlightFilter.ShowAvailableFlightsByDate(departureDate.Value);
+                        Console.WriteLine($"Selected Date: {departureDate.Value:MM-dd-yyyy}");
                     }
                     break;
 

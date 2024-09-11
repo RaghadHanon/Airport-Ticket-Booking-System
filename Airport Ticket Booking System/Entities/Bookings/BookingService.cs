@@ -1,6 +1,7 @@
 ﻿using Airport_Ticket_Booking_System.Entites.FlightManagement;
 using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using Airport_Ticket_Booking_System.Entites.PassengersManager;
+using Airport_Ticket_Booking_System.Presentation;
 using Airport_Ticket_Booking_System.Utilities;
 using System;
 using System.Collections;
@@ -125,15 +126,8 @@ public static class BookingService
             ErrorException.error($"- Passenger not found.");
         }
 
-        if (passenger.Bookings.Count() == 0)
-        {
-            ErrorException.error($"- No Available bookings at the moment.");
-        }
+        string bookings = BookPrinter.PrintBookings(passenger.Bookings, $"--- {passenger.Name}'s Bookings ---");
+        Console.WriteLine(bookings);
 
-        Console.WriteLine($"--- {passenger.Name}'s Bookings ---");
-        foreach (var book in passenger.Bookings)
-        {
-            Console.WriteLine($"{book}");
-        }
     }
 }

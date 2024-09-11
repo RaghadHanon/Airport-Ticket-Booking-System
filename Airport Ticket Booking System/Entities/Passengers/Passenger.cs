@@ -21,9 +21,6 @@ public class Passenger
     public List<Book> Bookings { get; } = new List<Book>();
     public string Name { get; set; }
  
-    public override string? ToString()
-    {
-        return $"PassengerId {Id}: \" {Name} \"";
-    }
+   
 }
 

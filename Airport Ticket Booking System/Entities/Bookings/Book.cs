@@ -26,18 +26,5 @@ public class Book
     public Flight? Flight { get; set; }
     public Passenger? Passenger { get; set; }
     public DateTime? BookingDate { get; init; }
-    public override string? ToString()
-    {
-        return $$""" 
-                  { 
-                    BookId {{Id}}:
-                    Booked Class: "{{ClassOfFlight}}",
-                    Price: {{Flight?.ClassPriceMap[(ClassOfFlight)ClassOfFlight!]}}$,
-                    {{Passenger}},
-                    {{Flight}}
-                    Booking Date: {{BookingDate}}
-                  }
-
-                 """;
-    }
+    
 }

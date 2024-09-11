@@ -2,13 +2,14 @@
 using Airport_Ticket_Booking_System.Entites.FlightManagement;
 using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using Airport_Ticket_Booking_System.Entites.ManagerManagemnt;
+using Airport_Ticket_Booking_System.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Airport_Ticket_Booking_System.Utilities; public static class ManagerUI
+namespace Airport_Ticket_Booking_System.UI; public static class ManagerUI
 {
     public static void ShowMenu()
     {
@@ -66,11 +67,7 @@ namespace Airport_Ticket_Booking_System.Utilities; public static class ManagerUI
 
     public static void VewAllFlights()
     {
-        Console.WriteLine("\n--- Flights ---");
-        foreach (var flight in FlightQuery.GetAll())
-        {
-            Console.WriteLine($"{flight}");
-        }
+        Console.WriteLine(FlightPrinter.PrintFlights(FlightQuery.GetAll(), "\n--- Flights ---"));
     }
 
     public static void SearchBookings()
@@ -101,16 +98,14 @@ namespace Airport_Ticket_Booking_System.Utilities; public static class ManagerUI
                 case "1":
                     int? flightId = InputGathering.GetFlightId();
                     if (flightId != null)
-                    {
                         BookingFilter.ShowBookingsByFlight(flightId.Value);
-                    }
+                    
                     break;
                 case "2":
                     decimal? price = InputGathering.GetPriceInput();
                     if (price != null)
-                    {
                         BookingFilter.ShowBookingsByPrice(price.Value);
-                    }
+                    
                     break;
                 case "3":
                     string depCountry = InputGathering.GetStringInput("departure country");
@@ -123,9 +118,8 @@ namespace Airport_Ticket_Booking_System.Utilities; public static class ManagerUI
                 case "5":
                     DateTime? depDate = InputGathering.GetDateInput();
                     if (depDate != null)
-                    {
                         BookingFilter.ShowBookingsByDate(depDate.Value);
-                    }
+                    
                     break;
                 case "6":
                     string depAirport = InputGathering.GetStringInput("departure airport");
@@ -138,16 +132,14 @@ namespace Airport_Ticket_Booking_System.Utilities; public static class ManagerUI
                 case "8":
                     int? passengerId = InputGathering.GetPassengerId();
                     if (passengerId != null)
-                    {
                         BookingFilter.ShowBookingsByPassenger(passengerId.Value);
-                    }
+                    
                     break;
                 case "9":
                     ClassOfFlight? flightClass = InputGathering.GetClassOfFlightInput();
                     if (flightClass != null)
-                    {
                         BookingFilter.ShowBookingsByClassFlight(flightClass.Value);
-                    }
+                    
                     break;
                 case "10":
                     isExit = true;

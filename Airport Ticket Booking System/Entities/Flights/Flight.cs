@@ -69,23 +69,5 @@ public class Flight
     public string? ArrivalAirport { get; set; }
 
 
-    public override string? ToString()
-    {
-        return $$""" 
-              {
-                  FlightId {{_id}}:
-                  DepartureCountry: "{{DepartureCountry}}",
-                  DestinationCountry: "{{DestinationCountry}}\",
-                  DepartureDate: "{{DepartureDate}}",
-                  DepartureAirport: "{{DepartureAirport}}",
-                  ArrivalAirport: "{{ArrivalAirport}}"
-                  Prices: 
-                  - Economy: {{EconomyPrice}}$
-                  - Business: {{BusinessPrice}}$
-                  - First Class: {{FirstClassPrice}}$
-              }
-
-            """;
-
-    }
+   
 }
