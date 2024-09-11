@@ -1,22 +1,15 @@
 ﻿using Airport_Ticket_Booking_System.Entites.BookingManagement;
 using Airport_Ticket_Booking_System.Entites.FlightManagment;
-using Airport_Ticket_Booking_System.Entites.PassengersManager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.Presentation;
 public class BookPrinter
 {
     private readonly Book _book;
-
     public BookPrinter(Book book)
     {
         _book = book ?? throw new ArgumentNullException(nameof(book));
     }
-
     public string PrintBooking()
     {
         return $$"""
@@ -33,7 +26,6 @@ public class BookPrinter
                 }     
                 """;
     }
-
     public static string PrintBookings(IEnumerable<Book> bookings,string? title=null)
     {
         if (bookings == null || !bookings.Any())

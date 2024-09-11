@@ -1,10 +1,4 @@
-﻿using Airport_Ticket_Booking_System.Entites.FlightManagement;
-using Airport_Ticket_Booking_System.Entites.FlightManagment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
 
 namespace Airport_Ticket_Booking_System.Entites.ManagerManagemnt;
 public static class DataRepository
@@ -13,7 +7,6 @@ public static class DataRepository
     private static string[]? Data;
     public static void BatchUploadFlights(string fileName)
     {
-
         string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         string filePath = Path.Combine(baseDirectory, @"..\..\..\..\", fileName);
         string fullPath = Path.GetFullPath(filePath);
@@ -87,6 +80,5 @@ public static class DataRepository
             Console.WriteLine("All flights are valid.");
         }
     }
-
 }
 

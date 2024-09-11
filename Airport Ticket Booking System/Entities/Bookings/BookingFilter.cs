@@ -1,13 +1,5 @@
-﻿using Airport_Ticket_Booking_System.Entites.FlightManagement;
-using Airport_Ticket_Booking_System.Entites.FlightManagment;
-using Airport_Ticket_Booking_System.Entites.PassengersManager;
+﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using Airport_Ticket_Booking_System.Presentation;
-using Airport_Ticket_Booking_System.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.Entites.BookingManagement;
 public static class BookingFilter
@@ -16,7 +8,6 @@ public static class BookingFilter
     {
         string bookings = BookPrinter.PrintBookings(BookingQuery.GetAll(), $"Bookings List:\n ");
         Console.WriteLine(bookings);
-        
     }
     public static void ShowBookingsByPassenger(int passengerId)
     {
@@ -27,7 +18,6 @@ public static class BookingFilter
     {
         string bookings = BookPrinter.PrintBookings(BookingQuery.GetByFlight(flightId), $"Bookings on flight { flightId}:\n ");
         Console.WriteLine(bookings);
-
     }
     public static void ShowBookingsByClassFlight(ClassOfFlight classOfFlight)
     {

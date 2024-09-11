@@ -1,11 +1,7 @@
 ﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using Airport_Ticket_Booking_System.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.Entites.FlightManagement;
 public static class FlightValidation
@@ -93,7 +89,6 @@ public static class FlightValidation
         if (string.IsNullOrWhiteSpace(flight.DepartureAirport))
             errorList.Add("- Departure airport is required.");
 
-
         if (string.IsNullOrWhiteSpace(flight.ArrivalAirport))
             errorList.Add("- Arrival airport is required.");
 
@@ -103,7 +98,6 @@ public static class FlightValidation
     public static void DisplayValidationRules()
     {
         var flightType = typeof(Flight);
-
         Console.WriteLine("\n--- Validation Rules ---");
 
         foreach (var property in flightType.GetProperties())

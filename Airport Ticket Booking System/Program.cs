@@ -1,11 +1,5 @@
-﻿using Airport_Ticket_Booking_System.Entites.BookingManagement;
-using Airport_Ticket_Booking_System.Entites.FlightManagement;
-using Airport_Ticket_Booking_System.Entites.FlightManagment;
-using Airport_Ticket_Booking_System.Entites.PassengersManager;
-using Airport_Ticket_Booking_System.UI;
+﻿using Airport_Ticket_Booking_System.UI;
 using Airport_Ticket_Booking_System.Utilities;
-using System.Security.Cryptography;
-
 namespace Airport_Ticket_Booking_System;
 internal class Program
 {
@@ -41,14 +35,8 @@ internal class Program
                     Console.WriteLine("Invalid choice. Please select a valid option.");
                     break;
             }
-
         }
         
         Console.WriteLine("Thank you for using the Airport Ticket Booking System!");
     }
-
-   
-
-
-   
 }

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Security.Claims;
-using Airport_Ticket_Booking_System.Entites.PassengersManager;
+﻿
 using Airport_Ticket_Booking_System.Entites.FlightManagement;
 using Airport_Ticket_Booking_System.Utilities;
 
@@ -25,6 +16,4 @@ public static class FlightRepository
         Flights.Add(flight);
         return flight;
     }
-
-
 }

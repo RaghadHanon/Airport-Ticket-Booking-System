@@ -1,22 +1,14 @@
-﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
-using Airport_Ticket_Booking_System.Entites.PassengersManager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Airport_Ticket_Booking_System.Entites.PassengersManager;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Airport_Ticket_Booking_System.Presentation;
 public class PassengerPrinter
 {
     private readonly Passenger _passenger;
-
     public PassengerPrinter(Passenger passenger)
     {
         _passenger = passenger ?? throw new ArgumentNullException(nameof(passenger));
     }
-
     public string PrintPassenger()
     {
         return $" Passenger: {_passenger.Id}, Name: {_passenger.Name}";

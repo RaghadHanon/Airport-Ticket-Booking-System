@@ -1,11 +1,4 @@
 ﻿using Airport_Ticket_Booking_System.Entites.BookingManagement;
-using Airport_Ticket_Booking_System.Entites.FlightManagment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Airport_Ticket_Booking_System.Entites.PassengersManager;
 
 public class Passenger
@@ -20,7 +13,5 @@ public class Passenger
     }
     public List<Book> Bookings { get; } = new List<Book>();
     public string Name { get; set; }
- 
-   
 }
 

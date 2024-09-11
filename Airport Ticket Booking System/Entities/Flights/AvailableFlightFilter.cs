@@ -26,7 +26,6 @@ public static class AvailableFlightFilter
         }
         string flights = FlightPrinter.PrintFlights(FlightQuery.GetByDepartureDate(date), $"Available flights departing at {date}:\n ");
         Console.WriteLine(flights);
-
     }
     public static void ShowFlightsByPrice(decimal price)
     {

@@ -1,9 +1,4 @@
 ﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.UI;
 public static class InputGathering
@@ -17,7 +12,6 @@ public static class InputGathering
         Console.WriteLine("Invalid input.");
         return null;
     }
-
     public static int? GetFlightId()
     {
         Console.WriteLine("Please enter the flight ID you want to book:");
@@ -53,13 +47,11 @@ public static class InputGathering
         Console.WriteLine("Invalid input.");
         return null;
     }
-
     public static string GetStringInput(string inputType)
     {
         Console.WriteLine($"Enter {inputType}:");
         return Console.ReadLine();
     }
-
     public static DateTime? GetDateInput()
     {
         Console.WriteLine("Enter departure date (MM-DD-YYYY):");

@@ -1,9 +1,4 @@
 ﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.Entites.FlightManagement;
 public static class FlightQuery
@@ -37,7 +32,6 @@ public static class FlightQuery
 
         return FlightRepository.Flights.Where(f => f.DepartureCountry == departureCountry).ToList();
     }
-
     public static List<Flight> GetByDestinationCountry(string destinationCountry, DateTime? date = null)
     {
         if (date.HasValue)
@@ -59,5 +53,4 @@ public static class FlightQuery
 
         return FlightRepository.Flights.Where(f => f.ArrivalAirport == arrivalAirport).ToList();
     }
-
 }

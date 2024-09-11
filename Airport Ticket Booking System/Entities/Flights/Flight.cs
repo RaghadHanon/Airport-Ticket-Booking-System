@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using Airport_Ticket_Booking_System.Utilities;
-using System.IO;
+﻿using Airport_Ticket_Booking_System.Utilities;
 
 namespace Airport_Ticket_Booking_System.Entites.FlightManagment;
 public class Flight
@@ -33,11 +24,8 @@ public class Flight
             { ClassOfFlight.Business, businessPrice},
             { ClassOfFlight.FirstClass, firstClassPrice }
         };
-
     }
-
     public int Id { get { return _id; } }
-
     public Dictionary<ClassOfFlight, decimal> ClassPriceMap { get => _classPriceMap; }
 
     [FieldType("Decimal"), ValidationRule("Required, Must be greater than 0")]
@@ -49,25 +37,18 @@ public class Flight
     [FieldType("Decimal"), ValidationRule("Required, Must be greater than 0")]
     public decimal FirstClassPrice { get => _classPriceMap[ClassOfFlight.FirstClass]; set { _classPriceMap[ClassOfFlight.FirstClass] = value; } }
 
-
-
     [FieldType("Free Text"), ValidationRule("Required")]
     public string? DepartureCountry { get; set; }
 
     [FieldType("Free Text"), ValidationRule("Required")]
     public string? DestinationCountry { get; set; }
 
-
     [FieldType("Date Time"), ValidationRule("Required, Allowed Range: Today to Future")]
     public DateTime? DepartureDate { get; set; }
-
 
     [FieldType("Free Text"), ValidationRule("Required")]
     public string? DepartureAirport { get; set; }
 
     [FieldType("Free Text"), ValidationRule("Required")]
     public string? ArrivalAirport { get; set; }
-
-
-   
 }

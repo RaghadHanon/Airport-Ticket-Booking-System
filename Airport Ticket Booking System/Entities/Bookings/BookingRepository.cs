@@ -5,14 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Airport_Ticket_Booking_System.Entites.BookingManagement
+namespace Airport_Ticket_Booking_System.Entites.BookingManagement;
+public class BookingRepository
 {
-    public class BookingRepository
-    {
-
-        private static List<Book> _bookings= new List<Book>();
-        public static List<Book> Bookings { get => _bookings; }
-        
-
-    }
+    private static List<Book> _bookings = new List<Book>();
+    public static List<Book> Bookings { get => _bookings; }
 }

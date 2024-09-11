@@ -4,12 +4,6 @@ using Airport_Ticket_Booking_System.Entites.FlightManagment;
 using Airport_Ticket_Booking_System.Entites.PassengersManager;
 using Airport_Ticket_Booking_System.Entities.Flights;
 using Airport_Ticket_Booking_System.Presentation;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airport_Ticket_Booking_System.UI;
 public static class PassengerUI
@@ -53,7 +47,6 @@ public static class PassengerUI
             }
         }
     }
-
     public static void BookAFlight()
     {
         int? passengerId = InputGathering.GetPassengerId();
@@ -84,7 +77,6 @@ public static class PassengerUI
             Console.WriteLine($"{ex.Message}");
         }
     }
-
     public static void SearchAvailableFlights()
     {
         bool isExit = false;
@@ -153,7 +145,6 @@ public static class PassengerUI
             }
         }
     }
-
     public static void ManageBookings()
     {
         int? passengerId = InputGathering.GetPassengerId();
@@ -198,7 +189,6 @@ public static class PassengerUI
             }
         }
     }
-
     private static void CancleBooking(int passengerId)
     {
         int? cancelBookingId = InputGathering.GetBookingId("cancel");
@@ -214,7 +204,6 @@ public static class PassengerUI
             Console.WriteLine($"{ex.Message}");
         }
     }
-
     private static void ModifyBooking(int passengerId)
     {
         int? bookingId = InputGathering.GetBookingId("modify");
@@ -256,7 +245,6 @@ public static class PassengerUI
             }
         }
     }
-
     private static void ViewAllBookings(int passengerId)
     {
         try
@@ -268,5 +256,4 @@ public static class PassengerUI
             Console.WriteLine($"{ex.Message}");
         }
     }
-
 }
