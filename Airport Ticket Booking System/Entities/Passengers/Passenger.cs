@@ -1,6 +1,6 @@
-﻿using Airport_Ticket_Booking_System.Entites.BookingManagement;
-namespace Airport_Ticket_Booking_System.Entites.PassengersManager;
+﻿using Airport_Ticket_Booking_System.Entities.Bookings;
 
+namespace Airport_Ticket_Booking_System.Entities.Passenegers;
 public class Passenger
 {
     private static int _currentId = 0;

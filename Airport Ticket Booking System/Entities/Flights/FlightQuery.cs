@@ -1,56 +1,43 @@
-﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
-
-namespace Airport_Ticket_Booking_System.Entites.FlightManagement;
+﻿namespace Airport_Ticket_Booking_System.Entities.Flights;
 public static class FlightQuery
 {
-    public static List<Flight> GetAll(DateTime? date = null)
-    {
-        if (date.HasValue)
-            return FlightRepository.Flights.Where(f => f.DepartureDate?.CompareTo(date) >= 0).ToList();
-
-        return FlightRepository.Flights;
-    }
     public static Flight? GetById(int? id)
     {
         return FlightRepository.Flights.FirstOrDefault(f => f.Id == id);
     }
-    public static List<Flight> GetByPrice(decimal price, DateTime? date = null)
-    {
-        if (date.HasValue)
-            return FlightRepository.Flights.Where(f => f.ClassPriceMap.Values.Contains(price) && f.DepartureDate?.CompareTo(date) >= 0).ToList();
 
-        return FlightRepository.Flights.Where(f => f.ClassPriceMap.Values.Contains(price)).ToList();
-    }
-    public static List<Flight> GetByDepartureDate(DateTime? departureDate)
-    {
-        return FlightRepository.Flights.Where(f => f.DepartureDate == departureDate).ToList();
-    }
-    public static List<Flight> GetByDepartureCountry(string departureCountry, DateTime? date = null)
-    {
-        if (date.HasValue)
-            return FlightRepository.Flights.Where(f => f.DepartureCountry == departureCountry && f.DepartureDate?.CompareTo(date) >= 0).ToList();
+    public static List<Flight> FilterFlights(
+        DateTime? departureDate = null,
+        string? departureCountry = null,
+        string? destinationCountry = null,
+        string? departureAirport = null,
+        string? arrivalAirport = null,
+        decimal? price = null,
+        DateTime? afterDate = null)
+    { 
+        var query = FlightRepository.Flights.AsQueryable();
 
-        return FlightRepository.Flights.Where(f => f.DepartureCountry == departureCountry).ToList();
-    }
-    public static List<Flight> GetByDestinationCountry(string destinationCountry, DateTime? date = null)
-    {
-        if (date.HasValue)
-            return FlightRepository.Flights.Where(f => f.DestinationCountry == destinationCountry && f.DepartureDate?.CompareTo(date) >= 0).ToList();
+        if (departureDate.HasValue)
+            query = query.Where(f => f.DepartureDate  == departureDate);
 
-        return FlightRepository.Flights.Where(f => f.DestinationCountry == destinationCountry).ToList();
-    }
-    public static List<Flight> GetByDepartureAirport(string departureAirport, DateTime? date = null)
-    {
-        if (date.HasValue)
-            return FlightRepository.Flights.Where(f => f.DepartureAirport == departureAirport && f.DepartureDate?.CompareTo(date) >= 0).ToList();
+        if (!string.IsNullOrEmpty(departureCountry))
+            query = query.Where(f => f.DepartureCountry == departureCountry);
 
-        return FlightRepository.Flights.Where(f => f.DepartureAirport == departureAirport).ToList();
-    }
-    public static List<Flight> GetByArrivalAirport(string arrivalAirport, DateTime? date = null)
-    {
-        if (date.HasValue)
-            return FlightRepository.Flights.Where(f => f.ArrivalAirport == arrivalAirport && f.DepartureDate?.CompareTo(date) >= 0).ToList();
+        if (!string.IsNullOrEmpty(destinationCountry))
+            query = query.Where(f => f.DestinationCountry == destinationCountry);
 
-        return FlightRepository.Flights.Where(f => f.ArrivalAirport == arrivalAirport).ToList();
+        if (!string.IsNullOrEmpty(departureAirport))
+            query = query.Where(f => f.DepartureAirport == departureAirport);
+
+        if (!string.IsNullOrEmpty(arrivalAirport))
+            query = query.Where(f => f.ArrivalAirport == arrivalAirport);
+
+        if (price.HasValue)
+            query = query.Where(f => f.ClassPriceMap.Values.Contains(price.Value));
+
+        if (afterDate.HasValue)
+            query = query.Where(f => f.DepartureDate >= afterDate.Value);
+
+        return query.ToList();
     }
 }

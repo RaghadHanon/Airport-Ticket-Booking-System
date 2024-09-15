@@ -1,5 +1,5 @@
-﻿using Airport_Ticket_Booking_System.Entites.ManagerManagemnt;
-using Airport_Ticket_Booking_System.Entites.PassengersManager;
+﻿using Airport_Ticket_Booking_System.Entities.DataManagement;
+using Airport_Ticket_Booking_System.Entities.Passenegers;
 
 namespace Airport_Ticket_Booking_System.Utilities;
 public static class SampleData

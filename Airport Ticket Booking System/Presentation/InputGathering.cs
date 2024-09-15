@@ -1,6 +1,7 @@
-﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
+﻿using Airport_Ticket_Booking_System.Entities.Flights;
+using Airport_Ticket_Booking_System.Utilities;
 
-namespace Airport_Ticket_Booking_System.UI;
+namespace Airport_Ticket_Booking_System.Presentation;
 public static class InputGathering
 {
     public static int? GetPassengerId()
@@ -9,16 +10,17 @@ public static class InputGathering
         if (int.TryParse(Console.ReadLine(), out int passengerId))
             return passengerId;
         
-        Console.WriteLine("Invalid input.");
+        Console.WriteLine(ErrorMessages.InvalidInput);
         return null;
     }
+
     public static int? GetFlightId()
     {
         Console.WriteLine("Please enter the flight ID you want to book:");
         if (int.TryParse(Console.ReadLine(), out int flightId))
             return flightId;
         
-        Console.WriteLine("Invalid input.");
+        Console.WriteLine(ErrorMessages.InvalidInput);
         return null;
     }
 
@@ -35,45 +37,50 @@ public static class InputGathering
                 _ => null
             };
         }
-        Console.WriteLine("Invalid input.");
+        Console.WriteLine(ErrorMessages.InvalidInput);
         return null;
     }
+
     public static decimal? GetPriceInput()
     {
         Console.WriteLine("Enter price:");
         if (decimal.TryParse(Console.ReadLine(), out decimal price))
             return price;
         
-        Console.WriteLine("Invalid input.");
+        Console.WriteLine(ErrorMessages.InvalidInput);
         return null;
     }
+
     public static string GetStringInput(string inputType)
     {
         Console.WriteLine($"Enter {inputType}:");
         return Console.ReadLine();
     }
+
     public static DateTime? GetDateInput()
     {
         Console.WriteLine("Enter departure date (MM-DD-YYYY):");
         if (DateTime.TryParse(Console.ReadLine(), out DateTime date))
             return date;
         
-        Console.WriteLine("Invalid date.");
+        Console.WriteLine(ErrorMessages.InvalidInput);
         return null;
     }
+
     public static bool ConfirmModification(string itemType)
     {
         Console.WriteLine($"Do you want to change the {itemType}? (y/n)");
-        string response = Console.ReadLine()?.ToLower();
+        var response = Console.ReadLine()?.ToLower();
         return response == "y";
     }
+
     public static int? GetBookingId(string action)
     {
         Console.WriteLine($"Enter booking ID to {action}:");
         if (int.TryParse(Console.ReadLine(), out int bookingId))
             return bookingId;
         
-        Console.WriteLine("Invalid input.");
+        Console.WriteLine(ErrorMessages.InvalidInput);
         return null;
     }
 }

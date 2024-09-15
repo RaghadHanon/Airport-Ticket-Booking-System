@@ -1,11 +1,10 @@
 ﻿using Airport_Ticket_Booking_System.Utilities;
 
-namespace Airport_Ticket_Booking_System.Entites.FlightManagment;
+namespace Airport_Ticket_Booking_System.Entities.Flights;
 public class Flight
 {
     private static int _currentId = 0;
     private readonly int _id;
-
     private Dictionary<ClassOfFlight, decimal> _classPriceMap;
 
     public Flight(decimal economyPrice, decimal businessPrice, decimal firstClassPrice, string departureCountry, string destinationCountry, DateTime? departureDate,
@@ -17,7 +16,6 @@ public class Flight
         DepartureDate = departureDate;
         DepartureAirport = departureAirport;
         ArrivalAirport = arrivalAirport;
-
         _classPriceMap = new Dictionary<ClassOfFlight, decimal>
         {
             { ClassOfFlight.Economy, economyPrice },

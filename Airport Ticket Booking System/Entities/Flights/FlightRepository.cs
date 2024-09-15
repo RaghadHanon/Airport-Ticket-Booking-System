@@ -1,8 +1,6 @@
-﻿
-using Airport_Ticket_Booking_System.Entites.FlightManagement;
-using Airport_Ticket_Booking_System.Utilities;
+﻿using Airport_Ticket_Booking_System.Utilities;
 
-namespace Airport_Ticket_Booking_System.Entites.FlightManagment;
+namespace Airport_Ticket_Booking_System.Entities.Flights;
 public static class FlightRepository
 {
     private static List<Flight> _flights = new List<Flight>();

@@ -1,27 +1,24 @@
-﻿using Airport_Ticket_Booking_System.Entites.PassengersManager;
+﻿using Airport_Ticket_Booking_System.Entities.Passenegers;
+using Airport_Ticket_Booking_System.Utilities;
 using System.Text;
 
 namespace Airport_Ticket_Booking_System.Presentation;
-public class PassengerPrinter
+public static class PassengerPrinter
 {
-    private readonly Passenger _passenger;
-    public PassengerPrinter(Passenger passenger)
+    public static string PrintPassenger(Passenger passenger)
     {
-        _passenger = passenger ?? throw new ArgumentNullException(nameof(passenger));
+        return $" Passenger: {passenger.Id}, Name: {passenger.Name}";
     }
-    public string PrintPassenger()
-    {
-        return $" Passenger: {_passenger.Id}, Name: {_passenger.Name}";
-    }
+
     public static string PrintPassengers(IEnumerable<Passenger> passengers, string? title =null)
     {
         if (passengers == null || !passengers.Any())
         {
-            return "No passengers available.";
+            return ErrorMessages.NoAvailableFlights;
         }
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         sb.Append(title);
-        sb.Append(string.Join("\n", passengers.Select(p => new PassengerPrinter(p).PrintPassenger())));
+        sb.Append(string.Join("\n", passengers.Select(p => PassengerPrinter.PrintPassenger(p))));
         return sb.ToString();
     }
 }

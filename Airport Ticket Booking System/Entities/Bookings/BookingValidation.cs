@@ -1,67 +1,62 @@
-﻿using Airport_Ticket_Booking_System.Entites.FlightManagement;
-using Airport_Ticket_Booking_System.Entites.FlightManagment;
-using Airport_Ticket_Booking_System.Entites.PassengersManager;
-using Airport_Ticket_Booking_System.Presentation;
+﻿using Airport_Ticket_Booking_System.Presentation;
+using Airport_Ticket_Booking_System.Utilities;
 using System.Text;
 
-namespace Airport_Ticket_Booking_System.Entites.BookingManagement;
+namespace Airport_Ticket_Booking_System.Entities.Bookings;
 public static class BookingValidation
 {
     public static bool ValidateBook(Book booking, out string errors)
     {
         if (booking == null)
         {
-            errors = $"- Booking can't be null.\n";
+            errors = ErrorMessages.BookingCannotBeNull;
             return true;
         }
-        StringBuilder stringBuilder = new StringBuilder();
-
-        if (!ClassOfFlightValidation(booking, out string classOfFlightErrors))
+        var stringBuilder = new StringBuilder();
+        if (!ValidateClassOfFlight(booking, out string classOfFlightErrors))
             stringBuilder.Append($"{classOfFlightErrors}\n");
 
-        if (!PassengerValidation(booking, out string passengerErrors))
+        if (!ValidatePassenger(booking, out string passengerErrors))
             stringBuilder.Append($"{passengerErrors}\n");
 
-        if (!FlightValidation(booking, out string flightErrors))
+        if (!ValidateFlight(booking, out string flightErrors))
             stringBuilder.Append($"{flightErrors}\n");
 
-        if (!BookingCollisionsValidation(booking, out string collisionErrors))
+        if (!ValidateBookingCollisions(booking, out string collisionErrors))
             stringBuilder.Append($"{collisionErrors}\n");
 
         errors = stringBuilder.ToString();
         return string.IsNullOrEmpty(errors);
     }
-    public static bool ClassOfFlightValidation(Book booking, out string classOfFlightErrors)
+    public static bool ValidateClassOfFlight(Book booking, out string classOfFlightErrors)
     {
         classOfFlightErrors= string.Empty;
-
         if (booking.ClassOfFlight is null )
-            classOfFlightErrors =($"- Flight Class can't be null and must be one of these: Economy, Business, First Class.");
+            classOfFlightErrors =(ErrorMessages.ClassOfFlightCannotBeNull);
 
         return string.IsNullOrEmpty(classOfFlightErrors);
     }
-    public static bool PassengerValidation(Book booking, out string passengerErrors)
+    public static bool ValidatePassenger(Book booking, out string passengerErrors)
     {
         passengerErrors= string.Empty;  
-
         if (booking.Passenger == null)
-            passengerErrors=($"- Passenger not found.");
+            passengerErrors=(ErrorMessages.PassengerNotFound);
 
         return string.IsNullOrEmpty(passengerErrors);
     }
-    public static bool FlightValidation(Book booking, out string flightErrors)
+    public static bool ValidateFlight(Book booking, out string flightErrors)
     {
         var errorList = new List<string>();
         if (booking.Flight == null)
-            errorList.Add("- Flight cannot be null and must be a valid scheduled flight.");
+            errorList.Add($"{ErrorMessages.FlightCannotBeNull}\n{ErrorMessages.FlightMustBaValidScheduledFlight}");
 
-        if (booking?.Flight?.DepartureDate <= DateTime.Now.AddHours(2))
-            errorList.Add("- Departure date must be at least 2 hours from the current time.");
+        if (booking?.Flight?.DepartureDate <= DateTime.UtcNow.AddHours(2))
+            errorList.Add(ErrorMessages.DepartureDateTooCloseForBooking);
 
         flightErrors = string.Join("\n", errorList);
         return !errorList.Any();
     }
-    public static bool BookingCollisionsValidation(Book booking, out string collisionErrors)
+    public static bool ValidateBookingCollisions(Book booking, out string collisionErrors)
     {
         var passengerBookings = booking!.Passenger?.Bookings;
         var currentBookingFlight = booking!.Flight;
@@ -73,7 +68,7 @@ public static class BookingValidation
             collidingBooking = passengerBookings!.Where(b => b?.Flight?.DepartureDate == currentBookingFlight?.DepartureDate).ToList();
 
             if (collidingBooking.Any())
-                collisionErrors = BookPrinter.PrintBookings(collidingBooking, $"- The flight on {currentBookingFlight.DepartureDate} collides with an existing booking/s:\n");
+                collisionErrors = BookPrinter.PrintBookings(collidingBooking, $" {ErrorMessages.FlightCollisionMessage} on {currentBookingFlight.DepartureDate}:\n");
         }
         return string.IsNullOrEmpty(collisionErrors);
     }

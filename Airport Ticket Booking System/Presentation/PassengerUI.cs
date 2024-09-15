@@ -1,16 +1,15 @@
-﻿using Airport_Ticket_Booking_System.Entites.BookingManagement;
-using Airport_Ticket_Booking_System.Entites.FlightManagement;
-using Airport_Ticket_Booking_System.Entites.FlightManagment;
-using Airport_Ticket_Booking_System.Entites.PassengersManager;
+﻿using Airport_Ticket_Booking_System.Entities.Bookings;
 using Airport_Ticket_Booking_System.Entities.Flights;
-using Airport_Ticket_Booking_System.Presentation;
+using Airport_Ticket_Booking_System.Entities.Passenegers;
+using Airport_Ticket_Booking_System.Utilities;
+using System;
 
-namespace Airport_Ticket_Booking_System.UI;
+namespace Airport_Ticket_Booking_System.Presentation;
 public static class PassengerUI
 {
     public static void ShowMenu()
     {
-        bool isExit = false;
+        var isExit = false;
         while (!isExit)
         {
             Console.WriteLine("""
@@ -42,44 +41,44 @@ public static class PassengerUI
                     isExit = true;
                     break;
                 default:
-                    Console.WriteLine("Invalid choice. Please select a valid option.");
+                    Console.WriteLine(ErrorMessages.InvalidChoice);
                     break;
             }
         }
     }
+
     public static void BookAFlight()
     {
-        int? passengerId = InputGathering.GetPassengerId();
+        var passengerId = InputGathering.GetPassengerId();
         if (passengerId == null) return;
-        Passenger? passenger = PassenegerRepository.GetById(passengerId.Value);
+            var passenger = PassenegerRepository.GetById(passengerId.Value);
 
-
-        int? flightId = InputGathering.GetFlightId();
+        var flightId = InputGathering.GetFlightId();
         if (flightId == null) return;
-        Flight? flight = FlightQuery.GetById(flightId.Value);
+            var flight = FlightQuery.GetById(flightId.Value);
 
-
-        ClassOfFlight? classOfFlight = InputGathering.GetClassOfFlightInput();
+        var classOfFlight = InputGathering.GetClassOfFlightInput();
         if (classOfFlight == null)
         {
-            Console.WriteLine("Invalid flight class.");
+            Console.WriteLine(ErrorMessages.InvalidFlightClass);
             return;
         }
 
         try
         {
-            Book? booking = BookingService.BookAFlight(new Book(classOfFlight, flight, passenger));
+            var booking = BookingService.BookAFlight(new Book(classOfFlight, flight, passenger));
             Console.WriteLine("Booking successful!");
-            Console.WriteLine(new BookPrinter(booking).PrintBooking());
+            Console.WriteLine(BookPrinter.PrintBooking(booking));
         }
         catch (Exception ex)
         {
             Console.WriteLine($"{ex.Message}");
         }
     }
+
     public static void SearchAvailableFlights()
     {
-        bool isExit = false;
+        var isExit = false;
         while (!isExit)
         {
             Console.WriteLine("""
@@ -98,61 +97,53 @@ public static class PassengerUI
                           """);
 
             int.TryParse(Console.ReadLine(), out int searchOption);
-
             switch (searchOption)
             {
                 case 1:
-                    decimal? price = InputGathering.GetPriceInput();
+                    var price = InputGathering.GetPriceInput();
                     if (price != null) AvailableFlightFilter.ShowFlightsByPrice(price.Value);
                     break;
-
                 case 2:
-                    string departureCountry = InputGathering.GetStringInput("departure country");
+                    var departureCountry = InputGathering.GetStringInput("departure country");
                     AvailableFlightFilter.ShowFlightsByDepartureCountry(departureCountry);
                     break;
-
                 case 3:
-                    string destinationCountry = InputGathering.GetStringInput("destination country");
+                    var destinationCountry = InputGathering.GetStringInput("destination country");
                     AvailableFlightFilter.ShowFlightsByDestinationCountry(destinationCountry);
                     break;
-
                 case 4:
-                    string departureAirport = InputGathering.GetStringInput("departure airport");
+                    var departureAirport = InputGathering.GetStringInput("departure airport");
                     AvailableFlightFilter.ShowFlightsByDepartureAirport(departureAirport);
                     break;
-
                 case 5:
-                    string arrivalAirport = InputGathering.GetStringInput("arrival airport");
+                    var arrivalAirport = InputGathering.GetStringInput("arrival airport");
                     AvailableFlightFilter.ShowFlightsByArrivalAirport(arrivalAirport);
                     break;
-
                 case 6:
-                    DateTime? departureDate = InputGathering.GetDateInput();
+                    var departureDate = InputGathering.GetDateInput();
                     if (departureDate != null)
                     {
                         AvailableFlightFilter.ShowAvailableFlightsByDate(departureDate.Value);
                         Console.WriteLine($"Selected Date: {departureDate.Value:MM-dd-yyyy}");
                     }
                     break;
-
                 case 7:
                     isExit = true;
                     break;
-
                 default:
-                    Console.WriteLine("Invalid option.");
+                    Console.WriteLine(ErrorMessages.InvalidOption);
                     break;
             }
         }
     }
+
     public static void ManageBookings()
     {
-        int? passengerId = InputGathering.GetPassengerId();
+        var passengerId = InputGathering.GetPassengerId();
         if (passengerId == null) return;
 
         Passenger? passenger = PassenegerRepository.GetById(passengerId.Value);
-
-        bool isExit = false;
+        var isExit = false;
         while (!isExit)
         {
             Console.WriteLine("""
@@ -161,6 +152,7 @@ public static class PassengerUI
                                     2. Modify booking
                                     3. Cancel booking
                                     4. Exit
+
                                     Select an option:
                                   """);
 
@@ -170,28 +162,25 @@ public static class PassengerUI
                 case 1:
                     ViewAllBookings(passengerId.Value);
                     break;
-
                 case 2:
                     ModifyBooking(passengerId.Value);
                     break;
-
                 case 3:
                     CancleBooking(passengerId.Value);
                     break;
-
                 case 4:
                     isExit = true;
                     break;
-
                 default:
-                    Console.WriteLine("Invalid option.");
+                    Console.WriteLine(ErrorMessages.InvalidOption);
                     break;
             }
         }
     }
+
     private static void CancleBooking(int passengerId)
     {
-        int? cancelBookingId = InputGathering.GetBookingId("cancel");
+        var cancelBookingId = InputGathering.GetBookingId("cancel");
         if (cancelBookingId == null) return;
 
         try
@@ -204,20 +193,21 @@ public static class PassengerUI
             Console.WriteLine($"{ex.Message}");
         }
     }
+
     private static void ModifyBooking(int passengerId)
     {
-        int? bookingId = InputGathering.GetBookingId("modify");
+        var bookingId = InputGathering.GetBookingId("modify");
         if (bookingId == null) return;
 
-        bool changeClass = InputGathering.ConfirmModification("class");
+        var changeClass = InputGathering.ConfirmModification("class");
         if (changeClass)
         {
-            ClassOfFlight? newClassOfFlight = InputGathering.GetClassOfFlightInput();
+            var newClassOfFlight = InputGathering.GetClassOfFlightInput();
             if (newClassOfFlight != null)
             {
                 try
                 {
-                    BookingService.ModifyBookingClassFlight(bookingId.Value, newClassOfFlight, passengerId);
+                    BookingService.ModifyBooking(bookingId: bookingId.Value, passengerId: passengerId, classOfFlight: newClassOfFlight);
                     Console.WriteLine("Booking class modified successfully.");
                 }
                 catch (Exception ex)
@@ -227,15 +217,15 @@ public static class PassengerUI
             }
         }
 
-        bool changeFlight = InputGathering.ConfirmModification("flight");
+        var changeFlight = InputGathering.ConfirmModification("flight");
         if (changeFlight)
         {
-            int? newFlightId = InputGathering.GetFlightId();
+            var newFlightId = InputGathering.GetFlightId();
             if (newFlightId != null)
             {
                 try
                 {
-                    BookingService.ModifyBookingFlight(bookingId.Value, passengerId, newFlightId.Value);
+                    BookingService.ModifyBooking(bookingId :bookingId.Value, passengerId: passengerId, flightId :newFlightId.Value);
                     Console.WriteLine("Booking flight modified successfully.");
                 }
                 catch (Exception ex)
@@ -245,11 +235,13 @@ public static class PassengerUI
             }
         }
     }
+
     private static void ViewAllBookings(int passengerId)
     {
         try
         {
-            BookingFilter.ShowBookingsByPassenger(passengerId);
+            string bookings = BookPrinter.PrintBookings(BookingService.ShowBookings(passengerId), $"--- Personal Bookings ---\n");
+            Console.WriteLine(bookings);
         }
         catch (Exception ex)
         {

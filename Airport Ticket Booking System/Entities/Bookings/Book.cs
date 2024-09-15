@@ -1,18 +1,18 @@
-﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
-using Airport_Ticket_Booking_System.Entites.PassengersManager;
+﻿using Airport_Ticket_Booking_System.Entities.Flights;
+using Airport_Ticket_Booking_System.Entities.Passenegers;
 
-namespace Airport_Ticket_Booking_System.Entites.BookingManagement;
+namespace Airport_Ticket_Booking_System.Entities.Bookings;
 public class Book
 {
     private static int _currentId = 0;
     private readonly int _id;
-    public Book(ClassOfFlight? classOfFlight, Flight? flgiht, Passenger? passenger)
+    public Book(ClassOfFlight? classOfFlight, Flight? flight, Passenger? passenger)
     {
         _id = ++_currentId;
         ClassOfFlight = classOfFlight;
-        Flight = flgiht;
+        Flight = flight;
         Passenger = passenger;
-        BookingDate = DateTime.Now;
+        BookingDate = DateTime.UtcNow;
     }
     public int Id { get { return _id; } }
     public ClassOfFlight? ClassOfFlight { get; set; }

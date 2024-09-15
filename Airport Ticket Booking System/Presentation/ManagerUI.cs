@@ -1,15 +1,14 @@
-﻿﻿using Airport_Ticket_Booking_System.Entites.BookingManagement;
-using Airport_Ticket_Booking_System.Entites.FlightManagement;
-using Airport_Ticket_Booking_System.Entites.FlightManagment;
-using Airport_Ticket_Booking_System.Entites.ManagerManagemnt;
-using Airport_Ticket_Booking_System.Presentation;
+﻿﻿using Airport_Ticket_Booking_System.Entities.Bookings;
+using Airport_Ticket_Booking_System.Entities.DataManagement;
+using Airport_Ticket_Booking_System.Entities.Flights;
+using Airport_Ticket_Booking_System.Utilities;
 
-namespace Airport_Ticket_Booking_System.UI; 
+namespace Airport_Ticket_Booking_System.Presentation; 
 public static class ManagerUI
 {
     public static void ShowMenu()
     {
-        bool isExit = false;
+        var isExit = false;
         while (!isExit)
         {
             Console.WriteLine("""
@@ -55,7 +54,7 @@ public static class ManagerUI
                     isExit = true;
                     break;
                 default:
-                    Console.WriteLine("Invalid option. Please try again.");
+                    Console.WriteLine(ErrorMessages.InvalidOption);
                     break;
             }
         }
@@ -63,11 +62,12 @@ public static class ManagerUI
 
     public static void VewAllFlights()
     {
-        Console.WriteLine(FlightPrinter.PrintFlights(FlightQuery.GetAll(), "\n--- Flights ---"));
+        Console.WriteLine(FlightPrinter.PrintFlights(FlightQuery.FilterFlights(), "\n--- Flights ---"));
     }
+
     public static void SearchBookings()
     {
-        bool isExit = false;
+        var isExit = false;
         while (!isExit)
         {
             Console.WriteLine("""
@@ -136,30 +136,31 @@ public static class ManagerUI
                     isExit = true;
                     break;
                 default:
-                    Console.WriteLine("Invalid option.");
+                    Console.WriteLine(ErrorMessages.InvalidOption);
                     break;
             }
         }
     }
+
     public static void BatchUploadFlights()
     {
         Console.Write("\nEnter the file name for batch flight upload (CSV format): ");
-        string filePath = Console.ReadLine();
+        var filePath = Console.ReadLine();
         try
         {
             DataRepository.BatchUploadFlights(filePath);
-            Console.WriteLine("Batch flight upload successful.");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error during batch upload: {ex.Message}");
+            Console.WriteLine($"{ErrorMessages.BatchUploadError} {ex.Message}");
         }
     }
+
     public static void ValidateFlightData()
     {
         DataRepository.ValidateImportedFlightData();
-        DataRepository.ViewValidationErrorList();
     }
+
     public static void DisplayValidationRules()
     {
         FlightValidation.DisplayValidationRules();

@@ -1,40 +1,37 @@
-﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
+﻿using Airport_Ticket_Booking_System.Entities.Flights;
+using Airport_Ticket_Booking_System.Utilities;
 using System.Text;
 
 namespace Airport_Ticket_Booking_System.Presentation;
-public class FlightPrinter
+public static class FlightPrinter
 {
-    private readonly Flight _flight;
-    public FlightPrinter(Flight flight)
-    {
-        _flight = flight ?? throw new ArgumentNullException(nameof(flight));
-    }
-    public string PrintFlight()
+    public static string PrintFlight(Flight flight)
     {
         return $$""" 
                   {
-                     FlightId {{_flight.Id}}:
-                     DepartureCountry: "{{_flight.DepartureCountry}}",
-                     DestinationCountry: "{{_flight.DestinationCountry}}\",
-                     DepartureDate: "{{_flight.DepartureDate}}",
-                     DepartureAirport: "{{_flight.DepartureAirport}}",
-                     ArrivalAirport: "{{_flight.ArrivalAirport}}"
+                     FlightId {{flight.Id}}:
+                     DepartureCountry: "{{flight.DepartureCountry}}",
+                     DestinationCountry: "{{flight.DestinationCountry}}\",
+                     DepartureDate: "{{flight.DepartureDate}}",
+                     DepartureAirport: "{{flight.DepartureAirport}}",
+                     ArrivalAirport: "{{flight.ArrivalAirport}}"
                      Prices: 
-                     - Economy: {{_flight.EconomyPrice}}$
-                     - Business: {{_flight.BusinessPrice}}$
-                     - First Class: {{_flight.FirstClassPrice}}$
+                     - Economy: {{flight.EconomyPrice}}$
+                     - Business: {{flight.BusinessPrice}}$
+                     - First Class: {{flight.FirstClassPrice}}$
                   }
                  """;
 
     }
+
     public static string PrintFlights(IEnumerable<Flight> flights,string? title =null)
     {
         if (flights == null || !flights.Any())
-            return "No flights available.";
-        
-        StringBuilder sb = new StringBuilder();
+            return ErrorMessages.NoAvailableFlights;
+
+        var sb = new StringBuilder();
         sb.Append(title);
-        sb.Append(string.Join("\n", flights.Select(f => new FlightPrinter(f).PrintFlight())));
+        sb.Append(string.Join("\n", flights.Select(f => PrintFlight(f))));
         return sb.ToString();
     }
 }

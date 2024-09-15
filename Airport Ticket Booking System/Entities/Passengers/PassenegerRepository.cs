@@ -1,4 +1,6 @@
-﻿namespace Airport_Ticket_Booking_System.Entites.PassengersManager;
+﻿using Airport_Ticket_Booking_System.Utilities;
+
+namespace Airport_Ticket_Booking_System.Entities.Passenegers;
 public static class PassenegerRepository
 {
     public static List<Passenger> Passengers { get; } = new List<Passenger>();
@@ -12,7 +14,7 @@ public static class PassenegerRepository
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error Adding passenger: {e.Message}");
+            Console.WriteLine($"{ErrorMessages.PassengerAddingError} {e.Message}");
         }
         return passenger;
     }

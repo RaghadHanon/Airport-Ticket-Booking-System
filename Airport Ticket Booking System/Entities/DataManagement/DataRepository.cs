@@ -1,19 +1,20 @@
-﻿using Airport_Ticket_Booking_System.Entites.FlightManagment;
+﻿using Airport_Ticket_Booking_System.Entities.Flights;
+using Airport_Ticket_Booking_System.Utilities;
 
-namespace Airport_Ticket_Booking_System.Entites.ManagerManagemnt;
+namespace Airport_Ticket_Booking_System.Entities.DataManagement;
 public static class DataRepository
 {
     private static List<string> ErrorList = new List<string>();
     private static string[]? Data;
     public static void BatchUploadFlights(string fileName)
     {
-        string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        string filePath = Path.Combine(baseDirectory, @"..\..\..\..\", fileName);
-        string fullPath = Path.GetFullPath(filePath);
+        var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        var filePath = Path.Combine(baseDirectory, @"..\..\..\..\", fileName);
+        var fullPath = Path.GetFullPath(filePath);
 
         if (!File.Exists(fullPath))
         {
-            Console.WriteLine("File not found.");
+            Console.WriteLine(ErrorMessages.FileNotFount);
             return;
         }
         try
@@ -21,13 +22,14 @@ public static class DataRepository
             Data = File.ReadAllLines(filePath);
             if (Data.Length == 0)
             {
-                Console.WriteLine("The file is empty.");
+                Console.WriteLine(ErrorMessages.FileEmpty);
                 return;
             }
+            Console.WriteLine("Batch flight upload successful.");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error processing file: {ex.Message}");
+            Console.WriteLine($"{ErrorMessages.ProcessingFileError} {ex.Message}");
         }
     }
 
@@ -35,7 +37,7 @@ public static class DataRepository
     {
         if (Data == null || !Data.Any())
         {
-            ErrorList.Add("No new data found.");
+            ErrorList.Add(ErrorMessages.NoNewDataFound);
             return ErrorList;
         }
         foreach (var line in Data?.Skip(1))
@@ -51,7 +53,6 @@ public static class DataRepository
                 departureAirport: flightDetails[6],
                 arrivalAirport: flightDetails[7]
                 );
-
                 try
                 {
                     FlightRepository.AddFlight(flight);
