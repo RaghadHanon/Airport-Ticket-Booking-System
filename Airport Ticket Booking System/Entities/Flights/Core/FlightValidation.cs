@@ -14,7 +14,7 @@ public static class FlightValidation
         }
 
         var stringBuilder = new StringBuilder();
-        if (!ValidtePrice(flight, out string priceErrors))
+        if (!ValidatePrice(flight, out string priceErrors))
             stringBuilder.Append($"{priceErrors}\n");
 
         if (!ValidateDepartureDate(flight, out string dateErrors))
@@ -30,7 +30,7 @@ public static class FlightValidation
         return string.IsNullOrEmpty(errors);
     }
 
-    public static bool ValidtePrice(Flight flight, out string priceErrors)
+    public static bool ValidatePrice(Flight flight, out string priceErrors)
     {
         var errorList = new List<string>();
         if (flight.EconomyPrice <= 0)

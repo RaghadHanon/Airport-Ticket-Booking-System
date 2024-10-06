@@ -2,7 +2,7 @@
 using Airport_Ticket_Booking_System.Entities.Passengers.Core;
 
 namespace Airport_Ticket_Booking_System.Entities.Bookings.Core;
-public class Book
+public class Book 
 {
     private static int _currentId = 0;
     private readonly int _id;

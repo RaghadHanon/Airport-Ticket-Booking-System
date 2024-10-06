@@ -5,7 +5,7 @@ using Airport_Ticket_Booking_System.Entities.Flights.Core;
 using Airport_Ticket_Booking_System.Entities.Passengers.Core;
 using Moq;
 
-namespace Airport_Ticket_Booking_System_Tests;
+namespace Airport_Ticket_Booking_System_Tests.BookingQueryTests;
 public class BookingsQueryFixture
 {
     public BookingQuery sut { get; private set; }
