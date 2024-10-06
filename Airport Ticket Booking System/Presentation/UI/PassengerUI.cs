@@ -1,13 +1,29 @@
-﻿using Airport_Ticket_Booking_System.Entities.Bookings;
-using Airport_Ticket_Booking_System.Entities.Flights;
-using Airport_Ticket_Booking_System.Entities.Passenegers;
+﻿using Airport_Ticket_Booking_System.Entities.Bookings.Core;
+using Airport_Ticket_Booking_System.Entities.Bookings.Service;
+using Airport_Ticket_Booking_System.Entities.Flights.Filter;
+using Airport_Ticket_Booking_System.Entities.Flights.Query;
+using Airport_Ticket_Booking_System.Entities.Passengers.Core;
+using Airport_Ticket_Booking_System.Entities.Passengers.Repository;
+using Airport_Ticket_Booking_System.Presentation.EntitiesPrinters;
 using Airport_Ticket_Booking_System.Utilities;
 using System;
 
 namespace Airport_Ticket_Booking_System.Presentation;
-public static class PassengerUI
+public class PassengerUI
 {
-    public static void ShowMenu()
+    public IAvailableFlightFilter AvailableFlightFilter { get; }
+    public IPassenegerRepository PassenegerRepository { get; }
+    public IFlightQuery FlightQuery { get; }
+    public IBookingService BookingService { get; }
+    public PassengerUI(IAvailableFlightFilter availableFlightFilter, IPassenegerRepository passenegerRepository, IFlightQuery flightQuery, IBookingService bookingService)
+    {
+        AvailableFlightFilter = availableFlightFilter;
+        PassenegerRepository = passenegerRepository;
+        FlightQuery = flightQuery;
+        BookingService = bookingService;
+    }
+
+    public void ShowMenu()
     {
         var isExit = false;
         while (!isExit)
@@ -47,7 +63,7 @@ public static class PassengerUI
         }
     }
 
-    public static void BookAFlight()
+    public void BookAFlight()
     {
         var passengerId = InputGathering.GetPassengerId();
         if (passengerId == null) return;
@@ -76,7 +92,7 @@ public static class PassengerUI
         }
     }
 
-    public static void SearchAvailableFlights()
+    public void SearchAvailableFlights()
     {
         var isExit = false;
         while (!isExit)
@@ -101,7 +117,8 @@ public static class PassengerUI
             {
                 case 1:
                     var price = InputGathering.GetPriceInput();
-                    if (price != null) AvailableFlightFilter.ShowFlightsByPrice(price.Value);
+                    if (price != null) 
+                        AvailableFlightFilter.ShowFlightsByPrice(price.Value);
                     break;
                 case 2:
                     var departureCountry = InputGathering.GetStringInput("departure country");
@@ -137,7 +154,7 @@ public static class PassengerUI
         }
     }
 
-    public static void ManageBookings()
+    public void ManageBookings()
     {
         var passengerId = InputGathering.GetPassengerId();
         if (passengerId == null) return;
@@ -178,7 +195,7 @@ public static class PassengerUI
         }
     }
 
-    private static void CancleBooking(int passengerId)
+    private void CancleBooking(int passengerId)
     {
         var cancelBookingId = InputGathering.GetBookingId("cancel");
         if (cancelBookingId == null) return;
@@ -194,7 +211,7 @@ public static class PassengerUI
         }
     }
 
-    private static void ModifyBooking(int passengerId)
+    private void ModifyBooking(int passengerId)
     {
         var bookingId = InputGathering.GetBookingId("modify");
         if (bookingId == null) return;
@@ -236,7 +253,7 @@ public static class PassengerUI
         }
     }
 
-    private static void ViewAllBookings(int passengerId)
+    private void ViewAllBookings(int passengerId)
     {
         try
         {

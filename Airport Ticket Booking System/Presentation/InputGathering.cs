@@ -1,4 +1,4 @@
-﻿using Airport_Ticket_Booking_System.Entities.Flights;
+﻿using Airport_Ticket_Booking_System.Entities.Flights.Core;
 using Airport_Ticket_Booking_System.Utilities;
 
 namespace Airport_Ticket_Booking_System.Presentation;

@@ -1,12 +1,16 @@
-﻿namespace Airport_Ticket_Booking_System.Entities.Flights;
-public static class FlightQuery
+﻿using Airport_Ticket_Booking_System.Entities.Flights.Core;
+using Airport_Ticket_Booking_System.Entities.Flights.Repository;
+
+namespace Airport_Ticket_Booking_System.Entities.Flights.Query;
+public class FlightQuery : IFlightQuery
 {
-    public static Flight? GetById(int? id)
+    public IFlightRepository FlightRepository { get; }
+    public FlightQuery(IFlightRepository flightRepository)
     {
-        return FlightRepository.Flights.FirstOrDefault(f => f.Id == id);
+        FlightRepository = flightRepository;
     }
 
-    public static List<Flight> FilterFlights(
+    public List<Flight> FilterFlights(
         DateTime? departureDate = null,
         string? departureCountry = null,
         string? destinationCountry = null,
@@ -14,11 +18,11 @@ public static class FlightQuery
         string? arrivalAirport = null,
         decimal? price = null,
         DateTime? afterDate = null)
-    { 
+    {
         var query = FlightRepository.Flights.AsQueryable();
 
         if (departureDate.HasValue)
-            query = query.Where(f => f.DepartureDate  == departureDate);
+            query = query.Where(f => f.DepartureDate == departureDate);
 
         if (!string.IsNullOrEmpty(departureCountry))
             query = query.Where(f => f.DepartureCountry == departureCountry);
@@ -39,5 +43,9 @@ public static class FlightQuery
             query = query.Where(f => f.DepartureDate >= afterDate.Value);
 
         return query.ToList();
+    }
+    public Flight? GetById(int? id)
+    {
+        return FlightRepository.Flights.FirstOrDefault(f => f.Id == id);
     }
 }

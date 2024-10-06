@@ -1,12 +1,11 @@
 ﻿using Airport_Ticket_Booking_System.Utilities;
 
-namespace Airport_Ticket_Booking_System.Entities.Flights;
+namespace Airport_Ticket_Booking_System.Entities.Flights.Core;
 public class Flight
 {
     private static int _currentId = 0;
     private readonly int _id;
     private Dictionary<ClassOfFlight, decimal> _classPriceMap;
-
     public Flight(decimal economyPrice, decimal businessPrice, decimal firstClassPrice, string departureCountry, string destinationCountry, DateTime? departureDate,
         string departureAirport, string arrivalAirport)
     {
@@ -27,7 +26,7 @@ public class Flight
     public Dictionary<ClassOfFlight, decimal> ClassPriceMap { get => _classPriceMap; }
 
     [FieldType("Decimal"), ValidationRule("Required, Must be greater than 0")]
-    public decimal EconomyPrice { get=> _classPriceMap[ClassOfFlight.Economy]; set { _classPriceMap[ClassOfFlight.Economy] = value; } }
+    public decimal EconomyPrice { get => _classPriceMap[ClassOfFlight.Economy]; set { _classPriceMap[ClassOfFlight.Economy] = value; } }
 
     [FieldType("Decimal"), ValidationRule("Required, Must be greater than 0")]
     public decimal BusinessPrice { get => _classPriceMap[ClassOfFlight.Business]; set { _classPriceMap[ClassOfFlight.Business] = value; } }

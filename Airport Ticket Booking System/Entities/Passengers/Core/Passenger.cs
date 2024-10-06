@@ -1,16 +1,16 @@
-﻿using Airport_Ticket_Booking_System.Entities.Bookings;
+﻿using Airport_Ticket_Booking_System.Entities.Bookings.Core;
 
-namespace Airport_Ticket_Booking_System.Entities.Passenegers;
+namespace Airport_Ticket_Booking_System.Entities.Passengers.Core;
 public class Passenger
 {
     private static int _currentId = 0;
-    private readonly int _id;
-    public int Id { get { return _id; } }
+    private int _id;
     public Passenger(string name)
     {
         _id = ++_currentId;
         Name = name;
     }
+    public int Id { get { return _id; }  set{ _id = value; } }
     public List<Book> Bookings { get; } = new List<Book>();
     public string Name { get; set; }
 }

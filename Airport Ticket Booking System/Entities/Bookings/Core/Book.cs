@@ -1,7 +1,7 @@
-﻿using Airport_Ticket_Booking_System.Entities.Flights;
-using Airport_Ticket_Booking_System.Entities.Passenegers;
+﻿using Airport_Ticket_Booking_System.Entities.Flights.Core;
+using Airport_Ticket_Booking_System.Entities.Passengers.Core;
 
-namespace Airport_Ticket_Booking_System.Entities.Bookings;
+namespace Airport_Ticket_Booking_System.Entities.Bookings.Core;
 public class Book
 {
     private static int _currentId = 0;
@@ -19,5 +19,4 @@ public class Book
     public Flight? Flight { get; set; }
     public Passenger? Passenger { get; set; }
     public DateTime? BookingDate { get; init; }
-    
 }

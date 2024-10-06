@@ -1,8 +1,8 @@
-﻿using Airport_Ticket_Booking_System.Presentation;
+﻿using Airport_Ticket_Booking_System.Presentation.EntitiesPrinters;
 using Airport_Ticket_Booking_System.Utilities;
 using System.Text;
 
-namespace Airport_Ticket_Booking_System.Entities.Bookings;
+namespace Airport_Ticket_Booking_System.Entities.Bookings.Core;
 public static class BookingValidation
 {
     public static bool ValidateBook(Book booking, out string errors)
@@ -12,6 +12,7 @@ public static class BookingValidation
             errors = ErrorMessages.BookingCannotBeNull;
             return true;
         }
+
         var stringBuilder = new StringBuilder();
         if (!ValidateClassOfFlight(booking, out string classOfFlightErrors))
             stringBuilder.Append($"{classOfFlightErrors}\n");
@@ -30,17 +31,17 @@ public static class BookingValidation
     }
     public static bool ValidateClassOfFlight(Book booking, out string classOfFlightErrors)
     {
-        classOfFlightErrors= string.Empty;
-        if (booking.ClassOfFlight is null )
-            classOfFlightErrors =(ErrorMessages.ClassOfFlightCannotBeNull);
+        classOfFlightErrors = string.Empty;
+        if (booking.ClassOfFlight is null)
+            classOfFlightErrors = ErrorMessages.ClassOfFlightCannotBeNull;
 
         return string.IsNullOrEmpty(classOfFlightErrors);
     }
     public static bool ValidatePassenger(Book booking, out string passengerErrors)
     {
-        passengerErrors= string.Empty;  
+        passengerErrors = string.Empty;
         if (booking.Passenger == null)
-            passengerErrors=(ErrorMessages.PassengerNotFound);
+            passengerErrors = ErrorMessages.PassengerNotFound;
 
         return string.IsNullOrEmpty(passengerErrors);
     }

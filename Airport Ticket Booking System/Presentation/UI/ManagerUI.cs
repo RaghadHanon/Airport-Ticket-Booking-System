@@ -1,12 +1,24 @@
-﻿﻿using Airport_Ticket_Booking_System.Entities.Bookings;
+﻿using Airport_Ticket_Booking_System.Entities.Bookings.Filter;
 using Airport_Ticket_Booking_System.Entities.DataManagement;
-using Airport_Ticket_Booking_System.Entities.Flights;
+using Airport_Ticket_Booking_System.Entities.Flights.Core;
+using Airport_Ticket_Booking_System.Entities.Flights.Query;
+using Airport_Ticket_Booking_System.Presentation.EntitiesPrinters;
 using Airport_Ticket_Booking_System.Utilities;
 
-namespace Airport_Ticket_Booking_System.Presentation; 
-public static class ManagerUI
+namespace Airport_Ticket_Booking_System.Presentation.UI;
+public class ManagerUI
 {
-    public static void ShowMenu()
+    public IBookingFilter BookingFilter { get; }
+    public IFlightQuery FlightQuery { get; }
+    public IFlightDataFileProcessing FlightDataFileProcessing { get; }
+    public ManagerUI(IBookingFilter bookingFilter, IFlightQuery flightQuery, IFlightDataFileProcessing flightDataFileProcessing)
+    {
+        BookingFilter = bookingFilter;
+        FlightQuery = flightQuery;
+        FlightDataFileProcessing = flightDataFileProcessing;
+    }
+
+    public void ShowMenu()
     {
         var isExit = false;
         while (!isExit)
@@ -45,7 +57,7 @@ public static class ManagerUI
                     ValidateFlightData();
                     break;
                 case "6":
-                    DataRepository.ViewValidationErrorList();
+                    FlightDataFileProcessing.ViewValidationErrorList();
                     break;
                 case "7":
                     DisplayValidationRules();
@@ -60,12 +72,12 @@ public static class ManagerUI
         }
     }
 
-    public static void VewAllFlights()
+    public void VewAllFlights()
     {
         Console.WriteLine(FlightPrinter.PrintFlights(FlightQuery.FilterFlights(), "\n--- Flights ---"));
     }
 
-    public static void SearchBookings()
+    public void SearchBookings()
     {
         var isExit = false;
         while (!isExit)
@@ -125,7 +137,6 @@ public static class ManagerUI
                     int? passengerId = InputGathering.GetPassengerId();
                     if (passengerId != null)
                         BookingFilter.ShowBookingsByPassenger(passengerId.Value);
-
                     break;
                 case "9":
                     ClassOfFlight? flightClass = InputGathering.GetClassOfFlightInput();
@@ -142,13 +153,13 @@ public static class ManagerUI
         }
     }
 
-    public static void BatchUploadFlights()
+    public void BatchUploadFlights()
     {
         Console.Write("\nEnter the file name for batch flight upload (CSV format): ");
         var filePath = Console.ReadLine();
         try
         {
-            DataRepository.BatchUploadFlights(filePath);
+            FlightDataFileProcessing.BatchUploadFlights(filePath);
         }
         catch (Exception ex)
         {
@@ -156,9 +167,9 @@ public static class ManagerUI
         }
     }
 
-    public static void ValidateFlightData()
+    public void ValidateFlightData()
     {
-        DataRepository.ValidateImportedFlightData();
+        FlightDataFileProcessing.ValidateImportedFlightData();
     }
 
     public static void DisplayValidationRules()

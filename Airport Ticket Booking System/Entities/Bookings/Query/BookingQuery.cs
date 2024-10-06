@@ -1,14 +1,17 @@
-﻿using Airport_Ticket_Booking_System.Entities.Flights;
+﻿using Airport_Ticket_Booking_System.Entities.Bookings.Core;
+using Airport_Ticket_Booking_System.Entities.Bookings.Repository;
+using Airport_Ticket_Booking_System.Entities.Flights.Core;
 
-namespace Airport_Ticket_Booking_System.Entities.Bookings;
-public static class BookingQuery
+namespace Airport_Ticket_Booking_System.Entities.Bookings.Query;
+public class BookingQuery : IBookingQuery
 {
-    public static Book? GetById(int id)
+    public IBookingRepository BookingRepository { get; }
+    public BookingQuery(IBookingRepository bookingRepository)
     {
-        return BookingRepository.Bookings.FirstOrDefault(b => b.Id == id);
+        BookingRepository = bookingRepository;
     }
 
-    public static List<Book> FilterBookings(
+    public List<Book> FilterBookings(
         int? passengerId = null,
         int? flightId = null,
         ClassOfFlight? classOfFlight = null,
@@ -52,5 +55,10 @@ public static class BookingQuery
             query = query.Where(b => b.Flight.DepartureDate >= afterDate.Value);
 
         return query.ToList();
+    }
+
+    public Book? GetById(int id)
+    {
+        return BookingRepository.Bookings.FirstOrDefault(b => b.Id == id);
     }
 }

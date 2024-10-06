@@ -1,12 +1,19 @@
-﻿using Airport_Ticket_Booking_System.Entities.Flights;
+﻿using Airport_Ticket_Booking_System.Entities.Flights.Core;
+using Airport_Ticket_Booking_System.Entities.Flights.Repository;
 using Airport_Ticket_Booking_System.Utilities;
 
 namespace Airport_Ticket_Booking_System.Entities.DataManagement;
-public static class DataRepository
+public class FlightDataFileProcessing : IFlightDataFileProcessing
 {
-    private static List<string> ErrorList = new List<string>();
-    private static string[]? Data;
-    public static void BatchUploadFlights(string fileName)
+    private List<string> ErrorList = new List<string>();
+    private string[]? Data;
+    public IFlightRepository FlightRepository {  get; }
+    public FlightDataFileProcessing(IFlightRepository flightRepository)
+    {
+        FlightRepository = flightRepository;
+    }
+
+    public void BatchUploadFlights(string fileName)
     {
         var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         var filePath = Path.Combine(baseDirectory, @"..\..\..\..\", fileName);
@@ -33,7 +40,7 @@ public static class DataRepository
         }
     }
 
-    public static List<string> ValidateImportedFlightData()
+    public List<string> ValidateImportedFlightData()
     {
         if (Data == null || !Data.Any())
         {
@@ -49,24 +56,26 @@ public static class DataRepository
                 firstClassPrice: decimal.Parse(flightDetails[2]),
                 departureCountry: flightDetails[3],
                 destinationCountry: flightDetails[4],
-                departureDate : DateTime.TryParse(flightDetails[5], out DateTime _departureDate) ? _departureDate : null,
+                departureDate: DateTime.TryParse(flightDetails[5], out DateTime _departureDate) ? _departureDate : null,
                 departureAirport: flightDetails[6],
                 arrivalAirport: flightDetails[7]
                 );
-                try
-                {
-                    FlightRepository.AddFlight(flight);
-                }catch( Exception ex)
-                {
-                    ErrorList.Add($"""
+            try
+            {
+                FlightRepository.AddFlight(flight);
+            }
+            catch (Exception ex)
+            {
+                ErrorList.Add($"""
                                    Error with Flight {line}: {ex.Message}
                                    """);
-                }
+            }
         }
         Data = null;
         return ErrorList;
     }
-    public static void ViewValidationErrorList()
+
+    public void ViewValidationErrorList()
     {
         if (ErrorList?.Count > 0)
         {

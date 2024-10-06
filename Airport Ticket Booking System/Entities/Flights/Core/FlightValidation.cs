@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Text;
 
-namespace Airport_Ticket_Booking_System.Entities.Flights;
+namespace Airport_Ticket_Booking_System.Entities.Flights.Core;
 public static class FlightValidation
 {
     public static bool ValidateFlight(Flight flight, out string errors)
@@ -16,16 +16,16 @@ public static class FlightValidation
         var stringBuilder = new StringBuilder();
         if (!ValidtePrice(flight, out string priceErrors))
             stringBuilder.Append($"{priceErrors}\n");
-        
+
         if (!ValidateDepartureDate(flight, out string dateErrors))
             stringBuilder.Append($"{dateErrors}\n");
-        
+
         if (!ValidateCountry(flight, out string countryErrors))
             stringBuilder.Append($"{countryErrors}\n");
-        
+
         if (!ValidateAirport(flight, out string airportErrors))
             stringBuilder.Append($"{airportErrors}\n");
-        
+
         errors = stringBuilder.ToString();
         return string.IsNullOrEmpty(errors);
     }
@@ -49,7 +49,7 @@ public static class FlightValidation
     public static bool ValidateDepartureDate(Flight flight, out string dateErrors)
     {
         var errorList = new List<string>();
-        if( flight.DepartureDate is null)
+        if (flight.DepartureDate is null)
             errorList.Add(ErrorMessages.DepartureDateInvalidFormat);
 
         if (flight.DepartureDate <= DateTime.UtcNow.AddHours(4))

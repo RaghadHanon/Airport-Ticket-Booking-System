@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Airport_Ticket_Booking_System.Utilities;
+﻿namespace Airport_Ticket_Booking_System.Utilities;
 
 public static class ErrorMessages
 {
@@ -32,7 +25,7 @@ public static class ErrorMessages
     public const string FlightCollisionMessage = "- The flight collides with an existing booking/s";
     public const string FlightValidationError = "- Flight validation failed.";
     public const string FileNotFount = "File not found.";
-    public const string FileEmpty = "The file is empty."; 
+    public const string FileEmpty = "The file is empty.";
     public const string InvalidChoice = "Invalid choice. Please select a valid option.";
     public const string InvalidFlightClass = "Invalid flight class.";
     public const string InvalidOption = "Invalid option.";
@@ -47,7 +40,7 @@ public static class ErrorMessages
     public const string PassengerAddingError = $"- Error Adding passenger:";
     public const string ProcessingFileError = $"- Error processing file:";
     public const string SelectedDateInvalid = "- The selected date is either in the past or less than 2 hours from now. Please choose a date at least 2 hours in the future.";
-   
+
 
 }
 

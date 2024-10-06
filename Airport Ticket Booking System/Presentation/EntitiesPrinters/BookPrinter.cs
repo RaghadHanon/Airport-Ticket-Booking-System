@@ -1,9 +1,9 @@
-﻿using Airport_Ticket_Booking_System.Entities.Bookings;
-using Airport_Ticket_Booking_System.Entities.Flights;
+﻿using Airport_Ticket_Booking_System.Entities.Bookings.Core;
+using Airport_Ticket_Booking_System.Entities.Flights.Core;
 using Airport_Ticket_Booking_System.Utilities;
 using System.Text;
 
-namespace Airport_Ticket_Booking_System.Presentation;
+namespace Airport_Ticket_Booking_System.Presentation.EntitiesPrinters;
 public static class BookPrinter
 {
     public static string PrintBooking(Book book)
@@ -23,7 +23,7 @@ public static class BookPrinter
                 """;
     }
 
-    public static string PrintBookings(IEnumerable<Book> bookings,string? title=null)
+    public static string PrintBookings(IEnumerable<Book> bookings, string? title = null)
     {
         if (bookings == null || !bookings.Any())
             return ErrorMessages.NoAvailableBookings;
