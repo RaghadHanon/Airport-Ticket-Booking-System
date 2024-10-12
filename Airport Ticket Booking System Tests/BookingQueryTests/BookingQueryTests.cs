@@ -2,11 +2,11 @@ using Airport_Ticket_Booking_System.Entities.Flights.Core;
 using FluentAssertions;
 
 namespace Airport_Ticket_Booking_System_Tests.BookingQueryTests;
-public class BookingQueryShould : IClassFixture<BookingsQueryFixture>
+public class BookingQueryTests : IClassFixture<BookingsQueryFixture>
 {
     private readonly BookingsQueryFixture _bookingsQueryFixture;
 
-    public BookingQueryShould(BookingsQueryFixture bookingsQueryFixture)
+    public BookingQueryTests(BookingsQueryFixture bookingsQueryFixture)
     {
         _bookingsQueryFixture = bookingsQueryFixture;
     }
@@ -15,7 +15,7 @@ public class BookingQueryShould : IClassFixture<BookingsQueryFixture>
     [InlineData(1)]
     [InlineData(2)]
     [InlineData(3)]
-    public void FilterBookings_WhenPassengerIdExists_ShouldReturnMatchingBookings(int passengerId)
+    public void FilterBookings_ShouldReturnMatchingBookings_WhenPassengerIdExists(int passengerId)
     {
         var result = _bookingsQueryFixture.sut.FilterBookings(passengerId: passengerId);
 
@@ -26,7 +26,7 @@ public class BookingQueryShould : IClassFixture<BookingsQueryFixture>
 
     [Theory]
     [InlineData(999)]
-    public void FilterBookings_WhenPassengerIdDoesNotExist_ShouldReturnNoBookings(int nonExistentPassengerId)
+    public void FilterBookings_ShouldReturnNoBookings_WhenPassengerIdDoesNotExist(int nonExistentPassengerId)
     {
         var result = _bookingsQueryFixture.sut.FilterBookings(passengerId: nonExistentPassengerId);
 
@@ -37,7 +37,7 @@ public class BookingQueryShould : IClassFixture<BookingsQueryFixture>
     [InlineData(1)]
     [InlineData(2)]
     [InlineData(3)]
-    public void FilterBookings_WhenFlightIdExists_ShouldReturnMatchingBookings(int flightId)
+    public void FilterBookings_ShouldReturnMatchingBookings_WhenFlightIdExists(int flightId)
     {
         var result = _bookingsQueryFixture.sut.FilterBookings(flightId: flightId);
 
@@ -48,7 +48,7 @@ public class BookingQueryShould : IClassFixture<BookingsQueryFixture>
 
     [Theory]
     [InlineData(999)]
-    public void FilterBookings_WhenFlightIdDoesNotExist_ShouldReturnNoBookings(int nonExistentFlightId)
+    public void FilterBookings_ShouldReturnNoBookings_WhenFlightIdDoesNotExist(int nonExistentFlightId)
     {
         var result = _bookingsQueryFixture.sut.FilterBookings(flightId: nonExistentFlightId);
 
@@ -59,7 +59,7 @@ public class BookingQueryShould : IClassFixture<BookingsQueryFixture>
     [InlineData(ClassOfFlight.Business)]
     [InlineData(ClassOfFlight.Economy)]
     [InlineData(ClassOfFlight.FirstClass)]
-    public void FilterBookings_WhenClassOfFlightExists_ShouldReturnMatchingBookings(ClassOfFlight classOfFlight)
+    public void FilterBookings_ShouldReturnMatchingBookings_WhenClassOfFlightExists(ClassOfFlight classOfFlight)
     {
         var result = _bookingsQueryFixture.sut.FilterBookings(classOfFlight: classOfFlight);
 
@@ -72,7 +72,7 @@ public class BookingQueryShould : IClassFixture<BookingsQueryFixture>
     [InlineData(1200)]
     [InlineData(810)]
     [InlineData(310)]
-    public void FilterBookings_WhenPriceExists_ShouldReturnMatchingBookings(decimal price)
+    public void FilterBookings_ShouldReturnMatchingBookings_WhenPriceExists(decimal price)
     {
         var result = _bookingsQueryFixture.sut.FilterBookings(price: price);
         var classOfFlight = result.First().ClassOfFlight;
@@ -86,7 +86,7 @@ public class BookingQueryShould : IClassFixture<BookingsQueryFixture>
     [InlineData("USA")]
     [InlineData("Brazil")]
     [InlineData("France")]
-    public void FilterBookings_WhenDepartureCountryExists_ShouldReturnMatchingBookings(string departureCountry)
+    public void FilterBookings_ShouldReturnMatchingBookings_WhenDepartureCountryExists(string departureCountry)
     {
         var result = _bookingsQueryFixture.sut.FilterBookings(departureCountry: departureCountry);
 
@@ -99,7 +99,7 @@ public class BookingQueryShould : IClassFixture<BookingsQueryFixture>
     [InlineData("UK")]
     [InlineData("Italy")]
     [InlineData("Brazil")]
-    public void FilterBookings_WhenDestinationCountryExists_ShouldReturnMatchingBookings(string destinationCountry)
+    public void FilterBookings_ShouldReturnMatchingBookings_WhenDestinationCountryExists(string destinationCountry)
     {
         var result = _bookingsQueryFixture.sut.FilterBookings(destinationCountry: destinationCountry);
 
@@ -111,7 +111,7 @@ public class BookingQueryShould : IClassFixture<BookingsQueryFixture>
     [Theory]
     [InlineData("2024-10-15")]
     [InlineData("2024-04-09")]
-    public void FilterBookings_WhenDepartureDateExists_ShouldReturnMatchingBookings(string departureDateString)
+    public void FilterBookings_ShouldReturnMatchingBookings_WhenDepartureDateExists(string departureDateString)
     {
         DateTime departureDate = DateTime.Parse(departureDateString);
         var result = _bookingsQueryFixture.sut.FilterBookings(departureDate: departureDate);
@@ -123,7 +123,7 @@ public class BookingQueryShould : IClassFixture<BookingsQueryFixture>
 
     [Theory]
     [InlineData("2024-01-01")]
-    public void FilterBookings_WhenAfterSpecificDateExists_ShouldReturnBookingsAfterDate(string afterDateString)
+    public void FilterBookings_ShouldReturnBookingsAfterDate_WhenAfterSpecificDateExists(string afterDateString)
     {
         DateTime afterDate = DateTime.Parse(afterDateString);
         var result = _bookingsQueryFixture.sut.FilterBookings(afterDate: afterDate);

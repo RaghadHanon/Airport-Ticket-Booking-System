@@ -10,9 +10,9 @@ public class Flight
     {
         _classPriceMap = new Dictionary<ClassOfFlight, decimal>
         {
-            { ClassOfFlight.Economy, 0m },
-            { ClassOfFlight.Business, 0m },
-            { ClassOfFlight.FirstClass, 0m }
+            { ClassOfFlight.Economy, 100m },
+            { ClassOfFlight.Business, 100m },
+            { ClassOfFlight.FirstClass, 100m }
         };
     }
     public Flight(decimal economyPrice, decimal businessPrice, decimal firstClassPrice, string departureCountry, string destinationCountry, DateTime? departureDate,
